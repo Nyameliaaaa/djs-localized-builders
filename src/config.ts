@@ -24,9 +24,9 @@ let config: ConfigType = {
 		useUppercaseConversionValues: false,
 		seperatorChar: '_',
 		validators: proccess.ENV.NODE_ENV === 'production',
-        langs: ['en-US'],
+        langs: ['en-US', 'pl'], // we're using Discord language codes here, not the ISO ones.
 		namespaces: {
-			components: 'responses',
+			components: 'components',
 			commands: 'commands',
 			embeds: 'responses'
 		}
