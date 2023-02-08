@@ -7,6 +7,8 @@ on:
       - 'src/**'
       - '.gitbub/workflows/docs.yml'
 
+    workflow_dispatch: 
+
 permissions:
   contents: read
   pages: write
