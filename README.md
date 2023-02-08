@@ -1,6 +1,6 @@
 # djs-localized-builders
 
-A set of builders for Discord.js, built to allow easy localization.
+A set of builders for [discord.js](https://discord.js.org), built to allow easy localization.
 
 ## Get Started
 
