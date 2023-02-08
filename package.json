@@ -19,7 +19,7 @@
         "lint": "eslint .",
         "lint:fix": "eslint --fix",
         "docs:build": "typedoc",
-        "test:typescript": "tsc"
+        "test:typescript": "tsc --noEmit"
     },
     "repository": {
         "type": "git",
