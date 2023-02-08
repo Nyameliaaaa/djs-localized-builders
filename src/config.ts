@@ -10,7 +10,6 @@ interface ConfigType {
      * @param string The string to localize in question.
      * @param lang The language to fetch the string from.
      * @param options Key/Value pairs for arguments within the string.
-     * @defaultValue Empty placeholder function
      */
     getLocalizedString: (namespace: string, string: string, lang: string, options?: Record<string, any>) => string;
 
