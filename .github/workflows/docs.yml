@@ -5,6 +5,7 @@ on:
       - 'main'
     paths:
       - 'src/**'
+      - '.gitbub/workflows/docs.yml'
 
 permissions:
   contents: read
@@ -21,10 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: Checkout repository
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
 
         - name: Install Node v18
-          uses: actions/setup-node@v2
+          uses: actions/setup-node@v3
           with:
               node-version: 18
               cache: npm
@@ -50,12 +51,16 @@ jobs:
         - name: Setup Pages
           uses: actions/configure-pages@v3
 
+        - name: Log Path
+          run: echo '${{ steps.deployment.outputs.page_url }}'
+
         - name: Upload artifact
           uses: actions/upload-pages-artifact@v1
           with:
-            path: './docs'
+            path: 'docs/'
 
         - name: Deploy to GitHub Pages
           id: deployment
           uses: actions/deploy-pages@v1
+
 
