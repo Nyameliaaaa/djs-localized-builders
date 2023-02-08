@@ -1,6 +1,6 @@
 {
     "entryPoints": ["src/index.ts"],
-    "out": "docs",
+    "out": ".build/docs",
     "excludeInternal": true,
     "plugin": ["typedoc-theme-yaf"],
     "theme": "yaf"

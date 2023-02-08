@@ -38,7 +38,7 @@ jobs:
           run: npm ci
 
         - name: Clear old docs
-          run: rm -rf docs
+          run: rm -rf ./.build/docs
 
         - name: Run documentation build
           run: 'npm run docs:build'
@@ -47,7 +47,10 @@ jobs:
           uses: peaceiris/actions-gh-pages@v3
           with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: ./docs
+            publish_dir: ./.build/docs
+
+        - name: Cleanup
+          run: rm -rf ./.build/docs
 
   # deploy:
   #     name: 'Deploy Pages'
