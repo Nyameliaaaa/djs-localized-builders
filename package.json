@@ -48,6 +48,7 @@
         "typescript": "^4.9.5"
     },
     "dependencies": {
-        "@discordjs/builders": "^1.4.0"
+        "@discordjs/builders": "^1.4.0",
+        "ts-mixer": "^6.0.2"
     }
 }
