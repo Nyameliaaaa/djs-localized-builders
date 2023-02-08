@@ -64,4 +64,4 @@ jobs:
               run: npm ci
 
             - name: Check commit
-              run: npx commitlint
+              run: npx commitlint --edit
