@@ -1,6 +1,6 @@
 import { disableValidators, enableValidators } from '@discordjs/builders';
 
-interface NamespaceMap {
+export interface NamespaceMap {
     /**
      * The namespace used to fetch command localization strings.
      * @defaultValue 'commands'
@@ -21,17 +21,39 @@ interface NamespaceMap {
 }
 
 /**
+ * The options for the `options.getLocalizedString`
+ */
+export interface GetLocalizedStringOptions {
+    /**
+     * The namespace from which the string is fetched.
+     */
+    namespace: string;
+
+    /**
+     * The string in question
+     */
+    string: string;
+
+    /**
+     * The locale to fetch from.
+     */
+    lang: string;
+
+    /**
+     * Any additional Key/Value arguments for the string.
+     */
+    options?: Record<string, any>;
+}
+
+/**
  * The type for the library config.
  */
 interface ConfigType {
     /**
      * The function which is responsible for fetching a localized string. You must define this for the library to function.
-     * @param namespace The namespace from which strings are fetched [Modified by `namespaces`].
-     * @param string The string to localize in question.
-     * @param lang The language to fetch the string from.
-     * @param options Key/Value pairs for arguments within the string.
+     * @param {GetLocalizedStringOptions} options - The options passed by the function.
      */
-    getLocalizedString: (namespace: string, string: string, lang: string, options?: Record<string, any>) => string;
+    getLocalizedString: (options: GetLocalizedStringOptions) => string;
 
     /**
      * Whether to uppercase the values of Select Menu Options & Option Choices when fetching the string.
@@ -58,7 +80,7 @@ interface ConfigType {
 }
 
 let config: ConfigType = {
-    getLocalizedString: () => 'Function not implemented.',
+    getLocalizedString: ({ string }) => `function_not_implemented_${string.toLocaleLowerCase()}`,
     useUppercaseConversionForValues: false,
     seperatorChar: '.',
     validators: true,
@@ -73,7 +95,7 @@ let config: ConfigType = {
  * Set config for the library.
  * @example ```ts
 	setConfig({
-		getLocalizedString: (namespace: string, string: string, lang: string, options?: Record<string, any>) => {
+		getLocalizedString: ({ namespace, string, lang, options }) => {
 			return client.i18n.getString({ namespace, string, lang, options }) ?? 'fetch_fail'
 		},
 		useUppercaseConversionValues: false,
