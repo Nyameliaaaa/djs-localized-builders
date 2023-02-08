@@ -1,5 +1,8 @@
 import { disableValidators, enableValidators } from '@discordjs/builders';
 
+/**
+ * The type for the library config.
+ */
 interface ConfigType {
     /**
      * The function which is responsible for fetching a localized string. You must define this for the library to function.
@@ -54,9 +57,7 @@ interface ConfigType {
 }
 
 let config: ConfigType = {
-    getLocalizedString: (namespace: string, string: string, lang: string, options?: Record<string, any>) => {
-        return 'Function not implemented.';
-    },
+    getLocalizedString: () => 'Function not implemented.',
     useUppercaseConversionForValues: false,
     seperatorChar: '.',
     validators: true,
@@ -87,10 +88,10 @@ let config: ConfigType = {
  * @param newConfig The new config to use.
  */
 export const setConfig = (newConfig: Partial<ConfigType>) => {
-    if (!newConfig.validators) {
-        disableValidators();
-    } else {
+    if (newConfig.validators) {
         enableValidators();
+    } else {
+        disableValidators();
     }
 
     config = { ...config, ...newConfig };

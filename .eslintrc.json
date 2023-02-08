@@ -36,7 +36,7 @@
                 "position": "above"
             }
         ],
-        "lines-around-comment": "error",
+        "lines-around-comment": "off",
         "no-alert": "error",
         "no-case-declarations": "off",
         "no-confusing-arrow": "error",
@@ -147,7 +147,7 @@
                 "words": true
             }
         ],
-        "spaced-comment": "error",
+        "spaced-comment": "off",
         "switch-colon-spacing": "error",
         "template-curly-spacing": ["error", "never"],
         "unicode-bom": ["error", "never"],
