@@ -18,7 +18,8 @@
         "build": "tsup",
         "lint": "eslint .",
         "lint:fix": "eslint --fix",
-        "docs:build": "typedoc"
+        "docs:build": "typedoc",
+        "test:typescript": "tsc"
     },
     "repository": {
         "type": "git",
