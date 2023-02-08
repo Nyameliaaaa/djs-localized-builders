@@ -32,6 +32,9 @@
         },
         "test": {
             "description": "Changes which add missing tests or correct existing tests"
+        },
+        "ci": {
+            "description": "Changes which change or add CI workflows"
         }
     },
     "scopes": {
