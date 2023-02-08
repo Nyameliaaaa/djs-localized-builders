@@ -1,5 +1,25 @@
 import { disableValidators, enableValidators } from '@discordjs/builders';
 
+interface NamespaceMap {
+    /**
+     * The namespace used to fetch command localization strings.
+     * @defaultValue 'commands'
+     */
+    commands: string;
+
+    /**
+     * The namespace used to fetch component localization strings.
+     * @defaultValue 'components'
+     */
+    components: string;
+
+    /**
+     * The namespace used to fetch embed localization strings.
+     * @defaultValue 'embeds'
+     */
+    embeds: string;
+}
+
 /**
  * The type for the library config.
  */
@@ -34,25 +54,7 @@ interface ConfigType {
     /**
      * Modify the default namespace names used by the library for string fetching.
      */
-    namespaces?: {
-        /**
-         * The namespace used to fetch command localization strings.
-         * @defaultValue 'commands'
-         */
-        commands: string;
-
-        /**
-         * The namespace used to fetch component localization strings.
-         * @defaultValue 'components'
-         */
-        components: string;
-
-        /**
-         * The namespace used to fetch embed localization strings.
-         * @defaultValue 'embeds'
-         */
-        embeds: string;
-    };
+    namespaces?: NamespaceMap;
 }
 
 let config: ConfigType = {

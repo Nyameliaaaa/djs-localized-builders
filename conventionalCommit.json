@@ -38,6 +38,7 @@
         }
     },
     "scopes": {
-        "config": {}
+        "config": {},
+        "types": {}
     }
 }
