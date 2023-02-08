@@ -14,12 +14,13 @@
         "dist"
     ],
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "npm run test:typescript && npm run lint",
         "build": "tsup",
         "lint": "eslint .",
         "lint:fix": "eslint --fix",
         "docs:build": "typedoc",
-        "test:typescript": "tsc --noEmit"
+        "test:typescript": "tsc --noEmit",
+        "release": "standard-version --tags"
     },
     "repository": {
         "type": "git",
@@ -42,6 +43,7 @@
         "eslint-config-prettier": "^8.6.0",
         "eslint-plugin-prettier": "^4.2.1",
         "husky": "^8.0.3",
+        "standard-version": "^9.5.0",
         "tsup": "^6.6.0",
         "typedoc": "0.23.24",
         "typedoc-theme-yaf": "^0.0.3",
