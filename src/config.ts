@@ -48,7 +48,7 @@ export interface GetLocalizedStringOptions {
 /**
  * The type for the library config.
  */
-interface ConfigType {
+export interface ConfigType {
     /**
      * The function which is responsible for fetching a localized string. You must define this for the library to function.
      * @param {GetLocalizedStringOptions} options - The options passed by the function.
