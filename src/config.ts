@@ -27,7 +27,7 @@ interface ConfigType {
      * Whether to enable the Discord.js Builder validators.
      * @defaultValue `true`
      */
-    enableValidators?: boolean;
+    validators?: boolean;
 
     /**
      * Modify the default namespace names used by the library for string fetching.
@@ -59,7 +59,7 @@ let config: ConfigType = {
     },
     useUppercaseConversionForValues: false,
     seperatorChar: '.',
-    enableValidators: true,
+    validators: true,
     namespaces: {
         components: 'components',
         commands: 'commands',
@@ -76,7 +76,7 @@ let config: ConfigType = {
 		},
 		useUppercaseConversionValues: false,
 		seperatorChar: '_',
-		enableValidators: proccess.ENV.NODE_ENV === 'development',
+		validators: proccess.ENV.NODE_ENV === 'development',
 		namespaces: {
 			components: 'responses',
 			commands: 'commands',
@@ -87,7 +87,7 @@ let config: ConfigType = {
  * @param newConfig The new config to use.
  */
 export const setConfig = (newConfig: Partial<ConfigType>) => {
-    if (!newConfig.enableValidators) {
+    if (!newConfig.validators) {
         disableValidators();
     } else {
         enableValidators();
