@@ -1,5 +1,9 @@
 import { disableValidators, enableValidators } from '@discordjs/builders';
 
+/**
+ * The names to use for the different namespaces from where strings are fetched.
+ * @category Config
+ */
 export interface NamespaceMap {
     /**
      * The namespace used to fetch command localization strings.
@@ -22,6 +26,7 @@ export interface NamespaceMap {
 
 /**
  * The options for the `options.getLocalizedString`
+ * @category Config
  */
 export interface GetLocalizedStringOptions {
     /**
@@ -47,6 +52,7 @@ export interface GetLocalizedStringOptions {
 
 /**
  * The type for the library config.
+ * @category Config
  */
 export interface ConfigType {
     /**
@@ -68,15 +74,21 @@ export interface ConfigType {
     seperatorChar: string;
 
     /**
+     * Modify the default namespace names used by the library for string fetching.
+     */
+    namespaces?: NamespaceMap;
+
+    /**
+     * The languages that the builders should support.
+     * @defaultValue 'en-US'
+     */
+    langs: string[];
+
+    /**
      * Whether to enable the Discord.js Builder validators.
      * @defaultValue `true`
      */
     validators?: boolean;
-
-    /**
-     * Modify the default namespace names used by the library for string fetching.
-     */
-    namespaces?: NamespaceMap;
 }
 
 let config: ConfigType = {
@@ -84,6 +96,7 @@ let config: ConfigType = {
     useUppercaseConversionForValues: false,
     seperatorChar: '.',
     validators: true,
+    langs: ['en-US'],
     namespaces: {
         components: 'components',
         commands: 'commands',
@@ -109,6 +122,7 @@ let config: ConfigType = {
 	});
  * ```
  * @param newConfig The new config to use.
+ * @category Config
  */
 export const setConfig = (newConfig: Partial<ConfigType>) => {
     if (newConfig.validators) {
