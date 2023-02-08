@@ -1,0 +1,51 @@
+{
+    "name": "djs-localized-builders",
+    "description": "A set of builders for Discord.js, built with localization in mind.",
+    "version": "0.1.0",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "exports": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsup",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix",
+        "docs:build": "typedoc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/night-lake/djs-localized-builders.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/night-lake/djs-localized-builders/issues"
+    },
+    "homepage": "https://github.com/night-lake/djs-localized-builders#readme",
+    "devDependencies": {
+        "@commitlint/cli": "^17.4.2",
+        "@commitlint/config-conventional": "^17.4.2",
+        "@types/node": "^18.13.0",
+        "@typescript-eslint/eslint-plugin": "^5.51.0",
+        "@typescript-eslint/parser": "^5.51.0",
+        "eslint": "^8.33.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "husky": "^8.0.3",
+        "tsup": "^6.6.0",
+        "typedoc": "0.23.24",
+        "typedoc-theme-yaf": "^0.0.3",
+        "typescript": "^4.9.5"
+    },
+    "dependencies": {
+        "@discordjs/builders": "^1.4.0"
+    }
+}
