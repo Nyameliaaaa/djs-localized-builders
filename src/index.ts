@@ -1,2 +1,1 @@
-const helloWorld = 'hi';
-export { helloWorld };
+export * from 'config';
