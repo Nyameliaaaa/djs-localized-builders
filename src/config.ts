@@ -24,7 +24,7 @@ let config: ConfigType = {
 		useUppercaseConversionValues: false,
 		seperatorChar: '_',
 		validators: proccess.ENV.NODE_ENV === 'production',
-        langs: ['en-US', 'pl'], // we're using Discord language codes here, not the ISO ones.
+        langs: client.i18n.langs , // use discord i18n codes
 		namespaces: {
 			components: 'components',
 			commands: 'commands',
