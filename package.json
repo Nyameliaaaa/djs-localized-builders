@@ -20,7 +20,8 @@
         "lint:fix": "eslint --fix",
         "docs:build": "typedoc",
         "test:typescript": "tsc --noEmit",
-        "release": "standard-version --tags"
+        "release": "standard-version --tags",
+        "prepare": "husky install"
     },
     "repository": {
         "type": "git",
