@@ -47,6 +47,5 @@ export const setConfig = (newConfig: Partial<ConfigType>) => {
 
 /**
  * Get the currently selected config.
- * @internal
  */
 export const getConfig = (): ConfigType => config;
