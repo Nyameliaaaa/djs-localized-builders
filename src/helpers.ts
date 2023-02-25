@@ -30,11 +30,15 @@ export function joinKeys(keys: string[]) {
  * @param options Any additional args.
  * @returns {string}
  */
-export function getDefaultString(string: string, namespace: string, options?: Record<string, any>) {
+export function getDefaultString(
+    string: string,
+    namespace: 'embeds' | 'components' | 'commands',
+    options?: Record<string, any>
+) {
     const config = getConfig();
     return config.getLocalizedString({
         lang: 'en-US',
-        namespace,
+        namespace: config?.namespaces?.[namespace] ?? namespace,
         string,
         options
     });
@@ -47,14 +51,18 @@ export function getDefaultString(string: string, namespace: string, options?: Re
  * @param options Any additional args.
  * @returns {Record<string, string>}
  */
-export function getAllStrings(string: string, namespace: string, options?: Record<string, any>) {
+export function getAllStrings(
+    string: string,
+    namespace: 'embeds' | 'components' | 'commands',
+    options?: Record<string, any>
+) {
     const config = getConfig();
     const ret: Record<string, string> = {};
 
     for (const lang of config.langs) {
         ret[lang] = config.getLocalizedString({
             lang,
-            namespace,
+            namespace: config?.namespaces?.[namespace] ?? namespace,
             string,
             options
         });
