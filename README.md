@@ -13,7 +13,7 @@ setConfig({
     getLocalizedString: ({ namespace, string, lang, options }) => {
         return i18nLib.getString({ namespace, string, lang, options }) ?? 'fetch_fail';
     },
-    useUppercaseConversionValues: false,
+    caseFormat: 'lowercase', // can be lowercase, uppercase or keep.
     seperatorChar: '.',
     validators: proccess.ENV.NODE_ENV === 'production',
     langs: i18nLib.langs, // using discord lang codes is required.

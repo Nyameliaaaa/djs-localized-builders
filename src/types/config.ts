@@ -60,10 +60,11 @@ export interface ConfigType {
     getLocalizedString: (options: GetLocalizedStringOptions) => string;
 
     /**
-     * Whether to uppercase the values of Select Menu Options & Option Choices when fetching the string.
+     * The case your strings are coded in.
+     * If you are using camelCase key names, you must use 'keep'
      * @defaultValue `false`
      */
-    useUppercaseConversionForValues: boolean;
+    caseFormat: 'uppercase' | 'lowercase' | 'keep';
 
     /**
      * The char to join the base keys with.

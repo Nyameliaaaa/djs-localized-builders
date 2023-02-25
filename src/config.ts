@@ -3,7 +3,7 @@ import { ConfigType } from 'types';
 
 let config: ConfigType = {
     getLocalizedString: ({ string }) => `function_not_implemented_${string.toLocaleLowerCase()}`,
-    useUppercaseConversionForValues: false,
+    caseFormat: 'lowercase',
     seperatorChar: '.',
     validators: true,
     langs: ['en-US'],
@@ -21,7 +21,7 @@ let config: ConfigType = {
 		getLocalizedString: ({ namespace, string, lang, options }) => {
 			return client.i18n.getString({ namespace, string, lang, options }) ?? 'fetch_fail'
 		},
-		useUppercaseConversionValues: false,
+		caseFormat: 'lowercase',
 		seperatorChar: '_',
 		validators: proccess.ENV.NODE_ENV === 'production',
         langs: client.i18n.langs , // use discord i18n codes
