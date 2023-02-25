@@ -1,7 +1,7 @@
 {
     "name": "djs-localized-builders",
     "description": "A set of builders for discord.js, built with localization in mind.",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
