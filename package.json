@@ -18,7 +18,8 @@
         "build": "tsup",
         "lint": "eslint .",
         "lint:fix": "eslint --fix",
-        "docs:build": "typedoc",
+        "docs:dev": "vuepress dev docs",
+        "docs:build": "vuepress build docs",
         "test:typescript": "tsc --noEmit",
         "release": "standard-version --tags",
         "prepare": "husky install"
@@ -47,8 +48,9 @@
         "standard-version": "^9.5.0",
         "tsup": "^6.6.0",
         "typedoc": "0.23.24",
-        "typedoc-theme-yaf": "^0.0.3",
-        "typescript": "^4.9.5"
+        "typescript": "^4.9.5",
+        "vuepress": "^2.0.0-beta.61",
+        "vuepress-plugin-typedoc": "^0.11.2"
     },
     "dependencies": {
         "@discordjs/builders": "^1.4.0",

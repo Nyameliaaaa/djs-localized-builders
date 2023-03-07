@@ -1,6 +1,10 @@
-# djs-localized-builders
-
-A set of builders for [discord.js](https://discord.js.org), built to allow easy localization.
+---
+home: true
+tagline: Application Command/Component/Embed builders for `discord.js` built with i18n in mind.
+actionText: Quick Start →
+actionLink: /api
+footer: This project is licensed under the MIT license.
+---
 
 ## Get Started
 

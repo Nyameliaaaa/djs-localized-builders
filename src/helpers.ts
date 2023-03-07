@@ -4,6 +4,7 @@ import { getConfig } from '.';
  * A helper to join multiple base key parameters.
  * @param keys The keys to join.
  * @returns The joined key.
+ * @category Helpers
  */
 export function joinKeys(keys: string[]) {
     const config = getConfig();
@@ -29,6 +30,7 @@ export function joinKeys(keys: string[]) {
  * @param namespace The namespace to use.
  * @param options Any additional args.
  * @returns {string}
+ * @category Helpers
  */
 export function getDefaultString(
     string: string,
@@ -50,6 +52,7 @@ export function getDefaultString(
  * @param namespace The namespace to use.
  * @param options Any additional args.
  * @returns {Record<string, string>}
+ * @category Helpers
  */
 export function getAllStrings(
     string: string,
