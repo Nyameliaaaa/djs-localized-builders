@@ -1,4 +1,10 @@
-import { getConfig } from '.';
+/**
+ * @file Helper functions shared by all builders.
+ * @author Amelia Katherine [night-lake]
+ * @module Helpers
+ */
+
+import { getConfig } from '../index';
 
 /**
  * A helper to join multiple base key parameters.
