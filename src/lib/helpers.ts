@@ -31,6 +31,36 @@ export function joinKeys(keys: string[]) {
 }
 
 /**
+ * Get a string in a locale.
+ * @param string The string to get.
+ * @param lang The language to get.
+ * @param namespace The namespace to use.
+ * @param options Any additional args.
+ * @returns {string}
+ * @category Helpers
+ */
+export function getString(
+    string: string,
+    lang: string,
+    namespace: 'embeds' | 'components' | 'commands',
+    options?: Record<string, any>
+) {
+    const config = getConfig();
+    const val = config.getLocalizedString({
+        lang,
+        namespace: config.namespaces?.[namespace] ?? namespace,
+        string,
+        options
+    });
+
+    if (!val || val.includes(string)) {
+        config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
+    }
+
+    return val;
+}
+
+/**
  * Get a string in the en-US locale.
  * @param string The string to get.
  * @param namespace The namespace to use.
@@ -44,12 +74,18 @@ export function getDefaultString(
     options?: Record<string, any>
 ) {
     const config = getConfig();
-    return config.getLocalizedString({
+    const val = config.getLocalizedString({
         lang: 'en-US',
-        namespace: config?.namespaces?.[namespace] ?? namespace,
+        namespace: config.namespaces?.[namespace] ?? namespace,
         string,
         options
     });
+
+    if (!val || val.includes(string)) {
+        config.onMissingKey('en-US', config.namespaces?.[namespace] ?? namespace, string);
+    }
+
+    return val;
 }
 
 /**
@@ -71,10 +107,14 @@ export function getAllStrings(
     for (const lang of config.langs) {
         ret[lang] = config.getLocalizedString({
             lang,
-            namespace: config?.namespaces?.[namespace] ?? namespace,
+            namespace: config.namespaces?.[namespace] ?? namespace,
             string,
             options
         });
+
+        if (!ret[lang] || ret[lang].includes(string)) {
+            config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
+        }
     }
 
     return ret;

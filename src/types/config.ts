@@ -88,4 +88,13 @@ export interface ConfigType {
      * @defaultValue `true`
      */
     validators?: boolean;
+
+    /**
+     * Called when an attempted key call is not found.
+     * @param lang The langauge in which the key is missing.
+     * @param namespace The namespace in which this key does not exist.
+     * @param key The key which is missing.
+     * @returns
+     */
+    onMissingKey: (lang: string, namespace: string, key: string) => any;
 }
