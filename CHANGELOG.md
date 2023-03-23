@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/night-lake/djs-localized-builders/compare/v0.2.1...v0.3.0) (2023-03-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* switch to use builders as a peerdep
+
+### Features
+
+* add initial mixins ([af3f01b](https://github.com/night-lake/djs-localized-builders/commit/af3f01bf63dd48e565d1181026374856c9b5ecc5))
+* switch to use builders as a peerdep ([d29499a](https://github.com/night-lake/djs-localized-builders/commit/d29499a905211aeb6bc963c02e5249e903d2d570))
+* throw if a key is missing ([6854053](https://github.com/night-lake/djs-localized-builders/commit/6854053b1fc60eb81679f0bcff0e57f0c73b0c5c))
+
+
+### Bug Fixes
+
+* properly map namespaces ([4956135](https://github.com/night-lake/djs-localized-builders/commit/4956135892efae322e031b33baf77e86cd05c5c0))
+
 ### [0.2.1](https://github.com/night-lake/djs-localized-builders/compare/v0.2.0...v0.2.1) (2023-02-25)
 
 ### Features
