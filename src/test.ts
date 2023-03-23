@@ -37,7 +37,7 @@ const locs = {
         'funny options third name': 'third',
         'funny options third description': 'third desc',
         'funny options third choices cock': 'kurwa',
-        'funny options third choices 1': 'another kurwa'
+        'funny options third choices 3': 'another kurwa'
     },
     pl: {
         'funny name': 'funny_kurwa',
@@ -47,7 +47,7 @@ const locs = {
         'funny options third name': 'third_kurwa',
         'funny options third description': 'third desc kurwa',
         'funny options third choices cock': 'kurwa kurwa',
-        'funny options third choices 1': 'another kurwa kurwa'
+        'funny options third choices 3': 'another kurwa kurwa'
     }
 };
 
@@ -66,6 +66,6 @@ const funny = new Funny('funny')
     .setDMPermission(false)
     .addNumberOption('first', option => option.setAutocomplete(true))
     .addNumberOption(option => option.setName('cock').setDescription('how very'))
-    .addNumberOption(new NumberOption('third').addChoices([{ key: 'cock', value: 2 }]).addChoices(1));
+    .addNumberOption(new NumberOption('third').addChoices([{ key: 'cock', value: 2 }]).addChoices(3));
 
 console.log(funny.toJSON());
