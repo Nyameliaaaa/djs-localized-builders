@@ -3,7 +3,8 @@ import { getDefaultString, joinKeys, getAllStrings } from 'index';
 import { BaseKeyMixin } from 'mixins/base';
 import { PermsV2Mixin, SharedOptionsMixin } from 'mixins/commands';
 import { NameMixin } from 'mixins/nameAndDescription';
-import { mix } from 'ts-mixer';
+import { mix, settings } from 'ts-mixer';
+settings.initFunction = 'init';
 
 export interface ContextMenuCommandBuilder extends PermsV2Mixin<Builder>, NameMixin<Builder>, BaseKeyMixin {}
 
