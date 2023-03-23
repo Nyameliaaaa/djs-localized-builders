@@ -70,4 +70,4 @@ The second builder, the `StringOptionBuilder` is responsible for the `OPTION` pa
 
 As options and subcommands are added to your command builders, the lib does what is essentially joining the base keys, by updating the base key of children of the command (subcommand groups, subcommands, and options) with the base key of the parent, the structure element and then their base key and whatever part it needs to fetch.
 
-As this proccess is done at the higher-most command, the nested children are then also updates with the new base key.
+As this proccess is done at the higher-most command, the nested children are then also updated with the new base key.
