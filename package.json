@@ -38,6 +38,7 @@
     "devDependencies": {
         "@commitlint/cli": "^17.4.2",
         "@commitlint/config-conventional": "^17.4.2",
+        "@discordjs/builders": "^1.5.0",
         "@types/node": "^18.13.0",
         "@typescript-eslint/eslint-plugin": "^5.51.0",
         "@typescript-eslint/parser": "^5.51.0",
@@ -54,8 +55,10 @@
         "vuepress": "^2.0.0-beta.61",
         "vuepress-plugin-typedoc": "^0.11.2"
     },
+    "peerDependencies": {
+        "@discordjs/builders": "^1.5.0"
+    },
     "dependencies": {
-        "@discordjs/builders": "^1.4.0",
         "ts-mixer": "^6.0.3"
     }
 }
