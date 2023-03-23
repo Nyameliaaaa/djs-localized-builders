@@ -14,7 +14,7 @@ import {
 } from '@discordjs/builders';
 import { getAllStrings, getDefaultString, joinKeys } from 'lib';
 import { AutocompletableMixin, BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, OptionMixin } from 'mixins';
-import { IntegerOption, NumberOption } from 'options';
+import { IntegerOption, MentionableOption, NumberOption, RoleOption, UserOption } from 'options';
 import { hasMixin, mix } from 'ts-mixer';
 import { OptionInput, OptionResolvable } from 'types';
 
@@ -154,10 +154,16 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    // addMentionableOption(key: string, input: (option: MentionableOption) => MentionableOption = option => option) {
-    //     this.addOption(input(new MentionableOption(key)));
-    //     return this;
-    // }
+    addMentionableOption(key: string, input?: OptionInput<MentionableOption>): this;
+    addMentionableOption(option: OptionInput<MentionableOption>): this;
+    addMentionableOption(option: MentionableOption): this;
+    addMentionableOption(
+        keyOrInput: string | OptionInput<MentionableOption> | MentionableOption,
+        input: OptionInput<MentionableOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, MentionableOption);
+        return this;
+    }
 
     addNumberOption(key: string, input?: OptionInput<NumberOption>): this;
     addNumberOption(option: OptionInput<NumberOption>): this;
@@ -170,20 +176,32 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    // addRoleOption(key: string, input: (option: RoleOption) => RoleOption = option => option) {
-    //     this.addOption(input(new RoleOption(key)));
-    //     return this;
-    // }
+    addRoleOption(key: string, input?: OptionInput<RoleOption>): this;
+    addRoleOption(option: OptionInput<RoleOption>): this;
+    addRoleOption(option: RoleOption): this;
+    addRoleOption(
+        keyOrInput: string | OptionInput<RoleOption> | RoleOption,
+        input: OptionInput<RoleOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, RoleOption);
+        return this;
+    }
 
     // addStringOption(key: string, input: (option: StringOption) => StringOption = option => option) {
     //     this.addOption(input(new StringOption(key)));
     //     return this;
     // }
 
-    // addUserOption(key: string, input: (option: UserOption) => UserOption = option => option) {
-    //     this.addOption(input(new UserOption(key)));
-    //     return this;
-    // }
+    addUserOption(key: string, input?: OptionInput<UserOption>): this;
+    addUserOption(option: OptionInput<UserOption>): this;
+    addUserOption(option: UserOption): this;
+    addUserOption(
+        keyOrInput: string | OptionInput<UserOption> | UserOption,
+        input: OptionInput<UserOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, UserOption);
+        return this;
+    }
 
     hydrateOptions() {
         for (const option of this.optionQueue) {
