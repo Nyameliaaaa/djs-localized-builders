@@ -53,7 +53,7 @@ export function getString(
         options
     });
 
-    if (!val || val.includes(string)) {
+    if (config.validators && (!val || val.includes(string))) {
         config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
     }
 
@@ -81,7 +81,7 @@ export function getDefaultString(
         options
     });
 
-    if (!val || val.includes(string)) {
+    if (config.validators && (!val || val.includes(string))) {
         config.onMissingKey('en-US', config.namespaces?.[namespace] ?? namespace, string);
     }
 
@@ -112,7 +112,7 @@ export function getAllStrings(
             options
         });
 
-        if (!ret[lang] || ret[lang].includes(string)) {
+        if (config.validators && (!ret[lang] || ret[lang].includes(string))) {
             config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
         }
     }
