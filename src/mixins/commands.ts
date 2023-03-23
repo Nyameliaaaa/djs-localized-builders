@@ -14,7 +14,7 @@ import {
 } from '@discordjs/builders';
 import { getAllStrings, getDefaultString, joinKeys } from 'lib';
 import { AutocompletableMixin, BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, OptionMixin } from 'mixins';
-import { IntegerOption, MentionableOption, NumberOption, RoleOption, UserOption } from 'options';
+import { IntegerOption, MentionableOption, NumberOption, RoleOption, StringOption, UserOption } from 'options';
 import { hasMixin, mix } from 'ts-mixer';
 import { OptionInput, OptionResolvable } from 'types';
 
@@ -187,10 +187,16 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    // addStringOption(key: string, input: (option: StringOption) => StringOption = option => option) {
-    //     this.addOption(input(new StringOption(key)));
-    //     return this;
-    // }
+    addStringOption(key: string, input?: OptionInput<StringOption>): this;
+    addStringOption(option: OptionInput<StringOption>): this;
+    addStringOption(option: StringOption): this;
+    addStringOption(
+        keyOrInput: string | OptionInput<StringOption> | StringOption,
+        input: OptionInput<StringOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, StringOption);
+        return this;
+    }
 
     addUserOption(key: string, input?: OptionInput<UserOption>): this;
     addUserOption(option: OptionInput<UserOption>): this;
