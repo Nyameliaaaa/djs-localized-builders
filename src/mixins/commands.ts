@@ -14,7 +14,17 @@ import {
 } from '@discordjs/builders';
 import { getAllStrings, getDefaultString, joinKeys } from 'lib';
 import { AutocompletableMixin, BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, OptionMixin } from 'mixins';
-import { IntegerOption, MentionableOption, NumberOption, RoleOption, StringOption, UserOption } from 'options';
+import {
+    IntegerOption,
+    MentionableOption,
+    NumberOption,
+    RoleOption,
+    StringOption,
+    UserOption,
+    AttachmentOption,
+    BooleanOption,
+    ChannelOption
+} from 'options';
 import { hasMixin, mix } from 'ts-mixer';
 import { OptionInput, OptionResolvable } from 'types';
 
@@ -128,20 +138,38 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    // addAttachmentOption(key: string, input: (option: AttachmentOption) => AttachmentOption = option => option) {
-    //     this.addOption(input(new AttachmentOption(key)));
-    //     return this;
-    // }
+    addAttachmentOption(key: string, input?: OptionInput<AttachmentOption>): this;
+    addAttachmentOption(option: OptionInput<AttachmentOption>): this;
+    addAttachmentOption(option: AttachmentOption): this;
+    addAttachmentOption(
+        keyOrOption: string | OptionInput<AttachmentOption> | AttachmentOption,
+        input: OptionInput<AttachmentOption> = option => option
+    ) {
+        this.handleCall(keyOrOption, input, AttachmentOption);
+        return this;
+    }
 
-    // addBooleanOption(key: string, input: (option: BooleanOption) => BooleanOption = option => option) {
-    //     this.addOption(input(new BooleanOption(key)));
-    //     return this;
-    // }
+    addBooleanOption(key: string, input?: OptionInput<BooleanOption>): this;
+    addBooleanOption(option: OptionInput<BooleanOption>): this;
+    addBooleanOption(option: BooleanOption): this;
+    addBooleanOption(
+        keyOrOption: string | OptionInput<BooleanOption> | BooleanOption,
+        input: OptionInput<BooleanOption> = option => option
+    ) {
+        this.handleCall(keyOrOption, input, BooleanOption);
+        return this;
+    }
 
-    // addChannelOption(key: string, input: (option: ChannelOption) => ChannelOption = option => option) {
-    //     this.addOption(input(new ChannelOption(key)));
-    //     return this;
-    // }
+    addChannelOption(key: string, input?: OptionInput<ChannelOption>): this;
+    addChannelOption(option: OptionInput<ChannelOption>): this;
+    addChannelOption(option: ChannelOption): this;
+    addChannelOption(
+        keyOrOption: string | OptionInput<ChannelOption> | ChannelOption,
+        input: OptionInput<ChannelOption> = option => option
+    ) {
+        this.handleCall(keyOrOption, input, ChannelOption);
+        return this;
+    }
 
     addIntegerOption(key: string, input?: OptionInput<IntegerOption>): this;
     addIntegerOption(option: OptionInput<IntegerOption>): this;
