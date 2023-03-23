@@ -18,7 +18,7 @@ export class IntegerOption {
     }
 }
 
-export interface StringOption extends AutocompletableMixin<SlashCommandStringOption>, BaseKeyMixin {}
+export interface StringOption extends AutocompletableMixin<SlashCommandStringOption, string>, BaseKeyMixin {}
 @mix(AutocompletableMixin, BaseKeyMixin)
 export class StringOption {
     constructor(baseKey?: string) {
