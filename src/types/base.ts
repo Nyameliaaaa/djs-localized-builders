@@ -46,4 +46,4 @@ export type ComponentResolvable =
 
 export type ApplicationCommandBuilderResolvable = CommandResolvable | OptionResolvable;
 export type BuilderResolvable = ApplicationCommandBuilderResolvable | ComponentResolvable | EmbedBuilder;
-export type OptionInput<T> = (option: T) => T;
+export type FuncAsInput<T> = (option: T) => T;

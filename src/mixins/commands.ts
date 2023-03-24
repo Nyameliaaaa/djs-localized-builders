@@ -26,7 +26,7 @@ import {
     ChannelOption
 } from 'options';
 import { hasMixin, mix } from 'ts-mixer';
-import { OptionInput, OptionResolvable } from 'types';
+import { FuncAsInput, OptionResolvable } from 'types';
 
 export interface PermsV2Mixin<T extends SlashCommandBuilder | ContextMenuCommandBuilder> extends BuilderMixin<T> {}
 
@@ -60,11 +60,11 @@ export interface SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommand
 export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubcommandBuilder> {
     public optionQueue: OptionMixin<OptionResolvable>[] = [];
 
-    private isString(input: any): input is string {
+    protected isString(input: any): input is string {
         return typeof input === 'string';
     }
 
-    private isFunction<T>(input: any): input is OptionInput<T> {
+    private isFunction<T>(input: any): input is FuncAsInput<T> {
         return typeof input === 'function' && !this.isBuilder(input);
     }
 
@@ -119,8 +119,8 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
     }
 
     private handleCall<T extends OptionMixin<OptionResolvable>>(
-        keyOrInput: string | OptionInput<T> | T,
-        input: OptionInput<T> = option => option,
+        keyOrInput: string | FuncAsInput<T> | T,
+        input: FuncAsInput<T> = option => option,
         OptionType: new (...args: any[]) => T
     ) {
         if (this.isString(keyOrInput)) {
@@ -138,105 +138,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addAttachmentOption(key: string, input?: OptionInput<AttachmentOption>): this;
-    addAttachmentOption(option: OptionInput<AttachmentOption>): this;
-    addAttachmentOption(option: AttachmentOption): this;
-    addAttachmentOption(
-        keyOrOption: string | OptionInput<AttachmentOption> | AttachmentOption,
-        input: OptionInput<AttachmentOption> = option => option
-    ) {
-        this.handleCall(keyOrOption, input, AttachmentOption);
-        return this;
-    }
-
-    addBooleanOption(key: string, input?: OptionInput<BooleanOption>): this;
-    addBooleanOption(option: OptionInput<BooleanOption>): this;
-    addBooleanOption(option: BooleanOption): this;
-    addBooleanOption(
-        keyOrOption: string | OptionInput<BooleanOption> | BooleanOption,
-        input: OptionInput<BooleanOption> = option => option
-    ) {
-        this.handleCall(keyOrOption, input, BooleanOption);
-        return this;
-    }
-
-    addChannelOption(key: string, input?: OptionInput<ChannelOption>): this;
-    addChannelOption(option: OptionInput<ChannelOption>): this;
-    addChannelOption(option: ChannelOption): this;
-    addChannelOption(
-        keyOrOption: string | OptionInput<ChannelOption> | ChannelOption,
-        input: OptionInput<ChannelOption> = option => option
-    ) {
-        this.handleCall(keyOrOption, input, ChannelOption);
-        return this;
-    }
-
-    addIntegerOption(key: string, input?: OptionInput<IntegerOption>): this;
-    addIntegerOption(option: OptionInput<IntegerOption>): this;
-    addIntegerOption(option: IntegerOption): this;
-    addIntegerOption(
-        keyOrOption: string | OptionInput<IntegerOption> | IntegerOption,
-        input: OptionInput<IntegerOption> = option => option
-    ) {
-        this.handleCall(keyOrOption, input, IntegerOption);
-        return this;
-    }
-
-    addMentionableOption(key: string, input?: OptionInput<MentionableOption>): this;
-    addMentionableOption(option: OptionInput<MentionableOption>): this;
-    addMentionableOption(option: MentionableOption): this;
-    addMentionableOption(
-        keyOrInput: string | OptionInput<MentionableOption> | MentionableOption,
-        input: OptionInput<MentionableOption> = option => option
-    ) {
-        this.handleCall(keyOrInput, input, MentionableOption);
-        return this;
-    }
-
-    addNumberOption(key: string, input?: OptionInput<NumberOption>): this;
-    addNumberOption(option: OptionInput<NumberOption>): this;
-    addNumberOption(option: NumberOption): this;
-    addNumberOption(
-        keyOrInput: string | OptionInput<NumberOption> | NumberOption,
-        input: OptionInput<NumberOption> = option => option
-    ) {
-        this.handleCall(keyOrInput, input, NumberOption);
-        return this;
-    }
-
-    addRoleOption(key: string, input?: OptionInput<RoleOption>): this;
-    addRoleOption(option: OptionInput<RoleOption>): this;
-    addRoleOption(option: RoleOption): this;
-    addRoleOption(
-        keyOrInput: string | OptionInput<RoleOption> | RoleOption,
-        input: OptionInput<RoleOption> = option => option
-    ) {
-        this.handleCall(keyOrInput, input, RoleOption);
-        return this;
-    }
-
-    addStringOption(key: string, input?: OptionInput<StringOption>): this;
-    addStringOption(option: OptionInput<StringOption>): this;
-    addStringOption(option: StringOption): this;
-    addStringOption(
-        keyOrInput: string | OptionInput<StringOption> | StringOption,
-        input: OptionInput<StringOption> = option => option
-    ) {
-        this.handleCall(keyOrInput, input, StringOption);
-        return this;
-    }
-
-    addUserOption(key: string, input?: OptionInput<UserOption>): this;
-    addUserOption(option: OptionInput<UserOption>): this;
-    addUserOption(option: UserOption): this;
-    addUserOption(
-        keyOrInput: string | OptionInput<UserOption> | UserOption,
-        input: OptionInput<UserOption> = option => option
-    ) {
-        this.handleCall(keyOrInput, input, UserOption);
-        return this;
-    }
-
     hydrateOptions() {
         for (const option of this.optionQueue) {
             this.hydrateOption(option);
@@ -245,6 +146,105 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
 
         this.optionQueue = [];
 
+        return this;
+    }
+
+    addAttachmentOption(key: string, input?: FuncAsInput<AttachmentOption>): this;
+    addAttachmentOption(option: FuncAsInput<AttachmentOption>): this;
+    addAttachmentOption(option: AttachmentOption): this;
+    addAttachmentOption(
+        keyOrOption: string | FuncAsInput<AttachmentOption> | AttachmentOption,
+        input: FuncAsInput<AttachmentOption> = option => option
+    ) {
+        this.handleCall(keyOrOption, input, AttachmentOption);
+        return this;
+    }
+
+    addBooleanOption(key: string, input?: FuncAsInput<BooleanOption>): this;
+    addBooleanOption(option: FuncAsInput<BooleanOption>): this;
+    addBooleanOption(option: BooleanOption): this;
+    addBooleanOption(
+        keyOrOption: string | FuncAsInput<BooleanOption> | BooleanOption,
+        input: FuncAsInput<BooleanOption> = option => option
+    ) {
+        this.handleCall(keyOrOption, input, BooleanOption);
+        return this;
+    }
+
+    addChannelOption(key: string, input?: FuncAsInput<ChannelOption>): this;
+    addChannelOption(option: FuncAsInput<ChannelOption>): this;
+    addChannelOption(option: ChannelOption): this;
+    addChannelOption(
+        keyOrOption: string | FuncAsInput<ChannelOption> | ChannelOption,
+        input: FuncAsInput<ChannelOption> = option => option
+    ) {
+        this.handleCall(keyOrOption, input, ChannelOption);
+        return this;
+    }
+
+    addIntegerOption(key: string, input?: FuncAsInput<IntegerOption>): this;
+    addIntegerOption(option: FuncAsInput<IntegerOption>): this;
+    addIntegerOption(option: IntegerOption): this;
+    addIntegerOption(
+        keyOrOption: string | FuncAsInput<IntegerOption> | IntegerOption,
+        input: FuncAsInput<IntegerOption> = option => option
+    ) {
+        this.handleCall(keyOrOption, input, IntegerOption);
+        return this;
+    }
+
+    addMentionableOption(key: string, input?: FuncAsInput<MentionableOption>): this;
+    addMentionableOption(option: FuncAsInput<MentionableOption>): this;
+    addMentionableOption(option: MentionableOption): this;
+    addMentionableOption(
+        keyOrInput: string | FuncAsInput<MentionableOption> | MentionableOption,
+        input: FuncAsInput<MentionableOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, MentionableOption);
+        return this;
+    }
+
+    addNumberOption(key: string, input?: FuncAsInput<NumberOption>): this;
+    addNumberOption(option: FuncAsInput<NumberOption>): this;
+    addNumberOption(option: NumberOption): this;
+    addNumberOption(
+        keyOrInput: string | FuncAsInput<NumberOption> | NumberOption,
+        input: FuncAsInput<NumberOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, NumberOption);
+        return this;
+    }
+
+    addRoleOption(key: string, input?: FuncAsInput<RoleOption>): this;
+    addRoleOption(option: FuncAsInput<RoleOption>): this;
+    addRoleOption(option: RoleOption): this;
+    addRoleOption(
+        keyOrInput: string | FuncAsInput<RoleOption> | RoleOption,
+        input: FuncAsInput<RoleOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, RoleOption);
+        return this;
+    }
+
+    addStringOption(key: string, input?: FuncAsInput<StringOption>): this;
+    addStringOption(option: FuncAsInput<StringOption>): this;
+    addStringOption(option: StringOption): this;
+    addStringOption(
+        keyOrInput: string | FuncAsInput<StringOption> | StringOption,
+        input: FuncAsInput<StringOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, StringOption);
+        return this;
+    }
+
+    addUserOption(key: string, input?: FuncAsInput<UserOption>): this;
+    addUserOption(option: FuncAsInput<UserOption>): this;
+    addUserOption(option: UserOption): this;
+    addUserOption(
+        keyOrInput: string | FuncAsInput<UserOption> | UserOption,
+        input: FuncAsInput<UserOption> = option => option
+    ) {
+        this.handleCall(keyOrInput, input, UserOption);
         return this;
     }
 

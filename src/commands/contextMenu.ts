@@ -1,8 +1,6 @@
 import { ContextMenuCommandBuilder as Builder, ContextMenuCommandType } from '@discordjs/builders';
-import { getDefaultString, joinKeys, getAllStrings } from 'index';
-import { BaseKeyMixin } from 'mixins/base';
-import { PermsV2Mixin, SharedOptionsMixin } from 'mixins/commands';
-import { NameMixin } from 'mixins/nameAndDescription';
+import { getAllStrings, getDefaultString, joinKeys } from 'index';
+import { BaseKeyMixin, PermsV2Mixin, NameMixin } from 'mixins';
 import { mix, settings } from 'ts-mixer';
 settings.initFunction = 'init';
 
@@ -10,7 +8,6 @@ export interface ContextMenuCommandBuilder extends PermsV2Mixin<Builder>, NameMi
 
 @mix(PermsV2Mixin, NameMixin, BaseKeyMixin)
 export class ContextMenuCommandBuilder {
-    // eslint-disable-next-line
     constructor(baseKey?: string) {
         this.builder = new Builder();
     }
