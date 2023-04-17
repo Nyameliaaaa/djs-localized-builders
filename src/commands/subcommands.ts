@@ -74,7 +74,7 @@ export class SlashCommandSubcommandGroupBuilder {
 
     hydrateSelf(baseKey: string) {
         if (this.baseKey) {
-            this.baseKey = joinKeys([baseKey, 'subcommands', this.baseKey]).slice(0);
+            this.baseKey = joinKeys([baseKey, 'groups', this.baseKey]).slice(0);
 
             this.setName(getDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
             this.setDescription(getDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
