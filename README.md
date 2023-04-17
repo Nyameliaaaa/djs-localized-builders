@@ -15,12 +15,15 @@ setConfig({
     },
     caseFormat: 'lowercase', // can be lowercase, uppercase or keep.
     seperatorChar: '.',
-    validators: proccess.ENV.NODE_ENV === 'production',
+    validators: process.ENV.NODE_ENV === 'development',
     langs: i18nLib.langs, // using discord lang codes is required.
     namespaces: {
         components: 'responses',
         commands: 'commands',
         embeds: 'responses'
+    },
+    onMissingKey: (lang, namespace, key) => {
+        logger.throw(lang, namespace, key);
     }
 });
 

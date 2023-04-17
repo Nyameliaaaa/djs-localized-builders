@@ -28,13 +28,16 @@ let config: ConfigType = {
 		},
 		caseFormat: 'lowercase',
 		seperatorChar: '_',
-		validators: proccess.ENV.NODE_ENV === 'production',
+		validators: process.ENV.NODE_ENV === 'development',
         langs: client.i18n.langs , // use discord i18n codes
 		namespaces: {
 			components: 'components',
 			commands: 'commands',
 			embeds: 'responses'
-		}
+		},
+        onMisingKey: (lang, namespace, key) => {
+            logger.error(lang, namespace, key); // default function throws.
+        }
 	});
  * ```
  * @param newConfig The new config to use.
