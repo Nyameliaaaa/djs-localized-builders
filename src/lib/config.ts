@@ -12,7 +12,7 @@ let config: ConfigType = {
         commands: 'commands',
         embeds: 'embeds'
     },
-    onMissingKey(lang, namespace, key) {
+    onMissingKey: (lang, namespace, key) => {
         throw new TypeError(`Key "${key}" was not found in the ${namespace} of ${lang}`, {
             cause: { lang, namespace, key }
         });
