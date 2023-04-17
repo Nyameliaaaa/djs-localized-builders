@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { NumberOption, setConfig } from 'index';
+import { SlashCommandNumberOptionBuilder, setConfig } from 'index';
 import { getAllStrings, getDefaultString, joinKeys } from 'lib/helpers';
 import { BaseKeyMixin, PermsV2Mixin, SharedOptionsMixin } from 'mixins';
 import { mix, settings } from 'ts-mixer';
@@ -66,6 +66,8 @@ const funny = new Funny('funny')
     .setDMPermission(false)
     .addNumberOption('first', option => option.setAutocomplete(true))
     .addNumberOption(option => option.setName('cock').setDescription('how very'))
-    .addNumberOption(new NumberOption('third').addChoices([{ key: 'cock', value: 2 }]).addChoices(3));
+    .addNumberOption(
+        new SlashCommandNumberOptionBuilder('third').addChoices([{ key: 'cock', value: 2 }]).addChoices(3)
+    );
 
 console.log(funny.toJSON());

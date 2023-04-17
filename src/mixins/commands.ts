@@ -15,15 +15,15 @@ import {
 import { getAllStrings, getDefaultString, joinKeys } from 'lib';
 import { AutocompletableMixin, BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, OptionMixin } from 'mixins';
 import {
-    IntegerOption,
-    MentionableOption,
-    NumberOption,
-    RoleOption,
-    StringOption,
-    UserOption,
-    AttachmentOption,
-    BooleanOption,
-    ChannelOption
+    SlashCommandIntegerOptionBuilder,
+    SlashCommandMentionableOptionBuilder,
+    SlashCommandNumberOptionBuilder,
+    SlashCommandRoleOptionBuilder,
+    SlashCommandStringOptionBuilder,
+    SlashCommandUserOptionBuilder,
+    SlashCommandAttachmentOptionBuilder,
+    SlashCommandBooleanOptionBuilder,
+    SlashCommandChannelOptionBuilder
 } from 'options';
 import { hasMixin, mix } from 'ts-mixer';
 import { FuncAsInput, OptionResolvable } from 'types';
@@ -149,102 +149,102 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addAttachmentOption(key: string, input?: FuncAsInput<AttachmentOption>): this;
-    addAttachmentOption(option: FuncAsInput<AttachmentOption>): this;
-    addAttachmentOption(option: AttachmentOption): this;
+    addAttachmentOption(key: string, input?: FuncAsInput<SlashCommandAttachmentOptionBuilder>): this;
+    addAttachmentOption(option: FuncAsInput<SlashCommandAttachmentOptionBuilder>): this;
+    addAttachmentOption(option: SlashCommandAttachmentOptionBuilder): this;
     addAttachmentOption(
-        keyOrOption: string | FuncAsInput<AttachmentOption> | AttachmentOption,
-        input: FuncAsInput<AttachmentOption> = option => option
+        keyOrOption: string | FuncAsInput<SlashCommandAttachmentOptionBuilder> | SlashCommandAttachmentOptionBuilder,
+        input: FuncAsInput<SlashCommandAttachmentOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrOption, input, AttachmentOption);
+        this.handleCall(keyOrOption, input, SlashCommandAttachmentOptionBuilder);
         return this;
     }
 
-    addBooleanOption(key: string, input?: FuncAsInput<BooleanOption>): this;
-    addBooleanOption(option: FuncAsInput<BooleanOption>): this;
-    addBooleanOption(option: BooleanOption): this;
+    addBooleanOption(key: string, input?: FuncAsInput<SlashCommandBooleanOptionBuilder>): this;
+    addBooleanOption(option: FuncAsInput<SlashCommandBooleanOptionBuilder>): this;
+    addBooleanOption(option: SlashCommandBooleanOptionBuilder): this;
     addBooleanOption(
-        keyOrOption: string | FuncAsInput<BooleanOption> | BooleanOption,
-        input: FuncAsInput<BooleanOption> = option => option
+        keyOrOption: string | FuncAsInput<SlashCommandBooleanOptionBuilder> | SlashCommandBooleanOptionBuilder,
+        input: FuncAsInput<SlashCommandBooleanOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrOption, input, BooleanOption);
+        this.handleCall(keyOrOption, input, SlashCommandBooleanOptionBuilder);
         return this;
     }
 
-    addChannelOption(key: string, input?: FuncAsInput<ChannelOption>): this;
-    addChannelOption(option: FuncAsInput<ChannelOption>): this;
-    addChannelOption(option: ChannelOption): this;
+    addChannelOption(key: string, input?: FuncAsInput<SlashCommandChannelOptionBuilder>): this;
+    addChannelOption(option: FuncAsInput<SlashCommandChannelOptionBuilder>): this;
+    addChannelOption(option: SlashCommandChannelOptionBuilder): this;
     addChannelOption(
-        keyOrOption: string | FuncAsInput<ChannelOption> | ChannelOption,
-        input: FuncAsInput<ChannelOption> = option => option
+        keyOrOption: string | FuncAsInput<SlashCommandChannelOptionBuilder> | SlashCommandChannelOptionBuilder,
+        input: FuncAsInput<SlashCommandChannelOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrOption, input, ChannelOption);
+        this.handleCall(keyOrOption, input, SlashCommandChannelOptionBuilder);
         return this;
     }
 
-    addIntegerOption(key: string, input?: FuncAsInput<IntegerOption>): this;
-    addIntegerOption(option: FuncAsInput<IntegerOption>): this;
-    addIntegerOption(option: IntegerOption): this;
+    addIntegerOption(key: string, input?: FuncAsInput<SlashCommandIntegerOptionBuilder>): this;
+    addIntegerOption(option: FuncAsInput<SlashCommandIntegerOptionBuilder>): this;
+    addIntegerOption(option: SlashCommandIntegerOptionBuilder): this;
     addIntegerOption(
-        keyOrOption: string | FuncAsInput<IntegerOption> | IntegerOption,
-        input: FuncAsInput<IntegerOption> = option => option
+        keyOrOption: string | FuncAsInput<SlashCommandIntegerOptionBuilder> | SlashCommandIntegerOptionBuilder,
+        input: FuncAsInput<SlashCommandIntegerOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrOption, input, IntegerOption);
+        this.handleCall(keyOrOption, input, SlashCommandIntegerOptionBuilder);
         return this;
     }
 
-    addMentionableOption(key: string, input?: FuncAsInput<MentionableOption>): this;
-    addMentionableOption(option: FuncAsInput<MentionableOption>): this;
-    addMentionableOption(option: MentionableOption): this;
+    addMentionableOption(key: string, input?: FuncAsInput<SlashCommandMentionableOptionBuilder>): this;
+    addMentionableOption(option: FuncAsInput<SlashCommandMentionableOptionBuilder>): this;
+    addMentionableOption(option: SlashCommandMentionableOptionBuilder): this;
     addMentionableOption(
-        keyOrInput: string | FuncAsInput<MentionableOption> | MentionableOption,
-        input: FuncAsInput<MentionableOption> = option => option
+        keyOrInput: string | FuncAsInput<SlashCommandMentionableOptionBuilder> | SlashCommandMentionableOptionBuilder,
+        input: FuncAsInput<SlashCommandMentionableOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrInput, input, MentionableOption);
+        this.handleCall(keyOrInput, input, SlashCommandMentionableOptionBuilder);
         return this;
     }
 
-    addNumberOption(key: string, input?: FuncAsInput<NumberOption>): this;
-    addNumberOption(option: FuncAsInput<NumberOption>): this;
-    addNumberOption(option: NumberOption): this;
+    addNumberOption(key: string, input?: FuncAsInput<SlashCommandNumberOptionBuilder>): this;
+    addNumberOption(option: FuncAsInput<SlashCommandNumberOptionBuilder>): this;
+    addNumberOption(option: SlashCommandNumberOptionBuilder): this;
     addNumberOption(
-        keyOrInput: string | FuncAsInput<NumberOption> | NumberOption,
-        input: FuncAsInput<NumberOption> = option => option
+        keyOrInput: string | FuncAsInput<SlashCommandNumberOptionBuilder> | SlashCommandNumberOptionBuilder,
+        input: FuncAsInput<SlashCommandNumberOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrInput, input, NumberOption);
+        this.handleCall(keyOrInput, input, SlashCommandNumberOptionBuilder);
         return this;
     }
 
-    addRoleOption(key: string, input?: FuncAsInput<RoleOption>): this;
-    addRoleOption(option: FuncAsInput<RoleOption>): this;
-    addRoleOption(option: RoleOption): this;
+    addRoleOption(key: string, input?: FuncAsInput<SlashCommandRoleOptionBuilder>): this;
+    addRoleOption(option: FuncAsInput<SlashCommandRoleOptionBuilder>): this;
+    addRoleOption(option: SlashCommandRoleOptionBuilder): this;
     addRoleOption(
-        keyOrInput: string | FuncAsInput<RoleOption> | RoleOption,
-        input: FuncAsInput<RoleOption> = option => option
+        keyOrInput: string | FuncAsInput<SlashCommandRoleOptionBuilder> | SlashCommandRoleOptionBuilder,
+        input: FuncAsInput<SlashCommandRoleOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrInput, input, RoleOption);
+        this.handleCall(keyOrInput, input, SlashCommandRoleOptionBuilder);
         return this;
     }
 
-    addStringOption(key: string, input?: FuncAsInput<StringOption>): this;
-    addStringOption(option: FuncAsInput<StringOption>): this;
-    addStringOption(option: StringOption): this;
+    addStringOption(key: string, input?: FuncAsInput<SlashCommandStringOptionBuilder>): this;
+    addStringOption(option: FuncAsInput<SlashCommandStringOptionBuilder>): this;
+    addStringOption(option: SlashCommandStringOptionBuilder): this;
     addStringOption(
-        keyOrInput: string | FuncAsInput<StringOption> | StringOption,
-        input: FuncAsInput<StringOption> = option => option
+        keyOrInput: string | FuncAsInput<SlashCommandStringOptionBuilder> | SlashCommandStringOptionBuilder,
+        input: FuncAsInput<SlashCommandStringOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrInput, input, StringOption);
+        this.handleCall(keyOrInput, input, SlashCommandStringOptionBuilder);
         return this;
     }
 
-    addUserOption(key: string, input?: FuncAsInput<UserOption>): this;
-    addUserOption(option: FuncAsInput<UserOption>): this;
-    addUserOption(option: UserOption): this;
+    addUserOption(key: string, input?: FuncAsInput<SlashCommandUserOptionBuilder>): this;
+    addUserOption(option: FuncAsInput<SlashCommandUserOptionBuilder>): this;
+    addUserOption(option: SlashCommandUserOptionBuilder): this;
     addUserOption(
-        keyOrInput: string | FuncAsInput<UserOption> | UserOption,
-        input: FuncAsInput<UserOption> = option => option
+        keyOrInput: string | FuncAsInput<SlashCommandUserOptionBuilder> | SlashCommandUserOptionBuilder,
+        input: FuncAsInput<SlashCommandUserOptionBuilder> = option => option
     ) {
-        this.handleCall(keyOrInput, input, UserOption);
+        this.handleCall(keyOrInput, input, SlashCommandUserOptionBuilder);
         return this;
     }
 

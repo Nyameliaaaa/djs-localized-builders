@@ -10,25 +10,25 @@ import { BaseKeyMixin } from 'mixins/base';
 import { OptionMixin } from 'mixins/options';
 import { mix } from 'ts-mixer';
 
-export interface AttachmentOption extends OptionMixin<SlashCommandAttachmentOption>, BaseKeyMixin {}
+export interface SlashCommandAttachmentOptionBuilder extends OptionMixin<SlashCommandAttachmentOption>, BaseKeyMixin {}
 @mix(OptionMixin, BaseKeyMixin)
-export class AttachmentOption {
+export class SlashCommandAttachmentOptionBuilder {
     constructor(baseKey?: string) {
         this.builder = new SlashCommandAttachmentOption();
     }
 }
 
-export interface BooleanOption extends OptionMixin<SlashCommandBooleanOption>, BaseKeyMixin {}
+export interface SlashCommandBooleanOptionBuilder extends OptionMixin<SlashCommandBooleanOption>, BaseKeyMixin {}
 @mix(OptionMixin, BaseKeyMixin)
-export class BooleanOption {
+export class SlashCommandBooleanOptionBuilder {
     constructor(baseKey?: string) {
         this.builder = new SlashCommandBooleanOption();
     }
 }
 
-export interface ChannelOption extends OptionMixin<SlashCommandChannelOption>, BaseKeyMixin {}
+export interface SlashCommandChannelOptionBuilder extends OptionMixin<SlashCommandChannelOption>, BaseKeyMixin {}
 @mix(OptionMixin, BaseKeyMixin)
-export class ChannelOption {
+export class SlashCommandChannelOptionBuilder {
     constructor(baseKey?: string) {
         this.builder = new SlashCommandChannelOption();
     }
