@@ -11,6 +11,7 @@ import {
     LocaleFooterWithoutKey,
     localeAuthorWithKey,
     localeAuthorWithoutKey,
+    localeFieldOptions,
     localeFooterWithKey
 } from 'types';
 
@@ -30,50 +31,55 @@ export class EmbedBuilder {
 
     protected mapField(field: LocaleFieldOptions) {
         const returnField: APIEmbedField = { inline: field.inline, name: '', value: '' };
+        const { data, problems } = localeFieldOptions(field);
 
-        if ((field.name ?? field.value) && this.baseKey) {
+        if (problems) {
+            throw new TypeError('Invalid embed field.', { cause: problems });
+        }
+
+        if ((data.name ?? data.value) && this.baseKey) {
             throw new TypeError('Cannot have a full-key value or name along with a dynamic/base key.');
         }
 
         // if we have a raw field name or value key
-        if ((field.name ?? field.value) && !this.baseKey) {
-            if (field.name) {
-                returnField.name = getString(field.name, this.locale, 'embeds', field.nameArgs);
+        if ((data.name ?? data.value) && !this.baseKey) {
+            if (data.name) {
+                returnField.name = getString(data.name, this.locale, 'embeds', data.nameArgs);
             }
 
-            if (field.value) {
-                returnField.value = getString(field.value, this.locale, 'embeds', field.valueArgs);
+            if (data.value) {
+                returnField.value = getString(data.value, this.locale, 'embeds', data.valueArgs);
             }
         }
 
         // if we have a basekey
-        if (this.baseKey && field.key) {
-            if (!field.rawName) {
+        if (this.baseKey && data.key) {
+            if (!data.rawName) {
                 returnField.name = getString(
-                    joinKeys([this.baseKey, 'fields', field.key, 'name']),
+                    joinKeys([this.baseKey, 'fields', data.key, 'name']),
                     this.locale,
                     'embeds',
-                    field.nameArgs
+                    data.nameArgs
                 );
             }
 
-            if (!field.rawValue) {
+            if (!data.rawValue) {
                 returnField.value = getString(
-                    joinKeys([this.baseKey, 'fields', field.key, 'value']),
+                    joinKeys([this.baseKey, 'fields', data.key, 'value']),
                     this.locale,
                     'embeds',
-                    field.valueArgs
+                    data.valueArgs
                 );
             }
         }
 
         // if its raw
-        if (field.rawName) {
-            returnField.name = field.rawName;
+        if (data.rawName) {
+            returnField.name = data.rawName;
         }
 
-        if (field.rawValue) {
-            returnField.value = field.rawValue;
+        if (data.rawValue) {
+            returnField.value = data.rawValue;
         }
 
         return returnField;

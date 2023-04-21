@@ -20,20 +20,16 @@ const stringRecord = type([
     }
 ]);
 
-export interface LocaleFieldOptions {
-    key?: string;
-
-    name?: string;
-    nameArgs?: Record<string, unknown>;
-
-    value?: string;
-    valueArgs?: Record<string, unknown>;
-
-    rawName?: string;
-    rawValue?: string;
-
-    inline?: boolean;
-}
+export const localeFieldOptions = type({
+    'key?': 'string',
+    'name?': 'string',
+    'rawName?': 'string',
+    'nameArgs?': stringRecord,
+    'value?': 'string',
+    'rawValue?': 'string',
+    'valueArgs?': stringRecord,
+    'inline?': 'boolean'
+});
 
 export const localeAuthorWithKey = type({
     'nameArgs?': stringRecord,
@@ -61,6 +57,7 @@ export const localeFooterWithoutKey = type({
     'iconURL?': 'string'
 });
 
+export type LocaleFieldOptions = typeof localeFieldOptions.infer;
 export type LocaleAuthorWithoutKey = typeof localeAuthorWithoutKey.infer;
 export type LocaleAuthorWithKey = typeof localeAuthorWithKey.infer;
 export type LocaleFooterWithoutKey = typeof localeFooterWithoutKey.infer;
