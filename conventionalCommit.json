@@ -39,6 +39,10 @@
     },
     "scopes": {
         "config": {},
-        "types": {}
+        "types": {},
+        "embed": {},
+        "commands": {},
+        "options": {},
+        "components": {}
     }
 }
