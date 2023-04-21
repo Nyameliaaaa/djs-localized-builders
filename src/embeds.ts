@@ -194,26 +194,26 @@ export class EmbedBuilder {
         return this;
     }
 
-    // setTitle(title: string, args?: Record<string, any>): this;
-    // setTitle(args: Record<string, any>): this;
-    // setTitle(): this;
-    // setTitle(titleOrArgs?: string | Record<string, any>, args: Record<string, any> = {}) {
-    //     let title = '';
-    //     if (this.baseKey && typeof titleOrArgs === 'object') {
-    //         title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
-    //     }
+    setTitle(title: string, args?: Record<string, any>): this;
+    setTitle(args: Record<string, any>): this;
+    setTitle(): this;
+    setTitle(titleOrArgs?: string | Record<string, any>, args: Record<string, any> = {}) {
+        let title = '';
+        if (this.baseKey && typeof titleOrArgs === 'object') {
+            title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
+        }
 
-    //     if (this.baseKey && !titleOrArgs) {
-    //         title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds');
-    //     }
+        if (this.baseKey && !titleOrArgs) {
+            title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds');
+        }
 
-    //     if (typeof titleOrArgs === 'string') {
-    //         title = getString(titleOrArgs, this.locale, 'embeds', args);
-    //     }
+        if (typeof titleOrArgs === 'string') {
+            title = getString(titleOrArgs, this.locale, 'embeds', args);
+        }
 
-    //     this.builder.setTitle(title);
-    //     return this;
-    // }
+        this.builder.setTitle(title);
+        return this;
+    }
 
     setURL(url: string) {
         this.builder.setURL(url);
