@@ -20,6 +20,7 @@ export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin 
 @mix(LocaleBaseKeyMixin, BuilderMixin)
 export class EmbedBuilder {
     constructor(locale: string, baseKey?: string) {
+        this.builder = new Builder();
         this.locale = locale;
         this.baseKey = baseKey;
     }
