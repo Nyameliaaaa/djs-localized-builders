@@ -1,3 +1,5 @@
+import { EmbedBuilder } from 'embeds';
+
 /**
  * The names to use for the different namespaces from where strings are fetched.
  * @category Config
@@ -60,6 +62,21 @@ export interface ConfigType {
     getLocalizedString: (options: GetLocalizedStringOptions) => string;
 
     /**
+     * Called when an attempted key call is not found.
+     * @param lang The langauge in which the key is missing.
+     * @param namespace The namespace in which this key does not exist.
+     * @param key The key which is missing.
+     */
+    onMissingKey: (lang: string, namespace: string, key: string) => any;
+
+    /**
+     * Called when an instance of {@see EmbedBuilder} is created.
+     * @param embed The embed instance.
+     * @param locale The locale of the instance.
+     */
+    onCreateEmbed: (embed: EmbedBuilder, locale: string) => Promise<void> | void;
+
+    /**
      * The case your strings are coded in.
      * If you are using camelCase key names, you must use 'keep'
      * @defaultValue `false`
@@ -88,13 +105,4 @@ export interface ConfigType {
      * @defaultValue `true`
      */
     validators?: boolean;
-
-    /**
-     * Called when an attempted key call is not found.
-     * @param lang The langauge in which the key is missing.
-     * @param namespace The namespace in which this key does not exist.
-     * @param key The key which is missing.
-     * @returns
-     */
-    onMissingKey: (lang: string, namespace: string, key: string) => any;
 }

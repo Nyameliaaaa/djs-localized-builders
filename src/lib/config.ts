@@ -3,6 +3,13 @@ import { ConfigType } from 'types';
 
 let config: ConfigType = {
     getLocalizedString: ({ string }) => `function_not_implemented_${string.toLocaleLowerCase()}`,
+    onMissingKey: (lang, namespace, key) => {
+        throw new TypeError(`Key "${key}" was not found in the ${namespace} of ${lang}`, {
+            cause: { lang, namespace, key }
+        });
+    },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onCreateEmbed: (embed, locale) => {},
     caseFormat: 'lowercase',
     seperatorChar: '.',
     validators: true,
@@ -11,11 +18,6 @@ let config: ConfigType = {
         components: 'components',
         commands: 'commands',
         embeds: 'embeds'
-    },
-    onMissingKey: (lang, namespace, key) => {
-        throw new TypeError(`Key "${key}" was not found in the ${namespace} of ${lang}`, {
-            cause: { lang, namespace, key }
-        });
     }
 };
 
