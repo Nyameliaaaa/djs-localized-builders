@@ -1,4 +1,4 @@
-import { EmbedBuilder as Builder, RGBTuple } from '@discordjs/builders';
+import { EmbedBuilder as Builder, RGBTuple, RestOrArray, normalizeArray } from '@discordjs/builders';
 import { APIEmbedField } from 'discord-api-types/v10';
 import { getConfig, getString, joinKeys } from 'lib';
 import { BuilderMixin, LocaleBaseKeyMixin } from 'mixins';
@@ -79,8 +79,8 @@ export class EmbedBuilder {
         return returnField;
     }
 
-    addFields(fields: LocaleFieldOptions[]) {
-        this.builder.addFields(fields.map(field => this.mapField(field)));
+    addFields(fields: RestOrArray<LocaleFieldOptions>) {
+        this.builder.addFields(normalizeArray(fields).map(field => this.mapField(field)));
         return this;
     }
 
@@ -225,8 +225,8 @@ export class EmbedBuilder {
         return this;
     }
 
-    setFields(fields: LocaleFieldOptions[]) {
-        this.builder.setFields(fields.map(field => this.mapField(field)));
+    setFields(fields: RestOrArray<LocaleFieldOptions>) {
+        this.builder.setFields(normalizeArray(fields).map(field => this.mapField(field)));
         return this;
     }
 
