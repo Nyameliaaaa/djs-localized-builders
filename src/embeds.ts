@@ -3,7 +3,16 @@ import { APIEmbedField } from 'discord-api-types/v10';
 import { getConfig, getString, joinKeys } from 'lib';
 import { BuilderMixin, LocaleBaseKeyMixin } from 'mixins';
 import { mix } from 'ts-mixer';
-import { KeyLocaleAuthor, KeyLocaleFooter, LocaleFieldOptions, NonKeyLocaleAuthor, NonKeyLocaleFooter } from 'types';
+import {
+    LocaleAuthorWithKey,
+    LocaleAuthorWithoutKey,
+    LocaleFieldOptions,
+    LocaleFooterWithKey,
+    LocaleFooterWithoutKey,
+    localeAuthorWithKey,
+    localeAuthorWithoutKey,
+    localeFooterWithKey
+} from 'types';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin {}
 
@@ -17,19 +26,6 @@ export class EmbedBuilder {
     protected init(locale: string, baseKey?: string) {
         const config = getConfig();
         config.onCreateEmbed(this, locale);
-    }
-
-    protected isKeyAuthor(thing: any): thing is KeyLocaleAuthor {
-        return (
-            ('nameArgs' in thing || 'url' in thing || 'iconURL' in thing) && !('name' in thing) && !('rawName' in thing)
-        );
-    }
-
-    protected isNonKeyAuthor(thing: any): thing is NonKeyLocaleAuthor {
-        return (
-            ('nameArgs' in thing || 'url' in thing || 'iconURL' in thing || 'name' in thing || 'rawName' in thing) &&
-            !this.isKeyAuthor(thing)
-        );
     }
 
     protected mapField(field: LocaleFieldOptions) {
@@ -88,17 +84,37 @@ export class EmbedBuilder {
         return this;
     }
 
-    setAuthor({ iconURL, url, ...author }: KeyLocaleAuthor | NonKeyLocaleAuthor) {
-        if (this.isKeyAuthor(author) && !this.baseKey) {
-            throw new TypeError('Cannot have an implicit author field without an embed base key.');
-        }
-
+    setAuthor({ iconURL, url, nameArgs, ...author }: LocaleAuthorWithKey | LocaleAuthorWithoutKey) {
+        const forCheck = { ...author, url, iconURL, nameArgs };
+        const withKey = localeAuthorWithKey(forCheck);
+        const withoutKey = localeAuthorWithoutKey(forCheck);
         let name = '';
 
-        if (this.isKeyAuthor(author) && this.baseKey) {
-            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
-        } else if (this.isNonKeyAuthor(author)) {
-            name = author.rawName ?? getString(author.name ?? '', this.locale, 'embeds', author.nameArgs);
+        if (withoutKey.problems && withKey.problems) {
+            throw new TypeError('Provided author is not a valid author object.', {
+                cause: {
+                    validationsForKeyBased: withKey.problems,
+                    validationsForKeyless: withoutKey.problems
+                }
+            });
+        }
+
+        if (this.baseKey && withKey.data && withoutKey.problems) {
+            throw new TypeError('Cannot have a key-based author object without an initalized embed key.');
+        }
+
+        if (withKey.problems && withoutKey.data) {
+            if (withoutKey.data.rawName && withoutKey.data.name) {
+                throw new TypeError('Cannot have both a raw name and a key name in an author.');
+            } else if (withoutKey.data.rawName && withoutKey.data.nameArgs) {
+                throw new TypeError('Cannot have name arguments on a raw name.');
+            }
+
+            name = withoutKey.data.rawName ?? getString(withoutKey.data.name ?? '', this.locale, 'embeds', nameArgs);
+        }
+
+        if (this.baseKey && withoutKey.data && withKey.data) {
+            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', nameArgs);
         }
 
         this.builder.setAuthor({ name, url, iconURL });
@@ -131,10 +147,42 @@ export class EmbedBuilder {
         return this;
     }
 
-    // setFooter({ text, textArgs, rawText, iconURL }: LocaleFooter) {
-    //     this.builder.setFooter({ text: rawText ?? this.getOne(text, this.locale, textArgs), iconURL });
-    //     return this;
-    // }
+    setFooter({ textArgs, iconURL, ...footer }: LocaleFooterWithoutKey | LocaleFooterWithKey) {
+        const forCheck = { ...footer, iconURL, textArgs };
+        const withKey = localeFooterWithKey(forCheck);
+        const withoutKey = localeAuthorWithoutKey(forCheck);
+        let text = '';
+
+        if (withoutKey.problems && withKey.problems) {
+            throw new TypeError('Provided footer is not a valid footer object.', {
+                cause: {
+                    validationsForKeyBased: withKey.problems,
+                    validationsForKeyless: withoutKey.problems
+                }
+            });
+        }
+
+        if (this.baseKey && withKey.data && withoutKey.problems) {
+            throw new TypeError('Cannot have a key-based footer object without an initalized embed key.');
+        }
+
+        if (withKey.problems && withoutKey.data) {
+            if (withoutKey.data.rawName && withoutKey.data.name) {
+                throw new TypeError('Cannot have both a raw text and a key text in a footer.');
+            } else if (withoutKey.data.rawName && withoutKey.data.nameArgs) {
+                throw new TypeError('Cannot have text arguments on a raw text in a footer.');
+            }
+
+            text = withoutKey.data.rawName ?? getString(withoutKey.data.name ?? '', this.locale, 'embeds', textArgs);
+        }
+
+        if (this.baseKey && withoutKey.data && withKey.data) {
+            text = getString(joinKeys([this.baseKey, 'footer', 'text']), this.locale, 'embeds', textArgs);
+        }
+
+        this.builder.setFooter({ text, iconURL });
+        return this;
+    }
 
     setImage(url: string) {
         this.builder.setImage(url);
@@ -146,8 +194,24 @@ export class EmbedBuilder {
         return this;
     }
 
-    // setTitle(title: string, args: Record<string, any> = {}): this {
-    //     this.builder.setTitle(args.raw ? title : this.getOne(title, this.locale, args));
+    // setTitle(title: string, args?: Record<string, any>): this;
+    // setTitle(args: Record<string, any>): this;
+    // setTitle(): this;
+    // setTitle(titleOrArgs?: string | Record<string, any>, args: Record<string, any> = {}) {
+    //     let title = '';
+    //     if (this.baseKey && typeof titleOrArgs === 'object') {
+    //         title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
+    //     }
+
+    //     if (this.baseKey && !titleOrArgs) {
+    //         title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds');
+    //     }
+
+    //     if (typeof titleOrArgs === 'string') {
+    //         title = getString(titleOrArgs, this.locale, 'embeds', args);
+    //     }
+
+    //     this.builder.setTitle(title);
     //     return this;
     // }
 

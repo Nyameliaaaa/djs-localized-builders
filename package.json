@@ -59,6 +59,7 @@
         "@discordjs/builders": "^1.5.0"
     },
     "dependencies": {
+        "arktype": "^1.0.14-alpha",
         "ts-mixer": "^6.0.3"
     }
 }
