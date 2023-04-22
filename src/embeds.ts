@@ -204,8 +204,9 @@ export class EmbedBuilder {
         if (typeof titleOrArgs === 'string') {
             if (args.raw) {
                 title = titleOrArgs;
+            } else {
+                title = getString(titleOrArgs, this.locale, 'embeds', args);
             }
-            title = getString(titleOrArgs, this.locale, 'embeds', args);
         }
 
         this.builder.setTitle(title);
