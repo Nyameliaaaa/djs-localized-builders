@@ -57,6 +57,7 @@ export const localeFooterWithoutKey = type({
     'iconURL?': 'string'
 });
 
+export type ArgsWithRawParam = { raw?: boolean; [key: string]: any };
 export type LocaleFieldOptions = typeof localeFieldOptions.infer;
 export type LocaleAuthorWithoutKey = typeof localeAuthorWithoutKey.infer;
 export type LocaleAuthorWithKey = typeof localeAuthorWithKey.infer;

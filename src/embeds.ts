@@ -4,6 +4,7 @@ import { getConfig, getString, joinKeys } from 'lib';
 import { BuilderMixin, LocaleBaseKeyMixin } from 'mixins';
 import { mix } from 'ts-mixer';
 import {
+    ArgsWithRawParam,
     LocaleAuthorWithKey,
     LocaleAuthorWithoutKey,
     LocaleFieldOptions,
@@ -95,35 +96,31 @@ export class EmbedBuilder {
     setAuthor({ iconURL, url, nameArgs, ...author }: LocaleAuthorWithKey | LocaleAuthorWithoutKey) {
         let name = '';
         const forCheck = { ...author, url: url ?? '', iconURL: iconURL ?? '', nameArgs: nameArgs ?? {} };
+        const { data: withKeyData, problems: withKeyProblems } = localeAuthorWithKey(forCheck);
+        const { data: withoutKeyData, problems: withoutKeyProblems } = localeAuthorWithoutKey(forCheck);
 
-        if (this.baseKey) {
-            const { data, problems } = localeAuthorWithKey(forCheck);
-
-            if (problems) {
-                throw new TypeError('Provided author is not a valid author object.', {
-                    cause: problems.summary
-                });
-            }
-
-            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', data.nameArgs);
+        if (withKeyProblems && withoutKeyProblems) {
+            throw new TypeError('Provided author is not a valid author object.', {
+                cause: [withKeyProblems.summary, withoutKeyProblems.summary]
+            });
         }
 
-        if (!this.baseKey) {
-            const { data, problems } = localeAuthorWithoutKey(forCheck);
+        if (this.baseKey && withKeyData && withoutKeyProblems) {
+            console.log('hello');
+            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', withKeyData.nameArgs);
+        }
 
-            if (problems) {
-                throw new TypeError('Provided author is not a valid author object.', {
-                    cause: problems.summary
-                });
-            }
-
-            if (data.rawName && data.name) {
+        if (withoutKeyData && withKeyProblems) {
+            console.log('hi');
+            if (withoutKeyData.rawName && withoutKeyData.name) {
                 throw new TypeError('Cannot have both a raw name and a key name in an author.');
-            } else if (data.rawName && data.nameArgs) {
+            } else if (withoutKeyData.rawName && withoutKeyData.nameArgs) {
                 throw new TypeError('Cannot have name arguments on a raw name.');
             }
 
-            name = data.rawName ?? getString(data.name ?? '', this.locale, 'embeds', data.nameArgs);
+            name =
+                withoutKeyData.rawName ??
+                getString(withoutKeyData.name ?? '', this.locale, 'embeds', withoutKeyData.nameArgs);
         }
 
         this.builder.setAuthor({ name, url, iconURL });
@@ -135,11 +132,12 @@ export class EmbedBuilder {
         return this;
     }
 
-    setDescription(description: string, args?: Record<string, any>): this;
+    setDescription(description: string, args?: ArgsWithRawParam): this;
     setDescription(args: Record<string, any>): this;
     setDescription(): this;
-    setDescription(descriptionOrArgs?: string | Record<string, any>, args: Record<string, any> = {}) {
+    setDescription(descriptionOrArgs?: string | Record<string, any>, args: ArgsWithRawParam = {}) {
         let desc = '';
+
         if (this.baseKey && typeof descriptionOrArgs === 'object') {
             desc = getString(joinKeys([this.baseKey, 'description']), this.locale, 'embeds', descriptionOrArgs);
         }
@@ -149,7 +147,11 @@ export class EmbedBuilder {
         }
 
         if (typeof descriptionOrArgs === 'string') {
-            desc = getString(descriptionOrArgs, this.locale, 'embeds', args);
+            if (args.raw) {
+                desc = descriptionOrArgs;
+            } else {
+                desc = getString(descriptionOrArgs, this.locale, 'embeds', args);
+            }
         }
 
         this.builder.setDescription(desc);
@@ -204,10 +206,10 @@ export class EmbedBuilder {
         return this;
     }
 
-    setTitle(title: string, args?: Record<string, any>): this;
+    setTitle(title: string, args?: ArgsWithRawParam): this;
     setTitle(args: Record<string, any>): this;
     setTitle(): this;
-    setTitle(titleOrArgs?: string | Record<string, any>, args: Record<string, any> = {}) {
+    setTitle(titleOrArgs?: string | Record<string, any>, args: ArgsWithRawParam = {}) {
         let title = '';
         if (this.baseKey && typeof titleOrArgs === 'object') {
             title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
@@ -218,6 +220,9 @@ export class EmbedBuilder {
         }
 
         if (typeof titleOrArgs === 'string') {
+            if (args.raw) {
+                title = titleOrArgs;
+            }
             title = getString(titleOrArgs, this.locale, 'embeds', args);
         }
 
