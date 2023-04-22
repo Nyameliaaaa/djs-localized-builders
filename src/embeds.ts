@@ -5,13 +5,10 @@ import { BuilderMixin, LocaleBaseKeyMixin } from 'mixins';
 import { mix } from 'ts-mixer';
 import {
     ArgsWithRawParam,
-    LocaleAuthorWithKey,
-    LocaleAuthorWithoutKey,
+    LocaleAuthor,
     LocaleFieldOptions,
     LocaleFooterWithKey,
     LocaleFooterWithoutKey,
-    localeAuthorWithKey,
-    localeAuthorWithoutKey,
     localeFieldOptions,
     localeFooterWithKey,
     localeFooterWithoutKey
@@ -36,16 +33,31 @@ export class EmbedBuilder {
         const returnField: APIEmbedField = { inline: field.inline, name: '', value: '' };
         const { data, problems } = localeFieldOptions(field);
 
+        if (Object.keys(field).length === 0) {
+            throw new TypeError('Embed field cannot be empty');
+        }
+
         if (problems) {
-            throw new TypeError('Invalid embed field.', { cause: problems });
+            throw new TypeError('Invalid embed field.', { cause: problems.summary });
         }
 
-        if ((data.name ?? data.value) && this.baseKey) {
-            throw new TypeError('Cannot have a full-key value or name along with a dynamic/base key.');
+        // we cannot have both a key ref and a raw value, as that would cause an override
+        if ((data.name && data.rawName) ?? (data.value && data.rawName)) {
+            throw new TypeError('Cannot have a key reference name/value and a raw name/value', { cause: field });
         }
 
-        // if we have a raw field name or value key
-        if ((data.name ?? data.value) && !this.baseKey) {
+        // we cannot have both a field basekey and an opt key ref
+        if (data.key && (data.name ?? data.value)) {
+            throw new TypeError('Cannot have a field base key and a key reference name/value.', { cause: field });
+        }
+
+        // we cannot have both a raw opt and opt args
+        if ((data.rawName && data.nameArgs) ?? (data.rawValue && data.valueArgs)) {
+            throw new TypeError('Cannot have a field raw name/value and name/value string arguments', { cause: field });
+        }
+
+        // if we have a name or value ref key
+        if (data.name ?? data.value) {
             if (data.name) {
                 returnField.name = getString(data.name, this.locale, 'embeds', data.nameArgs);
             }
@@ -55,7 +67,7 @@ export class EmbedBuilder {
             }
         }
 
-        // if we have a basekey
+        // basekey (overrides manual key ref)
         if (this.baseKey && data.key) {
             if (!data.rawName) {
                 returnField.name = getString(
@@ -76,7 +88,7 @@ export class EmbedBuilder {
             }
         }
 
-        // if its raw
+        // handle raw opts (override manual key ref and basekey)
         if (data.rawName) {
             returnField.name = data.rawName;
         }
@@ -93,37 +105,31 @@ export class EmbedBuilder {
         return this;
     }
 
-    setAuthor({ iconURL, url, nameArgs, ...author }: LocaleAuthorWithKey | LocaleAuthorWithoutKey) {
+    setAuthor(author: LocaleAuthor = {}) {
         let name = '';
-        const forCheck = { ...author, url: url ?? '', iconURL: iconURL ?? '', nameArgs: nameArgs ?? {} };
-        const { data: withKeyData, problems: withKeyProblems } = localeAuthorWithKey(forCheck);
-        const { data: withoutKeyData, problems: withoutKeyProblems } = localeAuthorWithoutKey(forCheck);
 
-        if (withKeyProblems && withoutKeyProblems) {
-            throw new TypeError('Provided author is not a valid author object.', {
-                cause: [withKeyProblems.summary, withoutKeyProblems.summary]
-            });
+        if (!(author.name ?? author.rawName) && !this.baseKey) {
+            throw new TypeError(
+                'You must provide either a key ref or raw value as a name when no embed base key is defined',
+                { cause: author }
+            );
         }
 
-        if (this.baseKey && withKeyData && withoutKeyProblems) {
-            console.log('hello');
-            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', withKeyData.nameArgs);
+        if (((!author.name ?? !author.rawName) && this.baseKey) ?? (Object.keys(author).length === 0 && this.baseKey)) {
+            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
         }
 
-        if (withoutKeyData && withKeyProblems) {
-            console.log('hi');
-            if (withoutKeyData.rawName && withoutKeyData.name) {
+        if (author.name ?? author.rawName) {
+            if (author.rawName && author.name) {
                 throw new TypeError('Cannot have both a raw name and a key name in an author.');
-            } else if (withoutKeyData.rawName && withoutKeyData.nameArgs) {
+            } else if (author.rawName && author.nameArgs) {
                 throw new TypeError('Cannot have name arguments on a raw name.');
             }
 
-            name =
-                withoutKeyData.rawName ??
-                getString(withoutKeyData.name ?? '', this.locale, 'embeds', withoutKeyData.nameArgs);
+            name = author.rawName ?? getString(author.name ?? '', this.locale, 'embeds', author.nameArgs);
         }
 
-        this.builder.setAuthor({ name, url, iconURL });
+        this.builder.setAuthor({ name, url: author.url, iconURL: author.iconURL });
         return this;
     }
 

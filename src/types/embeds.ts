@@ -37,14 +37,6 @@ export const localeAuthorWithKey = type({
     'iconURL?': 'string'
 });
 
-export const localeAuthorWithoutKey = type({
-    'name?': 'string',
-    'rawName?': 'string',
-    'nameArgs?': stringRecord,
-    'url?': 'string',
-    'iconURL?': 'string'
-});
-
 export const localeFooterWithKey = type({
     'textArgs?': stringRecord,
     'iconURL?': 'string'
@@ -59,7 +51,13 @@ export const localeFooterWithoutKey = type({
 
 export type ArgsWithRawParam = { raw?: boolean; [key: string]: any };
 export type LocaleFieldOptions = typeof localeFieldOptions.infer;
-export type LocaleAuthorWithoutKey = typeof localeAuthorWithoutKey.infer;
-export type LocaleAuthorWithKey = typeof localeAuthorWithKey.infer;
+export type LocaleAuthor = {
+    name?: string;
+    rawName?: string;
+    nameArgs?: Record<string, any>;
+    url?: string;
+    iconURL?: string;
+};
+
 export type LocaleFooterWithoutKey = typeof localeFooterWithoutKey.infer;
 export type LocaleFooterWithKey = typeof localeFooterWithKey.infer;
