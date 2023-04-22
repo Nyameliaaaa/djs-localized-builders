@@ -28,7 +28,7 @@ export class EmbedBuilder {
         }
 
         // we cannot have both a key ref and a raw value, as that would cause an override
-        if ((field.name && field.rawName) ?? (field.value && field.rawName)) {
+        if ((field.name && field.rawName) ?? (field.value && field.rawValue)) {
             throw new TypeError('Cannot have a key reference name/value and a raw name/value', { cause: field });
         }
 
