@@ -3,16 +3,7 @@ import { APIEmbedField } from 'discord-api-types/v10';
 import { getConfig, getString, joinKeys } from 'lib';
 import { BuilderMixin, LocaleBaseKeyMixin } from 'mixins';
 import { mix } from 'ts-mixer';
-import {
-    ArgsWithRawParam,
-    LocaleAuthor,
-    LocaleFieldOptions,
-    LocaleFooterWithKey,
-    LocaleFooterWithoutKey,
-    localeFieldOptions,
-    localeFooterWithKey,
-    localeFooterWithoutKey
-} from 'types';
+import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter } from 'types';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin {}
 
@@ -31,70 +22,65 @@ export class EmbedBuilder {
 
     protected mapField(field: LocaleFieldOptions) {
         const returnField: APIEmbedField = { inline: field.inline, name: '', value: '' };
-        const { data, problems } = localeFieldOptions(field);
 
         if (Object.keys(field).length === 0) {
             throw new TypeError('Embed field cannot be empty');
         }
 
-        if (problems) {
-            throw new TypeError('Invalid embed field.', { cause: problems.summary });
-        }
-
         // we cannot have both a key ref and a raw value, as that would cause an override
-        if ((data.name && data.rawName) ?? (data.value && data.rawName)) {
+        if ((field.name && field.rawName) ?? (field.value && field.rawName)) {
             throw new TypeError('Cannot have a key reference name/value and a raw name/value', { cause: field });
         }
 
         // we cannot have both a field basekey and an opt key ref
-        if (data.key && (data.name ?? data.value)) {
+        if (field.key && (field.name ?? field.value)) {
             throw new TypeError('Cannot have a field base key and a key reference name/value.', { cause: field });
         }
 
         // we cannot have both a raw opt and opt args
-        if ((data.rawName && data.nameArgs) ?? (data.rawValue && data.valueArgs)) {
+        if ((field.rawName && field.nameArgs) ?? (field.rawValue && field.valueArgs)) {
             throw new TypeError('Cannot have a field raw name/value and name/value string arguments', { cause: field });
         }
 
         // if we have a name or value ref key
-        if (data.name ?? data.value) {
-            if (data.name) {
-                returnField.name = getString(data.name, this.locale, 'embeds', data.nameArgs);
+        if (field.name ?? field.value) {
+            if (field.name) {
+                returnField.name = getString(field.name, this.locale, 'embeds', field.nameArgs);
             }
 
-            if (data.value) {
-                returnField.value = getString(data.value, this.locale, 'embeds', data.valueArgs);
+            if (field.value) {
+                returnField.value = getString(field.value, this.locale, 'embeds', field.valueArgs);
             }
         }
 
         // basekey (overrides manual key ref)
-        if (this.baseKey && data.key) {
-            if (!data.rawName) {
+        if (this.baseKey && field.key) {
+            if (!field.rawName) {
                 returnField.name = getString(
-                    joinKeys([this.baseKey, 'fields', data.key, 'name']),
+                    joinKeys([this.baseKey, 'fields', field.key, 'name']),
                     this.locale,
                     'embeds',
-                    data.nameArgs
+                    field.nameArgs
                 );
             }
 
-            if (!data.rawValue) {
+            if (!field.rawValue) {
                 returnField.value = getString(
-                    joinKeys([this.baseKey, 'fields', data.key, 'value']),
+                    joinKeys([this.baseKey, 'fields', field.key, 'value']),
                     this.locale,
                     'embeds',
-                    data.valueArgs
+                    field.valueArgs
                 );
             }
         }
 
         // handle raw opts (override manual key ref and basekey)
-        if (data.rawName) {
-            returnField.name = data.rawName;
+        if (field.rawName) {
+            returnField.name = field.rawName;
         }
 
-        if (data.rawValue) {
-            returnField.value = data.rawValue;
+        if (field.rawValue) {
+            returnField.value = field.rawValue;
         }
 
         return returnField;
@@ -164,41 +150,31 @@ export class EmbedBuilder {
         return this;
     }
 
-    setFooter({ textArgs, iconURL, ...footer }: LocaleFooterWithoutKey | LocaleFooterWithKey) {
+    setFooter(footer: LocaleFooter = {}) {
         let text = '';
-        const forCheck = { ...footer, iconURL: iconURL ?? '', textArgs: textArgs ?? {} };
 
-        if (this.baseKey) {
-            const { data, problems } = localeFooterWithKey(forCheck);
-
-            if (problems) {
-                throw new TypeError('Provided footer is not a valid footer object.', {
-                    cause: problems.summary
-                });
-            }
-
-            text = getString(joinKeys([this.baseKey, 'footer', 'text']), this.locale, 'embeds', data.textArgs);
+        if (!(footer.text ?? footer.rawText) && !this.baseKey) {
+            throw new TypeError(
+                'You must provide either a key ref or raw value as a text when no embed base key is defined',
+                { cause: footer }
+            );
         }
 
-        if (!this.baseKey) {
-            const { data, problems } = localeFooterWithoutKey(forCheck);
-
-            if (problems) {
-                throw new TypeError('Provided footer is not a valid footer object.', {
-                    cause: problems.summary
-                });
-            }
-
-            if (data.rawText && data.text) {
-                throw new TypeError('Cannot have both a raw name and a key name in an footer.');
-            } else if (data.rawText && data.textArgs) {
-                throw new TypeError('Cannot have name arguments on a raw name.');
-            }
-
-            text = data.rawText ?? getString(data.rawText ?? '', this.locale, 'embeds', data.textArgs);
+        if (((!footer.text ?? !footer.rawText) && this.baseKey) ?? (Object.keys(footer).length === 0 && this.baseKey)) {
+            text = getString(joinKeys([this.baseKey, 'footer', 'text']), this.locale, 'embeds', footer.textArgs);
         }
 
-        this.builder.setFooter({ text, iconURL });
+        if (footer.text ?? footer.rawText) {
+            if (footer.rawText && footer.text) {
+                throw new TypeError('Cannot have both a raw text and a key text in a footer.');
+            } else if (footer.rawText && footer.textArgs) {
+                throw new TypeError('Cannot have text arguments on a raw text.');
+            }
+
+            text = footer.rawText ?? getString(footer.text ?? '', this.locale, 'embeds', footer.textArgs);
+        }
+
+        this.builder.setFooter({ text, iconURL: footer.iconURL });
         return this;
     }
 
