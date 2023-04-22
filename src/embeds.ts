@@ -12,7 +12,8 @@ import {
     localeAuthorWithKey,
     localeAuthorWithoutKey,
     localeFieldOptions,
-    localeFooterWithKey
+    localeFooterWithKey,
+    localeFooterWithoutKey
 } from 'types';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin {}
@@ -92,36 +93,37 @@ export class EmbedBuilder {
     }
 
     setAuthor({ iconURL, url, nameArgs, ...author }: LocaleAuthorWithKey | LocaleAuthorWithoutKey) {
-        const forCheck = { ...author, url, iconURL, nameArgs };
-        const withKey = localeAuthorWithKey(forCheck);
-        const withoutKey = localeAuthorWithoutKey(forCheck);
         let name = '';
+        const forCheck = { ...author, url: url ?? '', iconURL: iconURL ?? '', nameArgs: nameArgs ?? {} };
 
-        if (withoutKey.problems && withKey.problems) {
-            throw new TypeError('Provided author is not a valid author object.', {
-                cause: {
-                    validationsForKeyBased: withKey.problems,
-                    validationsForKeyless: withoutKey.problems
-                }
-            });
+        if (this.baseKey) {
+            const { data, problems } = localeAuthorWithKey(forCheck);
+
+            if (problems) {
+                throw new TypeError('Provided author is not a valid author object.', {
+                    cause: problems.summary
+                });
+            }
+
+            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', data.nameArgs);
         }
 
-        if (this.baseKey && withKey.data && withoutKey.problems) {
-            throw new TypeError('Cannot have a key-based author object without an initalized embed key.');
-        }
+        if (!this.baseKey) {
+            const { data, problems } = localeAuthorWithoutKey(forCheck);
 
-        if (withKey.problems && withoutKey.data) {
-            if (withoutKey.data.rawName && withoutKey.data.name) {
+            if (problems) {
+                throw new TypeError('Provided author is not a valid author object.', {
+                    cause: problems.summary
+                });
+            }
+
+            if (data.rawName && data.name) {
                 throw new TypeError('Cannot have both a raw name and a key name in an author.');
-            } else if (withoutKey.data.rawName && withoutKey.data.nameArgs) {
+            } else if (data.rawName && data.nameArgs) {
                 throw new TypeError('Cannot have name arguments on a raw name.');
             }
 
-            name = withoutKey.data.rawName ?? getString(withoutKey.data.name ?? '', this.locale, 'embeds', nameArgs);
-        }
-
-        if (this.baseKey && withoutKey.data && withKey.data) {
-            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', nameArgs);
+            name = data.rawName ?? getString(data.name ?? '', this.locale, 'embeds', data.nameArgs);
         }
 
         this.builder.setAuthor({ name, url, iconURL });
@@ -155,36 +157,37 @@ export class EmbedBuilder {
     }
 
     setFooter({ textArgs, iconURL, ...footer }: LocaleFooterWithoutKey | LocaleFooterWithKey) {
-        const forCheck = { ...footer, iconURL, textArgs };
-        const withKey = localeFooterWithKey(forCheck);
-        const withoutKey = localeAuthorWithoutKey(forCheck);
         let text = '';
+        const forCheck = { ...footer, iconURL: iconURL ?? '', textArgs: textArgs ?? {} };
 
-        if (withoutKey.problems && withKey.problems) {
-            throw new TypeError('Provided footer is not a valid footer object.', {
-                cause: {
-                    validationsForKeyBased: withKey.problems,
-                    validationsForKeyless: withoutKey.problems
-                }
-            });
-        }
+        if (this.baseKey) {
+            const { data, problems } = localeFooterWithKey(forCheck);
 
-        if (this.baseKey && withKey.data && withoutKey.problems) {
-            throw new TypeError('Cannot have a key-based footer object without an initalized embed key.');
-        }
-
-        if (withKey.problems && withoutKey.data) {
-            if (withoutKey.data.rawName && withoutKey.data.name) {
-                throw new TypeError('Cannot have both a raw text and a key text in a footer.');
-            } else if (withoutKey.data.rawName && withoutKey.data.nameArgs) {
-                throw new TypeError('Cannot have text arguments on a raw text in a footer.');
+            if (problems) {
+                throw new TypeError('Provided footer is not a valid footer object.', {
+                    cause: problems.summary
+                });
             }
 
-            text = withoutKey.data.rawName ?? getString(withoutKey.data.name ?? '', this.locale, 'embeds', textArgs);
+            text = getString(joinKeys([this.baseKey, 'footer', 'text']), this.locale, 'embeds', data.textArgs);
         }
 
-        if (this.baseKey && withoutKey.data && withKey.data) {
-            text = getString(joinKeys([this.baseKey, 'footer', 'text']), this.locale, 'embeds', textArgs);
+        if (!this.baseKey) {
+            const { data, problems } = localeFooterWithoutKey(forCheck);
+
+            if (problems) {
+                throw new TypeError('Provided footer is not a valid footer object.', {
+                    cause: problems.summary
+                });
+            }
+
+            if (data.rawText && data.text) {
+                throw new TypeError('Cannot have both a raw name and a key name in an footer.');
+            } else if (data.rawText && data.textArgs) {
+                throw new TypeError('Cannot have name arguments on a raw name.');
+            }
+
+            text = data.rawText ?? getString(data.rawText ?? '', this.locale, 'embeds', data.textArgs);
         }
 
         this.builder.setFooter({ text, iconURL });
