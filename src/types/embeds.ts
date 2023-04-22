@@ -26,7 +26,7 @@ export type TextLocaleAuthor = {
 export type RawTextLocaleAuthor = {
     name?: never;
     rawName?: string;
-    namArgs?: never;
+    nameArgs?: never;
     url?: string;
     iconURL?: string;
 };
