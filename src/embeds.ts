@@ -28,7 +28,7 @@ export class EmbedBuilder {
         }
 
         // we cannot have both a key ref and a raw value, as that would cause an override
-        if ((field.name && field.rawName) ?? (field.value && field.rawValue)) {
+        if ((field.name && field.rawName) || (field.value && field.rawValue)) {
             throw new TypeError('Cannot have a key reference name/value and a raw name/value', { cause: field });
         }
 
@@ -38,19 +38,17 @@ export class EmbedBuilder {
         }
 
         // we cannot have both a raw opt and opt args
-        if ((field.rawName && field.nameArgs) ?? (field.rawValue && field.valueArgs)) {
+        if ((field.rawName && field.nameArgs) || (field.rawValue && field.valueArgs)) {
             throw new TypeError('Cannot have a field raw name/value and name/value string arguments', { cause: field });
         }
 
         // if we have a name or value ref key
-        if (field.name ?? field.value) {
-            if (field.name) {
-                returnField.name = getString(field.name, this.locale, 'embeds', field.nameArgs);
-            }
+        if (field.name) {
+            returnField.name = getString(field.name, this.locale, 'embeds', field.nameArgs);
+        }
 
-            if (field.value) {
-                returnField.value = getString(field.value, this.locale, 'embeds', field.valueArgs);
-            }
+        if (field.value) {
+            returnField.value = getString(field.value, this.locale, 'embeds', field.valueArgs);
         }
 
         // basekey (overrides manual key ref)
@@ -101,7 +99,7 @@ export class EmbedBuilder {
             );
         }
 
-        if (((!author.name ?? !author.rawName) && this.baseKey) ?? (Object.keys(author).length === 0 && this.baseKey)) {
+        if ((!(author.name ?? author.rawName) && this.baseKey) || (Object.keys(author).length === 0 && this.baseKey)) {
             name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
         }
 
@@ -160,7 +158,7 @@ export class EmbedBuilder {
             );
         }
 
-        if (((!footer.text ?? !footer.rawText) && this.baseKey) ?? (Object.keys(footer).length === 0 && this.baseKey)) {
+        if ((!(footer.text ?? footer.rawText) && this.baseKey) || (Object.keys(footer).length === 0 && this.baseKey)) {
             text = getString(joinKeys([this.baseKey, 'footer', 'text']), this.locale, 'embeds', footer.textArgs);
         }
 
