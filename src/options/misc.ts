@@ -6,6 +6,7 @@ import {
     SlashCommandBooleanOption,
     SlashCommandChannelOption
 } from '@discordjs/builders';
+import { ChannelType } from 'discord-api-types/v10';
 import { BaseKeyMixin } from 'mixins/base';
 import { OptionMixin } from 'mixins/options';
 import { mix } from 'ts-mixer';
@@ -37,7 +38,7 @@ export class SlashCommandChannelOptionBuilder {
         this.builder.addChannelTypes(...normalizeArray(channelTypes));
     }
 
-    get channelTypes() {
+    get channelTypes(): ChannelType[] | undefined {
         return this.builder.channel_types;
     }
 }

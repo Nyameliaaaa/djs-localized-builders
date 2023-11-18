@@ -1,23 +1,27 @@
 import type {
-    SlashCommandBuilder,
-    SlashCommandSubcommandBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ChannelSelectMenuBuilder,
     ContextMenuCommandBuilder,
-    SlashCommandSubcommandGroupBuilder,
+    EmbedBuilder,
+    MentionableSelectMenuBuilder,
+    ModalBuilder,
+    RoleSelectMenuBuilder,
     SlashCommandAttachmentOption,
     SlashCommandBooleanOption,
+    SlashCommandBuilder,
     SlashCommandChannelOption,
     SlashCommandIntegerOption,
     SlashCommandMentionableOption,
     SlashCommandNumberOption,
     SlashCommandRoleOption,
     SlashCommandStringOption,
+    SlashCommandSubcommandBuilder,
+    SlashCommandSubcommandGroupBuilder,
     SlashCommandUserOption,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ModalBuilder,
+    StringSelectMenuBuilder,
     TextInputBuilder,
-    SelectMenuBuilder,
-    EmbedBuilder
+    UserSelectMenuBuilder
 } from '@discordjs/builders';
 
 export type CommandResolvable =
@@ -37,12 +41,19 @@ export type OptionResolvable =
     | SlashCommandStringOption
     | SlashCommandUserOption;
 
+export type SelectMenuResolvable =
+    | StringSelectMenuBuilder
+    | ChannelSelectMenuBuilder
+    | RoleSelectMenuBuilder
+    | UserSelectMenuBuilder
+    | MentionableSelectMenuBuilder;
+
 export type ComponentResolvable =
     | ActionRowBuilder<any>
     | ButtonBuilder
     | ModalBuilder
     | TextInputBuilder
-    | SelectMenuBuilder;
+    | SelectMenuResolvable;
 
 export type ApplicationCommandBuilderResolvable = CommandResolvable | OptionResolvable;
 export type BuilderResolvable = ApplicationCommandBuilderResolvable | ComponentResolvable | EmbedBuilder;

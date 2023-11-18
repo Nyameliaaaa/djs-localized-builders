@@ -77,7 +77,10 @@ export class AutocompletableMixin<
         return this;
     }
 
-    get choices() {
+    get choices():
+        | APIApplicationCommandOptionChoice<number>[]
+        | APIApplicationCommandOptionChoice<string>[]
+        | undefined {
         return this.builder.choices;
     }
 
