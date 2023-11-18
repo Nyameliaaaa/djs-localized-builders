@@ -43,7 +43,7 @@ export function getString(
     string: string,
     lang: string,
     namespace: 'embeds' | 'components' | 'commands',
-    options?: Record<string, any>
+    options: Record<string, any> = {}
 ) {
     const config = getConfig();
     const val = config.getLocalizedString({
@@ -71,7 +71,7 @@ export function getString(
 export function getDefaultString(
     string: string,
     namespace: 'embeds' | 'components' | 'commands',
-    options?: Record<string, any>
+    options: Record<string, any> = {}
 ) {
     const config = getConfig();
     const val = config.getLocalizedString({
@@ -99,7 +99,7 @@ export function getDefaultString(
 export function getAllStrings(
     string: string,
     namespace: 'embeds' | 'components' | 'commands',
-    options?: Record<string, any>
+    options: Record<string, any> = {}
 ) {
     const config = getConfig();
     const ret: Record<string, string> = {};

@@ -1,10 +1,10 @@
 # djs-localized-builders
 
-A set of builders for [discord.js](https://discord.js.org), built to allow easy localization.
+A set of builders for [discord.js](https://discord.js.org), built to allow easy localization. Typescript is highly recommended but not required.
 
 ## Get Started
 
-Install `djs-localized-builders` using your favorite package manager and then add the following to your main file (where you create/extend the client)
+Install `djs-localized-builders` and `@discordjs/builders` (should be installed if you're using `discord.js`) using your favorite package manager and then add the following to your main file (where you create/extend the client)
 
 ```ts
 // initalize i18n here
@@ -13,6 +13,9 @@ setConfig({
     getLocalizedString: ({ namespace, string, lang, options }) => {
         return i18nLib.getString({ namespace, string, lang, options }) ?? 'fetch_fail';
     },
+    onMissingKey: (lang, namespace, key) => {
+        logger.throw(lang, namespace, key);
+    }, // not including this line will make it fallback to default behavior of throwing a TypeError
     caseFormat: 'lowercase', // can be lowercase, uppercase or keep.
     seperatorChar: '.',
     validators: process.ENV.NODE_ENV === 'development',
@@ -21,9 +24,6 @@ setConfig({
         components: 'responses',
         commands: 'commands',
         embeds: 'responses'
-    },
-    onMissingKey: (lang, namespace, key) => {
-        logger.throw(lang, namespace, key);
     }
 });
 

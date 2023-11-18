@@ -19,3 +19,18 @@ export class BaseKeyMixin {
         this.baseKey = baseKey;
     }
 }
+
+export class LocaleBaseKeyMixin {
+    public baseKey?: string;
+    public locale: string;
+
+    constructor(locale: string, baseKey?: string) {
+        this.locale = locale;
+        this.baseKey = baseKey;
+    }
+
+    protected init(locale: string, baseKey?: string) {
+        this.locale = locale;
+        this.baseKey = baseKey;
+    }
+}

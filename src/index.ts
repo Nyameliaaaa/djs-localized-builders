@@ -6,3 +6,4 @@ export * from './types';
 export * from './lib';
 export * from './options';
 export * from './commands';
+export * from './embeds';
