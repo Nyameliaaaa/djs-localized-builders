@@ -20,6 +20,7 @@ import type {
     SlashCommandSubcommandGroupBuilder,
     SlashCommandUserOption,
     StringSelectMenuBuilder,
+    StringSelectMenuOptionBuilder,
     TextInputBuilder,
     UserSelectMenuBuilder
 } from '@discordjs/builders';
@@ -53,8 +54,10 @@ export type ComponentResolvable =
     | ButtonBuilder
     | ModalBuilder
     | TextInputBuilder
-    | SelectMenuResolvable;
+    | SelectMenuResolvable
+    | StringSelectMenuOptionBuilder;
 
 export type ApplicationCommandBuilderResolvable = CommandResolvable | OptionResolvable;
 export type BuilderResolvable = ApplicationCommandBuilderResolvable | ComponentResolvable | EmbedBuilder;
+
 export type FuncAsInput<T> = (option: T) => T;
