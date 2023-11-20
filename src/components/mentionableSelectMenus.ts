@@ -6,12 +6,15 @@ import {
     normalizeArray
 } from '@discordjs/builders';
 import type { APISelectMenuDefaultValue, SelectMenuDefaultValueType, Snowflake } from 'discord-api-types/v10';
-import { BaseKeyMixin, BuilderMixin } from 'mixins';
+import { BaseKeyMixin, BuilderMixin, SelectMenu } from 'mixins';
 import { mix } from 'ts-mixer';
 
-export interface MentionableSelectMenuBuilder extends BuilderMixin<MentionableBuilder>, BaseKeyMixin {}
+export interface MentionableSelectMenuBuilder
+    extends BuilderMixin<MentionableBuilder>,
+        BaseKeyMixin,
+        SelectMenu<MentionableBuilder> {}
 
-@mix(BuilderMixin, BaseKeyMixin)
+@mix(BuilderMixin, BaseKeyMixin, SelectMenu)
 export class MentionableSelectMenuBuilder {
     constructor(baseKey?: string) {
         this.builder = new MentionableBuilder();
@@ -48,9 +51,9 @@ export class MentionableSelectMenuBuilder {
     }
 }
 
-export interface RoleSelectMenuBuilder extends BuilderMixin<RoleBuilder>, BaseKeyMixin {}
+export interface RoleSelectMenuBuilder extends BuilderMixin<RoleBuilder>, BaseKeyMixin, SelectMenu<RoleBuilder> {}
 
-@mix(BuilderMixin, BaseKeyMixin)
+@mix(BuilderMixin, BaseKeyMixin, SelectMenu)
 export class RoleSelectMenuBuilder {
     constructor(baseKey?: string) {
         this.builder = new RoleBuilder();
@@ -67,9 +70,9 @@ export class RoleSelectMenuBuilder {
     }
 }
 
-export interface UserSelectMenuBuilder extends BuilderMixin<UserBuilder>, BaseKeyMixin {}
+export interface UserSelectMenuBuilder extends BuilderMixin<UserBuilder>, BaseKeyMixin, SelectMenu<UserBuilder> {}
 
-@mix(BuilderMixin, BaseKeyMixin)
+@mix(BuilderMixin, BaseKeyMixin, SelectMenu)
 export class UserSelectMenuBuilder {
     constructor(baseKey?: string) {
         this.builder = new UserBuilder();

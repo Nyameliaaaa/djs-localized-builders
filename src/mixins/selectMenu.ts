@@ -7,36 +7,34 @@ export interface SelectMenu<Builder extends SelectMenuResolvable> extends Builde
 
 @mix(BuilderMixin, BaseKeyMixin)
 export class SelectMenu<Builder extends SelectMenuResolvable> {
-    args: Record<string, any>;
+    args: Record<string, any> = {};
     private localizedPlaceholderNotFromKeyInitialValue = '';
     private shouldSetPlaceholderFromParentBaseKey = false;
 
-    constructor(baseKey?: string) {
-        this.args = {};
-    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    constructor(baseKey?: string) {}
 
     setPlaceholder(placeholder: string, args?: ArgsWithRawOrKeyedParam): this;
     setPlaceholder(args: Record<string, any>): this;
     setPlaceholder(): this;
     setPlaceholder(placeholderOrArgs?: string | Record<string, any>, args: ArgsWithRawOrKeyedParam = {}) {
-        // if a base key is present along with args, store the args until the select menu is prepared for use.
-        if (this.baseKey && typeof placeholderOrArgs === 'object') {
+        // if a base key is present with no args (ie setPlaceholder()) then we should store that info so that the parent base key is used.
+        if (this.baseKey) {
             this.shouldSetPlaceholderFromParentBaseKey = true;
-            this.args = placeholderOrArgs;
         }
 
-        // if a base key is present with no args (ie setPlaceholder()) then we should store that info so that the parent base key is used.
-        if (this.baseKey && !placeholderOrArgs) {
-            this.shouldSetPlaceholderFromParentBaseKey = true;
+        // if a base key is present along with args, store the args until the select menu is prepared for use.
+        if (this.baseKey && typeof placeholderOrArgs === 'object') {
+            this.args = placeholderOrArgs;
         }
 
         if (typeof placeholderOrArgs === 'string') {
             // if the first argument is a string expliclitly marked as a raw value we should set it directly
             if (args.raw) {
                 this.builder.setPlaceholder(placeholderOrArgs);
-                // if it IS NOT marked as a raw value then we store the key for the placeholder and its arguments
             }
 
+            // if it IS NOT marked as a raw value then we store the key for the placeholder and its arguments
             if (args.localizedString) {
                 this.localizedPlaceholderNotFromKeyInitialValue = placeholderOrArgs;
                 this.args = args;
