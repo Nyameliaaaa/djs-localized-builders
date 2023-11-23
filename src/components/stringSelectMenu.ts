@@ -186,14 +186,16 @@ export class StringSelectMenuBuilder {
             this.builder.setOptions(
                 this.optionQueue.map(option => {
                     if (this.baseKey) {
-                        return option.hydrateSelf(locale, joinKeys([baseKey, 'selects', this.baseKey]));
+                        return option.hydrateSelf(locale, joinKeys([baseKey, 'selects', this.baseKey])).builder;
                     }
 
-                    return option;
+                    return option.builder;
                 })
             );
 
             this.optionQueue = [];
         }
+
+        return this;
     }
 }
