@@ -1,12 +1,12 @@
-import type { APIMessageComponentEmoji, APISelectMenuOption, LocalizationMap, Snowflake } from 'discord-api-types/v10';
-import { ArgsWithRawOrKeyedParam, SelectMenuResolvable, getString, joinKeys } from 'index';
-import { BaseKeyMixin, BuilderMixin, SelectMenu } from 'mixins';
 import {
     RestOrArray,
-    StringSelectMenuOptionBuilder as StringOptionBuilder,
     StringSelectMenuBuilder as StringBuilder,
+    StringSelectMenuOptionBuilder as StringOptionBuilder,
     normalizeArray
 } from '@discordjs/builders';
+import type { APIMessageComponentEmoji, APISelectMenuOption, LocalizationMap } from 'discord-api-types/v10';
+import { ArgsWithRawOrKeyedParam, getString, joinKeys } from 'index';
+import { BaseKeyMixin, BuilderMixin, SelectMenu } from 'mixins';
 import { mix } from 'ts-mixer';
 
 export interface StringSelectMenuOptionBuilder extends BuilderMixin<StringOptionBuilder>, BaseKeyMixin {

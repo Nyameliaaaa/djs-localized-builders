@@ -1,7 +1,7 @@
 import type { LocalizationMap } from 'discord-api-types/v10';
-import { ArgsWithRawOrKeyedParam, SelectMenuResolvable, getString, joinKeys } from 'index';
+import { ArgsWithRawOrKeyedParam, SelectMenuResolvable, StringSelectMenuBuilder, getString, joinKeys } from 'index';
 import { BaseKeyMixin, BuilderMixin } from 'mixins';
-import { mix } from 'ts-mixer';
+import { hasMixin, mix } from 'ts-mixer';
 
 export interface SelectMenu<Builder extends SelectMenuResolvable> extends BuilderMixin<Builder>, BaseKeyMixin {}
 
@@ -77,6 +77,10 @@ export class SelectMenu<Builder extends SelectMenuResolvable> {
             this.builder.setPlaceholder(
                 getString(this.localizedPlaceholderNotFromKeyInitialValue, locale, 'components', this.args)
             );
+        }
+
+        if (hasMixin(this, StringSelectMenuBuilder)) {
+            this.hydrateOptions(locale, baseKey);
         }
 
         return this;
