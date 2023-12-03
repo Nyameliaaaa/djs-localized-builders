@@ -38,11 +38,11 @@
     "devDependencies": {
         "@commitlint/cli": "^17.4.2",
         "@commitlint/config-conventional": "^17.4.2",
-        "@discordjs/builders": "^1.5.0",
+        "@discordjs/builders": "^1.7.0",
         "@types/node": "^18.13.0",
         "@typescript-eslint/eslint-plugin": "^5.51.0",
         "@typescript-eslint/parser": "^5.51.0",
-        "discord-api-types": "^0.37.35",
+        "discord-api-types": "^0.37.63",
         "eslint": "^8.33.0",
         "eslint-config-prettier": "^8.6.0",
         "eslint-plugin-prettier": "^4.2.1",
@@ -56,7 +56,7 @@
         "vuepress-plugin-typedoc": "^0.11.2"
     },
     "peerDependencies": {
-        "@discordjs/builders": "^1.5.0"
+        "@discordjs/builders": "^1.7.0"
     },
     "dependencies": {
         "ts-mixer": "^6.0.3"
