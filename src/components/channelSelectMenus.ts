@@ -21,7 +21,7 @@ export class ChannelSelectMenuBuilder {
         return this;
     }
 
-    addChannelTyoes(...values: RestOrArray<ChannelType>) {
+    addChannelTypes(...values: RestOrArray<ChannelType>) {
         this.builder.addChannelTypes(normalizeArray(values));
         return this;
     }
