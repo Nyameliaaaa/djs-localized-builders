@@ -76,6 +76,7 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         if (this.builder instanceof SlashCommandBuilder) {
             this.hydrateOption(option);
             this.addOption(option);
+            return;
         }
 
         this.optionQueue.push(option);
