@@ -36,27 +36,27 @@
     },
     "homepage": "https://github.com/night-lake/djs-localized-builders#readme",
     "devDependencies": {
-        "@commitlint/cli": "^17.4.2",
-        "@commitlint/config-conventional": "^17.4.2",
-        "@discordjs/builders": "^1.5.0",
-        "@types/node": "^18.13.0",
-        "@typescript-eslint/eslint-plugin": "^5.51.0",
-        "@typescript-eslint/parser": "^5.51.0",
-        "discord-api-types": "^0.37.35",
-        "eslint": "^8.33.0",
-        "eslint-config-prettier": "^8.6.0",
+        "@commitlint/cli": "^17.8.1",
+        "@commitlint/config-conventional": "^17.8.1",
+        "@discordjs/builders": "^1.10.1",
+        "@types/node": "^18.19.83",
+        "@typescript-eslint/eslint-plugin": "^5.62.0",
+        "@typescript-eslint/parser": "^5.62.0",
+        "discord-api-types": "^0.37.119",
+        "eslint": "^9.23.0",
+        "eslint-config-prettier": "^8.10.0",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-tsdoc": "^0.2.17",
         "husky": "^8.0.3",
         "standard-version": "^9.5.0",
-        "tsup": "^6.6.0",
+        "tsup": "^6.7.0",
         "typescript": "^4.9.5"
     },
     "peerDependencies": {
-        "@discordjs/builders": "^1.5.0"
+        "@discordjs/builders": "^1.10.0"
     },
     "dependencies": {
-        "ts-mixer": "^6.0.3"
+        "ts-mixer": "^6.0.4"
     },
     "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af"
 }
