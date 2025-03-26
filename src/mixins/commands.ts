@@ -54,7 +54,43 @@ export class PermsV2Mixin<T extends SlashCommandBuilder | ContextMenuCommandBuil
 export interface SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubcommandBuilder>
     extends NameAndDescriptionMixin<T>,
         BuilderMixin<T>,
-        BaseKeyMixin {}
+        BaseKeyMixin {
+    addAttachmentOption(key: string, input?: FuncAsInput<SlashCommandAttachmentOptionBuilder>): this;
+    addAttachmentOption(option: FuncAsInput<SlashCommandAttachmentOptionBuilder>): this;
+    addAttachmentOption(option: SlashCommandAttachmentOptionBuilder): this;
+
+    addBooleanOption(key: string, input?: FuncAsInput<SlashCommandBooleanOptionBuilder>): this;
+    addBooleanOption(option: FuncAsInput<SlashCommandBooleanOptionBuilder>): this;
+    addBooleanOption(option: SlashCommandBooleanOptionBuilder): this;
+
+    addChannelOption(key: string, input?: FuncAsInput<SlashCommandChannelOptionBuilder>): this;
+    addChannelOption(option: FuncAsInput<SlashCommandChannelOptionBuilder>): this;
+    addChannelOption(option: SlashCommandChannelOptionBuilder): this;
+
+    addIntegerOption(key: string, input?: FuncAsInput<SlashCommandIntegerOptionBuilder>): this;
+    addIntegerOption(option: FuncAsInput<SlashCommandIntegerOptionBuilder>): this;
+    addIntegerOption(option: SlashCommandIntegerOptionBuilder): this;
+
+    addMentionableOption(key: string, input?: FuncAsInput<SlashCommandMentionableOptionBuilder>): this;
+    addMentionableOption(option: FuncAsInput<SlashCommandMentionableOptionBuilder>): this;
+    addMentionableOption(option: SlashCommandMentionableOptionBuilder): this;
+
+    addNumberOption(key: string, input?: FuncAsInput<SlashCommandNumberOptionBuilder>): this;
+    addNumberOption(option: FuncAsInput<SlashCommandNumberOptionBuilder>): this;
+    addNumberOption(option: SlashCommandNumberOptionBuilder): this;
+
+    addStringOption(key: string, input?: FuncAsInput<SlashCommandStringOptionBuilder>): this;
+    addStringOption(option: FuncAsInput<SlashCommandStringOptionBuilder>): this;
+    addStringOption(option: SlashCommandStringOptionBuilder): this;
+
+    addRoleOption(key: string, input?: FuncAsInput<SlashCommandRoleOptionBuilder>): this;
+    addRoleOption(option: FuncAsInput<SlashCommandRoleOptionBuilder>): this;
+    addRoleOption(option: SlashCommandRoleOptionBuilder): this;
+
+    addUserOption(key: string, input?: FuncAsInput<SlashCommandUserOptionBuilder>): this;
+    addUserOption(option: FuncAsInput<SlashCommandUserOptionBuilder>): this;
+    addUserOption(option: SlashCommandUserOptionBuilder): this;
+}
 
 @mix(BuilderMixin, NameAndDescriptionMixin, BaseKeyMixin)
 export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubcommandBuilder> {
@@ -150,9 +186,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addAttachmentOption(key: string, input?: FuncAsInput<SlashCommandAttachmentOptionBuilder>): this;
-    addAttachmentOption(option: FuncAsInput<SlashCommandAttachmentOptionBuilder>): this;
-    addAttachmentOption(option: SlashCommandAttachmentOptionBuilder): this;
     addAttachmentOption(
         keyOrOption: string | FuncAsInput<SlashCommandAttachmentOptionBuilder> | SlashCommandAttachmentOptionBuilder,
         input: FuncAsInput<SlashCommandAttachmentOptionBuilder> = option => option
@@ -161,9 +194,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addBooleanOption(key: string, input?: FuncAsInput<SlashCommandBooleanOptionBuilder>): this;
-    addBooleanOption(option: FuncAsInput<SlashCommandBooleanOptionBuilder>): this;
-    addBooleanOption(option: SlashCommandBooleanOptionBuilder): this;
     addBooleanOption(
         keyOrOption: string | FuncAsInput<SlashCommandBooleanOptionBuilder> | SlashCommandBooleanOptionBuilder,
         input: FuncAsInput<SlashCommandBooleanOptionBuilder> = option => option
@@ -172,9 +202,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addChannelOption(key: string, input?: FuncAsInput<SlashCommandChannelOptionBuilder>): this;
-    addChannelOption(option: FuncAsInput<SlashCommandChannelOptionBuilder>): this;
-    addChannelOption(option: SlashCommandChannelOptionBuilder): this;
     addChannelOption(
         keyOrOption: string | FuncAsInput<SlashCommandChannelOptionBuilder> | SlashCommandChannelOptionBuilder,
         input: FuncAsInput<SlashCommandChannelOptionBuilder> = option => option
@@ -183,9 +210,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addIntegerOption(key: string, input?: FuncAsInput<SlashCommandIntegerOptionBuilder>): this;
-    addIntegerOption(option: FuncAsInput<SlashCommandIntegerOptionBuilder>): this;
-    addIntegerOption(option: SlashCommandIntegerOptionBuilder): this;
     addIntegerOption(
         keyOrOption: string | FuncAsInput<SlashCommandIntegerOptionBuilder> | SlashCommandIntegerOptionBuilder,
         input: FuncAsInput<SlashCommandIntegerOptionBuilder> = option => option
@@ -194,9 +218,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addMentionableOption(key: string, input?: FuncAsInput<SlashCommandMentionableOptionBuilder>): this;
-    addMentionableOption(option: FuncAsInput<SlashCommandMentionableOptionBuilder>): this;
-    addMentionableOption(option: SlashCommandMentionableOptionBuilder): this;
     addMentionableOption(
         keyOrInput: string | FuncAsInput<SlashCommandMentionableOptionBuilder> | SlashCommandMentionableOptionBuilder,
         input: FuncAsInput<SlashCommandMentionableOptionBuilder> = option => option
@@ -205,9 +226,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addNumberOption(key: string, input?: FuncAsInput<SlashCommandNumberOptionBuilder>): this;
-    addNumberOption(option: FuncAsInput<SlashCommandNumberOptionBuilder>): this;
-    addNumberOption(option: SlashCommandNumberOptionBuilder): this;
     addNumberOption(
         keyOrInput: string | FuncAsInput<SlashCommandNumberOptionBuilder> | SlashCommandNumberOptionBuilder,
         input: FuncAsInput<SlashCommandNumberOptionBuilder> = option => option
@@ -216,9 +234,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addRoleOption(key: string, input?: FuncAsInput<SlashCommandRoleOptionBuilder>): this;
-    addRoleOption(option: FuncAsInput<SlashCommandRoleOptionBuilder>): this;
-    addRoleOption(option: SlashCommandRoleOptionBuilder): this;
     addRoleOption(
         keyOrInput: string | FuncAsInput<SlashCommandRoleOptionBuilder> | SlashCommandRoleOptionBuilder,
         input: FuncAsInput<SlashCommandRoleOptionBuilder> = option => option
@@ -227,9 +242,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addStringOption(key: string, input?: FuncAsInput<SlashCommandStringOptionBuilder>): this;
-    addStringOption(option: FuncAsInput<SlashCommandStringOptionBuilder>): this;
-    addStringOption(option: SlashCommandStringOptionBuilder): this;
     addStringOption(
         keyOrInput: string | FuncAsInput<SlashCommandStringOptionBuilder> | SlashCommandStringOptionBuilder,
         input: FuncAsInput<SlashCommandStringOptionBuilder> = option => option
@@ -238,9 +250,6 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
-    addUserOption(key: string, input?: FuncAsInput<SlashCommandUserOptionBuilder>): this;
-    addUserOption(option: FuncAsInput<SlashCommandUserOptionBuilder>): this;
-    addUserOption(option: SlashCommandUserOptionBuilder): this;
     addUserOption(
         keyOrInput: string | FuncAsInput<SlashCommandUserOptionBuilder> | SlashCommandUserOptionBuilder,
         input: FuncAsInput<SlashCommandUserOptionBuilder> = option => option

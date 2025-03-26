@@ -7,6 +7,7 @@ import { BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, SharedOptionsMixin
 import { hasMixin, mix } from 'ts-mixer';
 
 export interface SlashCommandSubcommandBuilder extends SharedOptionsMixin<SubcommandBuilder>, BaseKeyMixin {}
+
 @mix(SharedOptionsMixin, BaseKeyMixin)
 export class SlashCommandSubcommandBuilder {
     constructor(baseKey?: string) {
@@ -29,7 +30,12 @@ export class SlashCommandSubcommandBuilder {
     }
 }
 
-export interface SlashCommandSubcommandGroupBuilder extends NameAndDescriptionMixin<GroupBuilder>, BaseKeyMixin {}
+export interface SlashCommandSubcommandGroupBuilder extends NameAndDescriptionMixin<GroupBuilder>, BaseKeyMixin {
+    addSubcommand(key: string, input?: FuncAsInput<SlashCommandSubcommandBuilder>): this;
+    addSubcommand(option: FuncAsInput<SlashCommandSubcommandBuilder>): this;
+    addSubcommand(option: SlashCommandSubcommandBuilder): this;
+}
+
 @mix(NameAndDescriptionMixin, BaseKeyMixin)
 export class SlashCommandSubcommandGroupBuilder {
     subcommandQueue: SlashCommandSubcommandBuilder[] = [];
@@ -50,9 +56,6 @@ export class SlashCommandSubcommandGroupBuilder {
         return hasMixin(input, SlashCommandSubcommandBuilder);
     }
 
-    addSubcommand(key: string, input?: FuncAsInput<SlashCommandSubcommandBuilder>): this;
-    addSubcommand(option: FuncAsInput<SlashCommandSubcommandBuilder>): this;
-    addSubcommand(option: SlashCommandSubcommandBuilder): this;
     addSubcommand(
         keyOrInput: string | FuncAsInput<SlashCommandSubcommandBuilder> | SlashCommandSubcommandBuilder,
         input: FuncAsInput<SlashCommandSubcommandBuilder> = option => option

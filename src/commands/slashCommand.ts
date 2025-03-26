@@ -11,7 +11,15 @@ import { BaseKeyMixin, PermsV2Mixin, SharedOptionsMixin } from 'mixins';
 import { hasMixin, mix, settings } from 'ts-mixer';
 settings.initFunction = 'init';
 
-export interface SlashCommandBuilder extends PermsV2Mixin<Builder>, SharedOptionsMixin<Builder>, BaseKeyMixin {}
+export interface SlashCommandBuilder extends PermsV2Mixin<Builder>, SharedOptionsMixin<Builder>, BaseKeyMixin {
+    addSubcommand(key: string, input?: FuncAsInput<SlashCommandSubcommandBuilder>): this;
+    addSubcommand(option: FuncAsInput<SlashCommandSubcommandBuilder>): this;
+    addSubcommand(option: SlashCommandSubcommandBuilder): this;
+
+    addSubcommandGroup(key: string, input?: FuncAsInput<SlashCommandSubcommandGroupBuilder>): this;
+    addSubcommandGroup(option: FuncAsInput<SlashCommandSubcommandGroupBuilder>): this;
+    addSubcommandGroup(option: SlashCommandSubcommandGroupBuilder): this;
+}
 
 @mix(PermsV2Mixin, SharedOptionsMixin, BaseKeyMixin)
 export class SlashCommandBuilder {
@@ -35,9 +43,6 @@ export class SlashCommandBuilder {
         return hasMixin(input, SlashCommandSubcommandGroupBuilder);
     }
 
-    addSubcommand(key: string, input?: FuncAsInput<SlashCommandSubcommandBuilder>): this;
-    addSubcommand(option: FuncAsInput<SlashCommandSubcommandBuilder>): this;
-    addSubcommand(option: SlashCommandSubcommandBuilder): this;
     addSubcommand(
         keyOrInput: string | FuncAsInput<SlashCommandSubcommandBuilder> | SlashCommandSubcommandBuilder,
         input: FuncAsInput<SlashCommandSubcommandBuilder> = option => option
@@ -61,9 +66,6 @@ export class SlashCommandBuilder {
         return this;
     }
 
-    addSubcommandGroup(key: string, input?: FuncAsInput<SlashCommandSubcommandGroupBuilder>): this;
-    addSubcommandGroup(option: FuncAsInput<SlashCommandSubcommandGroupBuilder>): this;
-    addSubcommandGroup(option: SlashCommandSubcommandGroupBuilder): this;
     addSubcommandGroup(
         keyOrInput: string | FuncAsInput<SlashCommandSubcommandGroupBuilder> | SlashCommandSubcommandGroupBuilder,
         input: FuncAsInput<SlashCommandSubcommandGroupBuilder> = option => option
