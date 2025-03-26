@@ -1,4 +1,10 @@
-import { EmbedBuilder as Builder, RGBTuple, RestOrArray, normalizeArray } from '@discordjs/builders';
+import {
+    EmbedBuilder as Builder,
+    RGBTuple,
+    RestOrArray,
+    isValidationEnabled,
+    normalizeArray
+} from '@discordjs/builders';
 import { APIEmbedField } from 'discord-api-types/v10';
 import { getConfig, getString, joinKeys } from 'lib';
 import { BuilderMixin, LocaleBaseKeyMixin } from 'mixins';
@@ -11,35 +17,36 @@ export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin 
 export class EmbedBuilder {
     constructor(locale: string, baseKey?: string) {
         this.builder = new Builder();
-        this.locale = locale;
-        this.baseKey = baseKey;
     }
 
     protected init(locale: string, baseKey?: string) {
-        const config = getConfig();
-        config.onCreateEmbed(this, locale);
+        getConfig().onCreateEmbed(this, locale);
     }
 
     protected mapField(field: LocaleFieldOptions) {
         const returnField: APIEmbedField = { inline: field.inline, name: '', value: '' };
 
-        if (Object.keys(field).length === 0) {
-            throw new TypeError('Embed field cannot be empty');
-        }
+        if (isValidationEnabled()) {
+            if (Object.keys(field).length === 0) {
+                throw new TypeError('Embed field cannot be empty');
+            }
 
-        // we cannot have both a key ref and a raw value, as that would cause an override
-        if ((field.name && field.rawName) || (field.value && field.rawValue)) {
-            throw new TypeError('Cannot have a key reference name/value and a raw name/value', { cause: field });
-        }
+            // we cannot have both a key ref and a raw value, as that would cause an override
+            if ((field.name && field.rawName) || (field.value && field.rawValue)) {
+                throw new TypeError('Cannot have a key reference name/value and a raw name/value', { cause: field });
+            }
 
-        // we cannot have both a field basekey and an opt key ref
-        if (field.key && (field.name ?? field.value)) {
-            throw new TypeError('Cannot have a field base key and a key reference name/value.', { cause: field });
-        }
+            // we cannot have both a field basekey and an opt key ref
+            if (field.key && (field.name ?? field.value)) {
+                throw new TypeError('Cannot have a field base key and a key reference name/value.', { cause: field });
+            }
 
-        // we cannot have both a raw opt and opt args
-        if ((field.rawName && field.nameArgs) || (field.rawValue && field.valueArgs)) {
-            throw new TypeError('Cannot have a field raw name/value and name/value string arguments', { cause: field });
+            // we cannot have both a raw opt and opt args
+            if ((field.rawName && field.nameArgs) || (field.rawValue && field.valueArgs)) {
+                throw new TypeError('Cannot have a field raw name/value and name/value string arguments', {
+                    cause: field
+                });
+            }
         }
 
         // if we have a name or value ref key
@@ -92,11 +99,13 @@ export class EmbedBuilder {
     setAuthor(author: LocaleAuthor = {}) {
         let name = '';
 
-        if (!(author.name ?? author.rawName) && !this.baseKey) {
-            throw new TypeError(
-                'You must provide either a key ref or raw value as a name when no embed base key is defined',
-                { cause: author }
-            );
+        if (isValidationEnabled()) {
+            if (!(author.name ?? author.rawName) && !this.baseKey) {
+                throw new TypeError(
+                    'You must provide either a key ref or raw value as a name when no embed base key is defined',
+                    { cause: author }
+                );
+            }
         }
 
         if ((!(author.name ?? author.rawName) && this.baseKey) || (Object.keys(author).length === 0 && this.baseKey)) {
@@ -104,10 +113,12 @@ export class EmbedBuilder {
         }
 
         if (author.name ?? author.rawName) {
-            if (author.rawName && author.name) {
-                throw new TypeError('Cannot have both a raw name and a key name in an author.');
-            } else if (author.rawName && author.nameArgs) {
-                throw new TypeError('Cannot have name arguments on a raw name.');
+            if (isValidationEnabled()) {
+                if (author.rawName && author.name) {
+                    throw new TypeError('Cannot have both a raw name and a key name in an author.');
+                } else if (author.rawName && author.nameArgs) {
+                    throw new TypeError('Cannot have name arguments on a raw name.');
+                }
             }
 
             name = author.rawName ?? getString(author.name ?? '', this.locale, 'embeds', author.nameArgs);
@@ -151,11 +162,13 @@ export class EmbedBuilder {
     setFooter(footer: LocaleFooter = {}) {
         let text = '';
 
-        if (!(footer.text ?? footer.rawText) && !this.baseKey) {
-            throw new TypeError(
-                'You must provide either a key ref or raw value as a text when no embed base key is defined',
-                { cause: footer }
-            );
+        if (isValidationEnabled()) {
+            if (!(footer.text ?? footer.rawText) && !this.baseKey) {
+                throw new TypeError(
+                    'You must provide either a key ref or raw value as a text when no embed base key is defined',
+                    { cause: footer }
+                );
+            }
         }
 
         if ((!(footer.text ?? footer.rawText) && this.baseKey) || (Object.keys(footer).length === 0 && this.baseKey)) {
@@ -163,10 +176,12 @@ export class EmbedBuilder {
         }
 
         if (footer.text ?? footer.rawText) {
-            if (footer.rawText && footer.text) {
-                throw new TypeError('Cannot have both a raw text and a key text in a footer.');
-            } else if (footer.rawText && footer.textArgs) {
-                throw new TypeError('Cannot have text arguments on a raw text.');
+            if (isValidationEnabled()) {
+                if (footer.rawText && footer.text) {
+                    throw new TypeError('Cannot have both a raw text and a key text in a footer.');
+                } else if (footer.rawText && footer.textArgs) {
+                    throw new TypeError('Cannot have text arguments on a raw text.');
+                }
             }
 
             text = footer.rawText ?? getString(footer.text ?? '', this.locale, 'embeds', footer.textArgs);
