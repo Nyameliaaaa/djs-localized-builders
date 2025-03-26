@@ -1,4 +1,5 @@
 export type ArgsWithRawParam = { raw?: boolean; [key: string]: any };
+export type ArgsWithRawOrKeyedParam = { raw?: boolean; localized?: boolean; [key: string]: any };
 
 export type LocaleFieldOptions = {
     key?: string;
