@@ -26,15 +26,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/night-lake/djs-localized-builders.git"
+        "url": "git+https://github.com/Nyameliaaaa/djs-localized-builders.git"
     },
     "keywords": [],
-    "author": "",
+    "author": "Amelia Rose <nyameliaaaaa@proton.me>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/night-lake/djs-localized-builders/issues"
+        "url": "https://github.com/Nyameliaaaa/djs-localized-builders/issues"
     },
-    "homepage": "https://github.com/night-lake/djs-localized-builders#readme",
+    "homepage": "https://github.com/Nyameliaaaa/djs-localized-builders#readme",
     "devDependencies": {
         "@commitlint/cli": "^17.8.1",
         "@commitlint/config-conventional": "^17.8.1",
