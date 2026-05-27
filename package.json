@@ -19,10 +19,11 @@
         "build": "tsup",
         "lint": "eslint .",
         "lint:fix": "eslint --fix",
-        "docs:dev": "vuepress dev docs",
-        "docs:build": "vuepress build docs",
         "release": "changelogen",
-        "prepare": "husky"
+        "prepare": "husky",
+        "docs:build:api": "typedoc",
+        "docs:dev": "pnpm docs:build:api && vitepress dev docs",
+        "docs:build": "pnpm docs:build:api && vitepress build docs"
     },
     "repository": {
         "type": "git",
@@ -53,7 +54,11 @@
         "globals": "^17.6.0",
         "husky": "^9.1.7",
         "tsup": "^8.5.1",
-        "typescript": "^6.0.3"
+        "typedoc": "^0.28.19",
+        "typedoc-plugin-markdown": "^4.11.0",
+        "typedoc-vitepress-theme": "^1.1.2",
+        "typescript": "^6.0.3",
+        "vitepress": "^1.6.4"
     },
     "peerDependencies": {
         "@discordjs/builders": "^1.10.0"

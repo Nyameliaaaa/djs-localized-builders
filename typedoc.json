@@ -1,6 +1,7 @@
 {
+    "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
     "entryPoints": ["src/index.ts"],
-    "out": ".build/docs",
-    "excludeInternal": true,
-    "plugin": ["typedoc-plugin-markdown"]
+    "out": "docs/api",
+    "tsconfig": "./tsconfig.json",
+    "docsRoot": "docs",
 }

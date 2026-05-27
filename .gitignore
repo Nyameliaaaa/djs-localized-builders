@@ -104,3 +104,8 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Vitepress
+docs/.vitepress/cache
+docs/.vitepress/dist
+docs/api
