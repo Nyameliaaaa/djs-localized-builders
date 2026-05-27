@@ -25,7 +25,8 @@
             "$options": ["./src/options/index.ts"],
             "$commands": ["./src/commands/index.ts"],
             "$components": ["./src/components/index.ts"],
-            "$embeds": ["./src/embeds.ts"]
+            "$embeds": ["./src/embeds.ts"],
+            "$dist": ["./dist/index.d.ts", "./dist/index.d.mts"]
         },
         "ignoreDeprecations": "6.0"
     }

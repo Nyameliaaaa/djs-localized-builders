@@ -14,7 +14,11 @@
         "dist"
     ],
     "scripts": {
-        "test": "npm run test:typescript && npm run lint",
+        "test:unit": "vitest",
+        "pretest:run": "pnpm build",
+        "test:run": "vitest run",
+        "test:ui": "vitest --ui",
+        "test:ci": "npm run test:typescript && npm run lint",
         "test:typescript": "tsc --noEmit",
         "build": "tsup",
         "lint": "eslint .",
@@ -45,6 +49,7 @@
         "@types/node": "^25.9.1",
         "@typescript-eslint/eslint-plugin": "^8.60.0",
         "@typescript-eslint/parser": "^8.60.0",
+        "@vitest/ui": "3.2.4",
         "changelogen": "^0.6.2",
         "discord-api-types": "^0.38.48",
         "eslint": "^10.4.0",
@@ -58,7 +63,8 @@
         "typedoc-plugin-markdown": "^4.11.0",
         "typedoc-vitepress-theme": "^1.1.2",
         "typescript": "^6.0.3",
-        "vitepress": "^1.6.4"
+        "vitepress": "^1.6.4",
+        "vitest": "^3.2.4"
     },
     "peerDependencies": {
         "@discordjs/builders": "^1.10.0"

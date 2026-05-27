@@ -1,3 +1,6 @@
+import { getConfig, getString, joinKeys } from '$lib';
+import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
+import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter } from '$types';
 import {
     EmbedBuilder as Builder,
     RGBTuple,
@@ -5,21 +8,21 @@ import {
     isValidationEnabled,
     normalizeArray
 } from '@discordjs/builders';
-import { APIEmbedField } from 'discord-api-types/v10';
-import { getConfig, getString, joinKeys } from '$lib';
-import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
-import { mix } from 'ts-mixer';
-import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter } from '$types';
+import { APIEmbedField, type LocalizationMap } from 'discord-api-types/v10';
+import { mix, settings } from 'ts-mixer';
+settings.initFunction = 'init';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin {}
 
 @mix(LocaleBaseKeyMixin, BuilderMixin)
 export class EmbedBuilder {
-    constructor(locale: string, baseKey?: string) {
+    constructor(locale: keyof LocalizationMap, baseKey?: string) {
         this.builder = new Builder();
+        this.locale = locale;
+        this.baseKey = baseKey;
     }
 
-    protected init(locale: string, baseKey?: string) {
+    protected init(locale: keyof LocalizationMap, baseKey?: string) {
         getConfig().onCreateEmbed(this, locale);
     }
 
