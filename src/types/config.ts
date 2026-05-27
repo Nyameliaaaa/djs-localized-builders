@@ -1,107 +1,113 @@
 import { EmbedBuilder } from '$embeds';
 
 /**
- * The names to use for the different namespaces from where strings are fetched.
- * @category Config
+ * Maps the internal namespace names used by {@link getString}, {@link getDefaultString}, and {@link getAllStrings} to the namespace names in your i18n files.
+ * @group Config
  */
 export interface NamespaceMap {
     /**
-     * The namespace used to fetch command localization strings.
-     * @defaultValue 'commands'
+     * Namespace for command localization strings.
+     * @defaultValue `'commands'`
      */
     commands: string;
 
     /**
-     * The namespace used to fetch component localization strings.
-     * @defaultValue 'components'
+     * Namespace for component localization strings.
+     * @defaultValue `'components'`
      */
     components: string;
 
     /**
-     * The namespace used to fetch embed localization strings.
-     * @defaultValue 'embeds'
+     * Namespace for embed localization strings.
+     * @defaultValue `'embeds'`
      */
     embeds: string;
 }
 
 /**
- * The options for the `options.getLocalizedString`
- * @category Config
+ * Options passed to {@link ConfigType.getLocalizedString}
+ * @group Config
  */
 export interface GetLocalizedStringOptions {
     /**
-     * The namespace from which the string is fetched.
+     * The i18n namespace to resolve from, mapped to the values of {@link ConfigType.namespaces}
      */
     namespace: string;
 
     /**
-     * The string in question
+     * The i18n key to resolve.
      */
     string: string;
 
     /**
-     * The locale to fetch from.
+     * The locale to resolve the i18n key from.
      */
     lang: string;
 
     /**
-     * Any additional Key/Value arguments for the string.
+     * Interpolation arguments passed to the localized string.
      */
     options?: Record<string, any>;
 }
 
 /**
- * The type for the library config.
- * @category Config
+ * Configuration object for `djs-localized-builders`, used by {@link setConfig}
+ * @group Config
  */
 export interface ConfigType {
     /**
-     * The function which is responsible for fetching a localized string. You must define this for the library to function.
-     * @param {GetLocalizedStringOptions} options - The options passed by the function.
+     * Resolves a localized string.
+     * @remarks The library will not function without this!
+     * Returning {@link GetLocalizedStringOptions#string} will call {@link ConfigType.onMissingKey}
+     * @param options - See {@link GetLocalizedStringOptions}.
      */
     getLocalizedString: (options: GetLocalizedStringOptions) => string;
 
     /**
-     * Called when an attempted key call is not found.
-     * @param lang The langauge in which the key is missing.
-     * @param namespace The namespace in which this key does not exist.
-     * @param key The key which is missing.
+     * Called by {@link getString}, {@link getDefaultString}, and {@link getAllStrings} when an i18n key was not found.
+     * @param lang The locale where this i18n key was not found.
+     * @param namespace The namespace where this i18n key was not found.
+     * @param key The i18n key that was not found.
      */
-    onMissingKey: (lang: string, namespace: string, key: string) => any;
+    onMissingKey: (lang: string, namespace: string, key: string) => void;
 
     /**
-     * Called when an instance of {@see EmbedBuilder} is created.
-     * @param embed The embed instance.
+     * Called when an instance of {@link EmbedBuilder} is created.
+     * @remarks Use this to apply default properties to all embeds, such as a default color or footer.
+     * @param embed The EmbedBuilder instance.
      * @param locale The locale of the instance.
      */
     onCreateEmbed: (embed: EmbedBuilder, locale: string) => Promise<void> | void;
 
     /**
-     * The case your strings are coded in.
-     * If you are using camelCase key names, you must use 'keep'
-     * @defaultValue `false`
+     * Casing format of your i18n keys.
+     * @remarks If you are using camelCase i18n key names, use `'keep'`.
+     * @defaultValue `'lowercase'`
      */
     caseFormat: 'uppercase' | 'lowercase' | 'keep';
 
     /**
-     * The char to join the base keys with.
-     * @defaultValue '.'
+     * The character used to join i18n key segments.
+     * @defaultValue `'.'`
      */
     separatorChar: string;
 
     /**
-     * Modify the default namespace names used by the library for string fetching.
+     * Maps the internal namespace names used by {@link getString}, {@link getDefaultString}, and {@link getAllStrings} to the namespace names in your i18n files.
+     * @defaultValue `{ commands: 'commands', components: 'components', embeds: 'embeds' }`
      */
     namespaces?: NamespaceMap;
 
     /**
-     * The languages that the builders should support.
-     * @defaultValue 'en-US'
+     * Locales to generate localizations for.
+     * @remarks Must be a valid Discord locale, see {@link https://docs.discord.com/developers/reference#locales}
+     * @defaultValue `['en-US']`
      */
     langs: string[];
 
     /**
-     * Whether to enable the Discord.js Builder validators.
+     * Whether to enable validation of parameters.
+     * @remarks This also configures `@discordjs/builders` validation automatically.
      * @defaultValue `true`
      */
     validators?: boolean;

@@ -6,6 +6,9 @@ settings.initFunction = 'init';
 
 export interface ContextMenuCommandBuilder extends PermsV2Mixin<Builder>, NameMixin<Builder>, BaseKeyMixin {}
 
+/**
+ * @group Commands
+ */
 @mix(PermsV2Mixin, NameMixin, BaseKeyMixin)
 export class ContextMenuCommandBuilder {
     constructor(baseKey?: string) {

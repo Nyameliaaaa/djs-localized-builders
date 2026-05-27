@@ -14,6 +14,9 @@ settings.initFunction = 'init';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin {}
 
+/**
+ * @group Embeds
+ */
 @mix(LocaleBaseKeyMixin, BuilderMixin)
 export class EmbedBuilder {
     constructor(locale: keyof LocalizationMap, baseKey?: string) {

@@ -11,6 +11,9 @@ import { BaseKeyMixin, PermsV2Mixin, SharedOptionsMixin } from '$mixins';
 import { hasMixin, mix, settings } from 'ts-mixer';
 settings.initFunction = 'init';
 
+/**
+ * @group Commands
+ */
 export interface SlashCommandBuilder extends PermsV2Mixin<Builder>, SharedOptionsMixin<Builder>, BaseKeyMixin {
     addSubcommand(key: string, input?: FuncAsInput<SlashCommandSubcommandBuilder>): this;
     addSubcommand(option: FuncAsInput<SlashCommandSubcommandBuilder>): this;
@@ -21,6 +24,9 @@ export interface SlashCommandBuilder extends PermsV2Mixin<Builder>, SharedOption
     addSubcommandGroup(option: SlashCommandSubcommandGroupBuilder): this;
 }
 
+/**
+ * @group Commands
+ */
 @mix(PermsV2Mixin, SharedOptionsMixin, BaseKeyMixin)
 export class SlashCommandBuilder {
     constructor(baseKey?: string) {

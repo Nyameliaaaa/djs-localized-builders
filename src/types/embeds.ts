@@ -50,6 +50,9 @@ type BaseKeySource =
           key?: never;
       };
 
+/**
+ * @group Embeds
+ */
 export type LocaleFieldOptions = {
     inline?: boolean;
     nameArgs?: Record<string, any>;
@@ -70,6 +73,9 @@ export type RawTextLocaleAuthor = {
     nameArgs?: never;
 };
 
+/**
+ * @group Embeds
+ */
 export type LocaleAuthor = (TextLocaleAuthor | RawTextLocaleAuthor) & { url?: string; iconURL?: string };
 
 export type TextLocaleFooter = {
@@ -84,4 +90,7 @@ export type RawTextLocaleFooter = {
     textArgs?: never;
 };
 
+/**
+ * @group Embeds
+ */
 export type LocaleFooter = (TextLocaleFooter | RawTextLocaleFooter) & { iconURL?: string };

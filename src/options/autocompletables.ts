@@ -3,6 +3,9 @@ import { AutocompletableMixin, BaseKeyMixin, MinMaxNumberMixin } from '$mixins';
 import { mix } from 'ts-mixer';
 
 export interface SlashCommandNumberOptionBuilder extends MinMaxNumberMixin<SlashCommandNumberOption>, BaseKeyMixin {}
+/**
+ * @group Options
+ */
 @mix(MinMaxNumberMixin, BaseKeyMixin)
 export class SlashCommandNumberOptionBuilder {
     constructor(baseKey?: string) {
@@ -11,6 +14,9 @@ export class SlashCommandNumberOptionBuilder {
 }
 
 export interface SlashCommandIntegerOptionBuilder extends MinMaxNumberMixin<SlashCommandIntegerOption>, BaseKeyMixin {}
+/**
+ * @group Options
+ */
 @mix(MinMaxNumberMixin, BaseKeyMixin)
 export class SlashCommandIntegerOptionBuilder {
     constructor(baseKey?: string) {
@@ -21,6 +27,9 @@ export class SlashCommandIntegerOptionBuilder {
 export interface SlashCommandStringOptionBuilder
     extends AutocompletableMixin<SlashCommandStringOption, string>,
         BaseKeyMixin {}
+/**
+ * @group Options
+ */
 @mix(AutocompletableMixin, BaseKeyMixin)
 export class SlashCommandStringOptionBuilder {
     constructor(baseKey?: string) {

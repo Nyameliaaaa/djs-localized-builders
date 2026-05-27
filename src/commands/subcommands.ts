@@ -8,6 +8,9 @@ import { hasMixin, mix } from 'ts-mixer';
 
 export interface SlashCommandSubcommandBuilder extends SharedOptionsMixin<SubcommandBuilder>, BaseKeyMixin {}
 
+/**
+ * @group Commands
+ */
 @mix(SharedOptionsMixin, BaseKeyMixin)
 export class SlashCommandSubcommandBuilder {
     constructor(baseKey?: string) {
@@ -37,6 +40,9 @@ export interface SlashCommandSubcommandGroupBuilder extends NameAndDescriptionMi
 }
 
 @mix(NameAndDescriptionMixin, BaseKeyMixin)
+/**
+ * @group Commands
+ */
 export class SlashCommandSubcommandGroupBuilder {
     subcommandQueue: SlashCommandSubcommandBuilder[] = [];
 

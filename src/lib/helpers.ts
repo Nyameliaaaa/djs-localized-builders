@@ -1,16 +1,10 @@
-/**
- * @file Helper functions shared by all builders.
- * @author Amelia Katherine [night-lake]
- * @module Helpers
- */
-
 import { getConfig } from '../index';
 
 /**
- * A helper to join multiple base key parameters.
- * @param keys The keys to join.
- * @returns The joined key.
- * @category Helpers
+ * Joins multiple i18n key segments.
+ * @param keys The i18n key segments.
+ * @returns The joined i18n key segments, formatted according to {@link ConfigType.caseFormat} and {@link ConfigType.separatorChar}.
+ * @group Helpers
  */
 export function joinKeys(keys: string[]) {
     const config = getConfig();
@@ -31,13 +25,12 @@ export function joinKeys(keys: string[]) {
 }
 
 /**
- * Get a string in a locale.
- * @param string The string to get.
- * @param lang The language to get.
- * @param namespace The namespace to use.
- * @param options Any additional args.
- * @returns {string}
- * @category Helpers
+ * Resolves a localized string in a specific locale.
+ * @param string The i18n key.
+ * @param lang The locale to resolve from.
+ * @param namespace The namespace to resolve from.
+ * @param options Interpolation arguments.
+ * @group Helpers
  */
 export function getString(
     string: string,
@@ -61,12 +54,11 @@ export function getString(
 }
 
 /**
- * Get a string in the en-US locale.
- * @param string The string to get.
- * @param namespace The namespace to use.
- * @param options Any additional args.
- * @returns {string}
- * @category Helpers
+ * Resolves an i18n string in the `en-US` locale.
+ * @param string The i18n key.
+ * @param namespace The namespace to resolve from.
+ * @param options Interpolation arguments.
+ * @group Helpers
  */
 export function getDefaultString(
     string: string,
@@ -89,12 +81,11 @@ export function getDefaultString(
 }
 
 /**
- * Get a string in all possible locales.
- * @param string The string to get.
- * @param namespace The namespace to use.
- * @param options Any additional args.
- * @returns {Record<string, string>}
- * @category Helpers
+ * Resolves an i18n string in all possible locales.
+ * @param string The i18n key.
+ * @param namespace The namespace to resolve from.
+ * @param options Interpolation arguments.
+ * @group Helpers
  */
 export function getAllStrings(
     string: string,

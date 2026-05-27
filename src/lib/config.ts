@@ -23,10 +23,11 @@ let config: ConfigType = {
 
 /**
  * Set config for the library.
- * @example ```ts
+ * @example Example #1
+ *  ```ts
 	setConfig({
 		getLocalizedString: ({ namespace, string, lang, options }) => {
-			return client.i18n.getString({ namespace, string, lang, options }) ?? 'fetch_fail'
+			return client.i18n.getString({ namespace, string, lang, options }) ?? string
 		},
 		caseFormat: 'lowercase',
 		separatorChar: '_',
@@ -43,7 +44,7 @@ let config: ConfigType = {
 	});
  * ```
  * @param newConfig The new config to use.
- * @category Config
+ * @group Config
  */
 export const setConfig = (newConfig: Partial<ConfigType>) => {
     if (newConfig.validators) {
@@ -57,6 +58,6 @@ export const setConfig = (newConfig: Partial<ConfigType>) => {
 
 /**
  * Get the currently selected config.
- * @category Config
+ * @group Config
  */
 export const getConfig = (): ConfigType => config;

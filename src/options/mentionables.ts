@@ -5,6 +5,10 @@ import { mix } from 'ts-mixer';
 export interface SlashCommandMentionableOptionBuilder
     extends OptionMixin<SlashCommandMentionableOption>,
         BaseKeyMixin {}
+
+/**
+ * @group Options
+ */
 @mix(OptionMixin, BaseKeyMixin)
 export class SlashCommandMentionableOptionBuilder {
     constructor(baseKey?: string) {
@@ -13,6 +17,10 @@ export class SlashCommandMentionableOptionBuilder {
 }
 
 export interface SlashCommandUserOptionBuilder extends OptionMixin<SlashCommandUserOption>, BaseKeyMixin {}
+
+/**
+ * @group Options
+ */
 @mix(OptionMixin, BaseKeyMixin)
 export class SlashCommandUserOptionBuilder {
     constructor(baseKey?: string) {
@@ -21,6 +29,9 @@ export class SlashCommandUserOptionBuilder {
 }
 
 export interface SlashCommandRoleOptionBuilder extends OptionMixin<SlashCommandRoleOption>, BaseKeyMixin {}
+/**
+ * @group Options
+ */
 @mix(OptionMixin, BaseKeyMixin)
 export class SlashCommandRoleOptionBuilder {
     constructor(baseKey?: string) {

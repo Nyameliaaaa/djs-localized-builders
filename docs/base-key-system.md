@@ -1,5 +1,3 @@
----
-title: The Base Key System
----
+# The Base Key System
 
 hi :3
