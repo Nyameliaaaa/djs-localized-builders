@@ -6,7 +6,7 @@ export default defineConfig({
     title: 'djs-localized-builders',
     description: 'A set of builders for discord.js, built to allow easy localization.',
     base: '/djs-localized-builders/',
-    cleanUrls: true,
+
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         nav: [
