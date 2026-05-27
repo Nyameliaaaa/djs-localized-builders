@@ -6,8 +6,8 @@ import {
     FuncAsInput,
     SlashCommandSubcommandBuilder,
     SlashCommandSubcommandGroupBuilder
-} from 'index';
-import { BaseKeyMixin, PermsV2Mixin, SharedOptionsMixin } from 'mixins';
+} from '$index';
+import { BaseKeyMixin, PermsV2Mixin, SharedOptionsMixin } from '$mixins';
 import { hasMixin, mix, settings } from 'ts-mixer';
 settings.initFunction = 'init';
 
@@ -61,7 +61,6 @@ export class SlashCommandBuilder {
             subcommand = keyOrInput;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.builder.addSubcommand(subcommand!.hydrateSelf(this.baseKey ?? '').builder);
         return this;
     }
@@ -84,7 +83,6 @@ export class SlashCommandBuilder {
             subcommandGroup = keyOrInput;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.builder.addSubcommandGroup(subcommandGroup!.hydrateSelf(this.baseKey ?? '').builder);
         return this;
     }

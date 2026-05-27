@@ -1,7 +1,7 @@
 import { ButtonBuilder as Builder, isValidationEnabled } from '@discordjs/builders';
 import type { APIMessageComponentEmoji, ButtonStyle, LocalizationMap } from 'discord-api-types/v10';
-import { ArgsWithRawOrKeyedParam, getString, joinKeys } from '../../index';
-import { BaseKeyMixin, BuilderMixin } from 'mixins';
+import { ArgsWithRawOrKeyedParam, getString, joinKeys } from '$index';
+import { BaseKeyMixin, BuilderMixin } from '$mixins';
 import { mix } from 'ts-mixer';
 
 export interface ButtonBuilder extends BuilderMixin<Builder>, BaseKeyMixin {}

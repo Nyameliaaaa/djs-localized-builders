@@ -1,20 +1,32 @@
 {
+    "include": ["src/**/*"],
     "compilerOptions": {
         "target": "es2022",
         "lib": ["esnext"],
-        "baseUrl": "src",
+        "rootDir": "src",
         "outDir": "dist",
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
+        "types": ["node"],
         "sourceMap": true,
         "declaration": true,
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
-        "pretty": true,
         "noEmitOnError": true,
         "strict": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "paths": {
+            "$lib": ["./src/lib/index.ts"],
+            "$mixins": ["./src/mixins/index.ts"],
+            "$types": ["./src/types/index.ts"],
+            "$index": ["./src/index.ts"],
+            "$options": ["./src/options/index.ts"],
+            "$commands": ["./src/commands/index.ts"],
+            "$components": ["./src/components/index.ts"],
+            "$embeds": ["./src/embeds.ts"]
+        },
+        "ignoreDeprecations": "6.0"
     }
 }

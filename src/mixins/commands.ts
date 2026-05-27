@@ -12,8 +12,8 @@ import {
     SlashCommandSubcommandBuilder,
     SlashCommandUserOption
 } from '@discordjs/builders';
-import { getAllStrings, getDefaultString, joinKeys } from 'lib';
-import { AutocompletableMixin, BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, OptionMixin } from 'mixins';
+import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { AutocompletableMixin, BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, OptionMixin } from '$mixins';
 import {
     SlashCommandIntegerOptionBuilder,
     SlashCommandMentionableOptionBuilder,
@@ -24,9 +24,9 @@ import {
     SlashCommandAttachmentOptionBuilder,
     SlashCommandBooleanOptionBuilder,
     SlashCommandChannelOptionBuilder
-} from 'options';
+} from '$options';
 import { hasMixin, mix } from 'ts-mixer';
-import { FuncAsInput, OptionResolvable } from 'types';
+import { FuncAsInput, OptionResolvable } from '$types';
 
 export interface PermsV2Mixin<T extends SlashCommandBuilder | ContextMenuCommandBuilder> extends BuilderMixin<T> {}
 

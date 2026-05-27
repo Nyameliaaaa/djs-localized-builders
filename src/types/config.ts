@@ -1,4 +1,4 @@
-import { EmbedBuilder } from 'embeds';
+import { EmbedBuilder } from '$embeds';
 
 /**
  * The names to use for the different namespaces from where strings are fetched.

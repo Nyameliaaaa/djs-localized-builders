@@ -1,9 +1,9 @@
 import { isValidationEnabled, StringSelectMenuOptionBuilder as StringOptionBuilder } from '@discordjs/builders';
 import { APIMessageComponentEmoji, LocalizationMap, APISelectMenuOption } from 'discord-api-types/v10';
-import { getString, joinKeys } from 'index';
-import { BuilderMixin, BaseKeyMixin } from 'mixins';
+import { getString, joinKeys } from '$index';
+import { BuilderMixin, BaseKeyMixin } from '$mixins';
 import { mix } from 'ts-mixer';
-import { ArgsWithRawOrKeyedParam } from 'types';
+import { ArgsWithRawOrKeyedParam } from '$types';
 
 export interface StringSelectMenuOptionBuilder extends BuilderMixin<StringOptionBuilder>, BaseKeyMixin {
     setLabel(label: string, args?: ArgsWithRawOrKeyedParam): this;

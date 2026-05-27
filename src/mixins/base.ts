@@ -1,5 +1,5 @@
 import { LocalizationMap } from 'discord-api-types/v10';
-import type { BuilderResolvable } from 'types';
+import type { BuilderResolvable } from '$types';
 
 export class BuilderMixin<T extends BuilderResolvable> {
     public builder!: T;

@@ -6,8 +6,7 @@ import {
     SlashCommandBooleanOption,
     SlashCommandChannelOption
 } from '@discordjs/builders';
-import { BaseKeyMixin } from 'mixins/base';
-import { OptionMixin } from 'mixins/options';
+import { BaseKeyMixin, OptionMixin } from '$mixins';
 import { mix } from 'ts-mixer';
 
 export interface SlashCommandAttachmentOptionBuilder extends OptionMixin<SlashCommandAttachmentOption>, BaseKeyMixin {}

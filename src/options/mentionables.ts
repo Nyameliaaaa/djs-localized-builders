@@ -1,5 +1,5 @@
 import { SlashCommandMentionableOption, SlashCommandRoleOption, SlashCommandUserOption } from '@discordjs/builders';
-import { BaseKeyMixin, OptionMixin } from 'mixins';
+import { BaseKeyMixin, OptionMixin } from '$mixins';
 import { mix } from 'ts-mixer';
 
 export interface SlashCommandMentionableOptionBuilder

@@ -1,6 +1,6 @@
 import { ChannelSelectMenuBuilder as ChannelBuilder, RestOrArray, normalizeArray } from '@discordjs/builders';
 import type { ChannelType, Snowflake } from 'discord-api-types/v10';
-import { BaseKeyMixin, BuilderMixin, SelectMenuMixin } from 'mixins';
+import { BaseKeyMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
 import { mix } from 'ts-mixer';
 
 export interface ChannelSelectMenuBuilder

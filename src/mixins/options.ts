@@ -6,7 +6,7 @@ import {
     SlashCommandStringOption
 } from '@discordjs/builders';
 import { APIApplicationCommandOptionChoice } from 'discord-api-types/v10';
-import { getAllStrings, getDefaultString, joinKeys, OptionResolvable } from 'index';
+import { getAllStrings, getDefaultString, joinKeys, OptionResolvable } from '$index';
 import { mix } from 'ts-mixer';
 import { BaseKeyMixin } from './base';
 import { NameAndDescriptionMixin } from './index';

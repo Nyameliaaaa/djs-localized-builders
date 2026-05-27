@@ -1,6 +1,6 @@
 import { ContextMenuCommandBuilder } from '@discordjs/builders';
 import { LocalizationMap } from 'discord-api-types/v10';
-import { ApplicationCommandBuilderResolvable } from 'types';
+import { ApplicationCommandBuilderResolvable } from '$types';
 import { mix } from 'ts-mixer';
 import { BuilderMixin } from './base';
 

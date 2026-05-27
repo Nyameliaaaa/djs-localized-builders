@@ -2,8 +2,8 @@ import {
     SlashCommandSubcommandBuilder as SubcommandBuilder,
     SlashCommandSubcommandGroupBuilder as GroupBuilder
 } from '@discordjs/builders';
-import { getAllStrings, getDefaultString, joinKeys, FuncAsInput } from 'index';
-import { BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, SharedOptionsMixin } from 'mixins';
+import { getAllStrings, getDefaultString, joinKeys, FuncAsInput } from '$index';
+import { BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, SharedOptionsMixin } from '$mixins';
 import { hasMixin, mix } from 'ts-mixer';
 
 export interface SlashCommandSubcommandBuilder extends SharedOptionsMixin<SubcommandBuilder>, BaseKeyMixin {}

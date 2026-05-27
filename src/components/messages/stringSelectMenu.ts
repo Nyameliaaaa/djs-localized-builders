@@ -1,8 +1,8 @@
 import { RestOrArray, StringSelectMenuBuilder as StringBuilder, normalizeArray } from '@discordjs/builders';
-import { StringSelectMenuOptionBuilder } from 'components';
+import { StringSelectMenuOptionBuilder } from '$components';
 import type { LocalizationMap } from 'discord-api-types/v10';
-import { joinKeys } from 'lib';
-import { BaseKeyMixin, BuilderMixin, SelectMenuMixin } from 'mixins';
+import { joinKeys } from '$lib';
+import { BaseKeyMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
 import { mix } from 'ts-mixer';
 
 export interface StringSelectMenuBuilder

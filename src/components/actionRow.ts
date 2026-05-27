@@ -11,9 +11,9 @@ import type {
     MentionableSelectMenuBuilder,
     UserSelectMenuBuilder,
     RoleSelectMenuBuilder
-} from 'components';
+} from '$components';
 import { LocalizationMap } from 'discord-api-types/v10';
-import { LocaleBaseKeyMixin, BuilderMixin } from 'mixins';
+import { LocaleBaseKeyMixin, BuilderMixin } from '$mixins';
 import { mix } from 'ts-mixer';
 
 export interface ActionRowBuilder extends LocaleBaseKeyMixin, BuilderMixin<Builder<AnyComponentBuilder>> {}

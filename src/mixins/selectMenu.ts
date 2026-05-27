@@ -1,7 +1,7 @@
 import { isValidationEnabled } from '@discordjs/builders';
 import type { LocalizationMap } from 'discord-api-types/v10';
-import { ArgsWithRawOrKeyedParam, SelectMenuResolvable, StringSelectMenuBuilder, getString, joinKeys } from 'index';
-import { BaseKeyMixin, BuilderMixin } from 'mixins';
+import { ArgsWithRawOrKeyedParam, SelectMenuResolvable, StringSelectMenuBuilder, getString, joinKeys } from '$index';
+import { BaseKeyMixin, BuilderMixin } from '$mixins';
 import { hasMixin, mix } from 'ts-mixer';
 
 export interface SelectMenuMixin<Builder extends SelectMenuResolvable> extends BuilderMixin<Builder>, BaseKeyMixin {}
@@ -12,7 +12,6 @@ export class SelectMenuMixin<Builder extends SelectMenuResolvable> {
     private nonBaseKeyplaceholderLocaleString = '';
     private placeholderRequiresParentBaseKeyHydration = false;
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     constructor(baseKey?: string) {}
 
     setPlaceholder(placeholder: string, args?: ArgsWithRawOrKeyedParam): this;

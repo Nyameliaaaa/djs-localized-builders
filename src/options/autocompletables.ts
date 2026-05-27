@@ -1,5 +1,5 @@
 import { SlashCommandIntegerOption, SlashCommandNumberOption, SlashCommandStringOption } from '@discordjs/builders';
-import { AutocompletableMixin, BaseKeyMixin, MinMaxNumberMixin } from 'mixins';
+import { AutocompletableMixin, BaseKeyMixin, MinMaxNumberMixin } from '$mixins';
 import { mix } from 'ts-mixer';
 
 export interface SlashCommandNumberOptionBuilder extends MinMaxNumberMixin<SlashCommandNumberOption>, BaseKeyMixin {}

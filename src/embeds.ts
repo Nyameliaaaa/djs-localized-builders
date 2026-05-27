@@ -6,10 +6,10 @@ import {
     normalizeArray
 } from '@discordjs/builders';
 import { APIEmbedField } from 'discord-api-types/v10';
-import { getConfig, getString, joinKeys } from 'lib';
-import { BuilderMixin, LocaleBaseKeyMixin } from 'mixins';
+import { getConfig, getString, joinKeys } from '$lib';
+import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
 import { mix } from 'ts-mixer';
-import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter } from 'types';
+import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter } from '$types';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin {}
 

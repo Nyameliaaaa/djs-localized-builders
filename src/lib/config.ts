@@ -1,5 +1,5 @@
 import { disableValidators, enableValidators } from '@discordjs/builders';
-import { ConfigType } from 'types';
+import { ConfigType } from '$types';
 
 let config: ConfigType = {
     getLocalizedString: ({ string }) => `function_not_implemented_${string.toLocaleLowerCase()}`,
@@ -8,7 +8,7 @@ let config: ConfigType = {
             cause: { lang, namespace, key }
         });
     },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     onCreateEmbed: (embed, locale) => {},
     caseFormat: 'lowercase',
     seperatorChar: '.',
