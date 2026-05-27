@@ -87,7 +87,7 @@ export interface ConfigType {
      * The char to join the base keys with.
      * @defaultValue '.'
      */
-    seperatorChar: string;
+    separatorChar: string;
 
     /**
      * Modify the default namespace names used by the library for string fetching.

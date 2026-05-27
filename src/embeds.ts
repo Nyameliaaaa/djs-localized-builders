@@ -27,40 +27,45 @@ export class EmbedBuilder {
         const returnField: APIEmbedField = { inline: field.inline, name: '', value: '' };
 
         if (isValidationEnabled()) {
-            if (Object.keys(field).length === 0) {
-                throw new TypeError('Embed field cannot be empty');
+            const isEmpty = Object.keys(field).length === 0;
+            const hasRawAndRefName = field.nameRef && field.name;
+            const hasRawAndRefValue = field.valueRef && field.value;
+            const hasRefs = field.nameRef ?? field.valueRef;
+            const hasRefsAndKey = field.key && hasRefs;
+            const hasRawNameAndArgs = field.name && field.nameArgs;
+            const hasRawValueAndArgs = field.value && field.valueArgs;
+
+            if (isEmpty) {
+                throw new TypeError('Embed field cannot be empty', { cause: this });
             }
 
-            // we cannot have both a key ref and a raw value, as that would cause an override
-            if ((field.name && field.rawName) || (field.value && field.rawValue)) {
-                throw new TypeError('Cannot have a key reference name/value and a raw name/value', { cause: field });
+            if (hasRawAndRefName || hasRawAndRefValue) {
+                throw new TypeError('Cannot have a locale reference name/value and a raw name/value', { cause: field });
             }
 
-            // we cannot have both a field basekey and an opt key ref
-            if (field.key && (field.name ?? field.value)) {
-                throw new TypeError('Cannot have a field base key and a key reference name/value.', { cause: field });
+            if (hasRefsAndKey) {
+                throw new TypeError('Cannot have a field baseKey and a locale reference name/value.', { cause: field });
             }
 
-            // we cannot have both a raw opt and opt args
-            if ((field.rawName && field.nameArgs) || (field.rawValue && field.valueArgs)) {
-                throw new TypeError('Cannot have a field raw name/value and name/value string arguments', {
+            if (hasRawNameAndArgs || hasRawValueAndArgs) {
+                throw new TypeError('Cannot have a raw name/value and locale reference name/value arguments', {
                     cause: field
                 });
             }
         }
 
         // if we have a name or value ref key
-        if (field.name) {
-            returnField.name = getString(field.name, this.locale, 'embeds', field.nameArgs);
+        if (field.nameRef) {
+            returnField.name = getString(field.nameRef, this.locale, 'embeds', field.nameArgs);
         }
 
-        if (field.value) {
-            returnField.value = getString(field.value, this.locale, 'embeds', field.valueArgs);
+        if (field.valueRef) {
+            returnField.value = getString(field.valueRef, this.locale, 'embeds', field.valueArgs);
         }
 
         // basekey (overrides manual key ref)
         if (this.baseKey && field.key) {
-            if (!field.rawName) {
+            if (!field.name) {
                 returnField.name = getString(
                     joinKeys([this.baseKey, 'fields', field.key, 'name']),
                     this.locale,
@@ -69,7 +74,7 @@ export class EmbedBuilder {
                 );
             }
 
-            if (!field.rawValue) {
+            if (!field.value) {
                 returnField.value = getString(
                     joinKeys([this.baseKey, 'fields', field.key, 'value']),
                     this.locale,
@@ -80,56 +85,39 @@ export class EmbedBuilder {
         }
 
         // handle raw opts (override manual key ref and basekey)
-        if (field.rawName) {
-            returnField.name = field.rawName;
+        if (field.name) {
+            returnField.name = field.name;
         }
 
-        if (field.rawValue) {
-            returnField.value = field.rawValue;
+        if (field.value) {
+            returnField.value = field.value;
         }
 
         return returnField;
     }
 
-    addFields(fields: RestOrArray<LocaleFieldOptions>) {
-        this.builder.addFields(normalizeArray(fields).map(field => this.mapField(field)));
-        return this;
-    }
+    setTitle(title: string, args?: ArgsWithRawParam): this;
+    setTitle(args: Record<string, any>): this;
+    setTitle(): this;
+    setTitle(titleOrArgs?: string | Record<string, any>, args: ArgsWithRawParam = {}) {
+        let title = '';
+        if (this.baseKey && typeof titleOrArgs === 'object') {
+            title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
+        }
 
-    setAuthor(author: LocaleAuthor = {}) {
-        let name = '';
+        if (this.baseKey && !titleOrArgs) {
+            title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds');
+        }
 
-        if (isValidationEnabled()) {
-            if (!(author.name ?? author.rawName) && !this.baseKey) {
-                throw new TypeError(
-                    'You must provide either a key ref or raw value as a name when no embed base key is defined',
-                    { cause: author }
-                );
+        if (typeof titleOrArgs === 'string') {
+            if (args.raw) {
+                title = titleOrArgs;
+            } else {
+                title = getString(titleOrArgs, this.locale, 'embeds', args);
             }
         }
 
-        if ((!(author.name ?? author.rawName) && this.baseKey) || (Object.keys(author).length === 0 && this.baseKey)) {
-            name = getString(joinKeys([this.baseKey, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
-        }
-
-        if (author.name ?? author.rawName) {
-            if (isValidationEnabled()) {
-                if (author.rawName && author.name) {
-                    throw new TypeError('Cannot have both a raw name and a key name in an author.');
-                } else if (author.rawName && author.nameArgs) {
-                    throw new TypeError('Cannot have name arguments on a raw name.');
-                }
-            }
-
-            name = author.rawName ?? getString(author.name ?? '', this.locale, 'embeds', author.nameArgs);
-        }
-
-        this.builder.setAuthor({ name, url: author.url, iconURL: author.iconURL });
-        return this;
-    }
-
-    setColor(color: RGBTuple | number | null) {
-        this.builder.setColor(color);
+        this.builder.setTitle(title);
         return this;
     }
 
@@ -159,35 +147,109 @@ export class EmbedBuilder {
         return this;
     }
 
+    addFields(fields: RestOrArray<LocaleFieldOptions>) {
+        this.builder.addFields(normalizeArray(fields).map(field => this.mapField(field)));
+        return this;
+    }
+
+    setFields(fields: RestOrArray<LocaleFieldOptions>) {
+        this.builder.setFields(normalizeArray(fields).map(field => this.mapField(field)));
+        return this;
+    }
+
+    spliceFields(index: number, deleteCount: number, fields: LocaleFieldOptions[]) {
+        this.builder.spliceFields(index, deleteCount, ...fields.map(field => this.mapField(field)));
+        return this;
+    }
+
+    setAuthor(author: LocaleAuthor = {}) {
+        let name = '';
+
+        const isEmpty = Object.keys(author).length === 0;
+        const hasNoNameSources = !(author.nameRef ?? author.name);
+        const hasRefAndRaw = author.name && author.nameRef;
+        const hasRawAndArgs = author.name && author.nameArgs;
+        const usesBaseKey = (hasNoNameSources || isEmpty) && Boolean(this.baseKey);
+
+        if (isValidationEnabled()) {
+            if (hasNoNameSources && !this.baseKey) {
+                throw new TypeError(
+                    'You must provide either a key ref or raw value as a name when no embed base key is defined',
+                    { cause: author }
+                );
+            }
+
+            if (hasRefAndRaw) {
+                throw new TypeError('Cannot have both a raw name and a key name in an author.', { cause: author });
+            }
+
+            if (hasRawAndArgs) {
+                throw new TypeError('Cannot have name arguments on a raw name.', { cause: author });
+            }
+        }
+
+        if (usesBaseKey) {
+            name = getString(joinKeys([this.baseKey!, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
+        }
+
+        if (author.nameRef) {
+            name = getString(author.nameRef, this.locale, 'embeds', author.nameArgs);
+        }
+
+        if (author.name) {
+            // eslint-disable-next-line prefer-destructuring
+            name = author.name;
+        }
+
+        this.builder.setAuthor({ name, url: author.url, iconURL: author.iconURL });
+        return this;
+    }
+
     setFooter(footer: LocaleFooter = {}) {
         let text = '';
 
+        const isEmpty = Object.keys(footer).length === 0;
+        const hasNoTextSources = !(footer.textRef ?? footer.text);
+        const hasRefAndRaw = footer.text && footer.textRef;
+        const hasRawAndArgs = footer.text && footer.textArgs;
+        const usesBaseKey = (hasNoTextSources || isEmpty) && Boolean(this.baseKey);
+
         if (isValidationEnabled()) {
-            if (!(footer.text ?? footer.rawText) && !this.baseKey) {
+            if (hasNoTextSources && !this.baseKey) {
                 throw new TypeError(
-                    'You must provide either a key ref or raw value as a text when no embed base key is defined',
+                    'You must provide either a key ref or raw value as a name when no embed base key is defined',
                     { cause: footer }
                 );
             }
-        }
 
-        if ((!(footer.text ?? footer.rawText) && this.baseKey) || (Object.keys(footer).length === 0 && this.baseKey)) {
-            text = getString(joinKeys([this.baseKey, 'footer', 'text']), this.locale, 'embeds', footer.textArgs);
-        }
-
-        if (footer.text ?? footer.rawText) {
-            if (isValidationEnabled()) {
-                if (footer.rawText && footer.text) {
-                    throw new TypeError('Cannot have both a raw text and a key text in a footer.');
-                } else if (footer.rawText && footer.textArgs) {
-                    throw new TypeError('Cannot have text arguments on a raw text.');
-                }
+            if (hasRefAndRaw) {
+                throw new TypeError('Cannot have both a raw text and a key text in a footer.', { cause: footer });
             }
 
-            text = footer.rawText ?? getString(footer.text ?? '', this.locale, 'embeds', footer.textArgs);
+            if (hasRawAndArgs) {
+                throw new TypeError('Cannot have text arguments on a raw text.', { cause: footer });
+            }
+        }
+
+        if (usesBaseKey) {
+            text = getString(joinKeys([this.baseKey!, 'footer', 'text']), this.locale, 'embeds', footer.textArgs);
+        }
+
+        if (footer.textRef) {
+            text = getString(footer.textRef, this.locale, 'embeds', footer.textArgs);
+        }
+
+        if (footer.text) {
+            // eslint-disable-next-line prefer-destructuring
+            text = footer.text;
         }
 
         this.builder.setFooter({ text, iconURL: footer.iconURL });
+        return this;
+    }
+
+    setColor(color: RGBTuple | number | null) {
+        this.builder.setColor(color);
         return this;
     }
 
@@ -201,31 +263,6 @@ export class EmbedBuilder {
         return this;
     }
 
-    setTitle(title: string, args?: ArgsWithRawParam): this;
-    setTitle(args: Record<string, any>): this;
-    setTitle(): this;
-    setTitle(titleOrArgs?: string | Record<string, any>, args: ArgsWithRawParam = {}) {
-        let title = '';
-        if (this.baseKey && typeof titleOrArgs === 'object') {
-            title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
-        }
-
-        if (this.baseKey && !titleOrArgs) {
-            title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds');
-        }
-
-        if (typeof titleOrArgs === 'string') {
-            if (args.raw) {
-                title = titleOrArgs;
-            } else {
-                title = getString(titleOrArgs, this.locale, 'embeds', args);
-            }
-        }
-
-        this.builder.setTitle(title);
-        return this;
-    }
-
     setURL(url: string) {
         this.builder.setURL(url);
         return this;
@@ -233,16 +270,6 @@ export class EmbedBuilder {
 
     setTimestamp(timestamp: Date | number | null = Date.now()) {
         this.builder.setTimestamp(timestamp);
-        return this;
-    }
-
-    setFields(fields: RestOrArray<LocaleFieldOptions>) {
-        this.builder.setFields(normalizeArray(fields).map(field => this.mapField(field)));
-        return this;
-    }
-
-    spliceFields(index: number, deleteCount: number, fields: LocaleFieldOptions[]) {
-        this.builder.spliceFields(index, deleteCount, ...fields.map(field => this.mapField(field)));
         return this;
     }
 }

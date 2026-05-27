@@ -17,15 +17,15 @@ export function joinKeys(keys: string[]) {
 
     switch (config.caseFormat) {
         case 'uppercase': {
-            return keys.map(key => key.toUpperCase()).join(config.seperatorChar);
+            return keys.map(key => key.toUpperCase()).join(config.separatorChar);
         }
 
         case 'lowercase': {
-            return keys.map(key => key.toLowerCase()).join(config.seperatorChar);
+            return keys.map(key => key.toLowerCase()).join(config.separatorChar);
         }
 
         case 'keep': {
-            return keys.join(config.seperatorChar);
+            return keys.join(config.separatorChar);
         }
     }
 }

@@ -11,7 +11,7 @@ let config: ConfigType = {
 
     onCreateEmbed: (embed, locale) => {},
     caseFormat: 'lowercase',
-    seperatorChar: '.',
+    separatorChar: '.',
     validators: true,
     langs: ['en-US'],
     namespaces: {
@@ -29,7 +29,7 @@ let config: ConfigType = {
 			return client.i18n.getString({ namespace, string, lang, options }) ?? 'fetch_fail'
 		},
 		caseFormat: 'lowercase',
-		seperatorChar: '_',
+		separatorChar: '_',
 		validators: process.ENV.NODE_ENV === 'development',
         langs: client.i18n.langs , // use discord i18n codes
 		namespaces: {
