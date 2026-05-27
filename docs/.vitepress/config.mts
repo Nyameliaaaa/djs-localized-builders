@@ -5,6 +5,7 @@ import typedocSidebar from '../api/typedoc-sidebar.json';
 export default defineConfig({
     title: 'djs-localized-builders',
     description: 'A set of builders for discord.js, built to allow easy localization.',
+    base: '/djs-localized-builders/',
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         nav: [
