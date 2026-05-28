@@ -15,12 +15,12 @@ describe('EmbedBuilder', () => {
 	describe('Config#onLocaleEmbed', () => {
 		it('properly calls onLocaleEmbed', () => {
 			setConfig({
-				onCreateEmbed: (embed, locale) => {
+				onCreateEmbed: (embed, locale, keySegment) => {
 					embed.setAuthor({ name: 'testing onCreateEmbed' });
 				}
 			});
-			const embed = new EmbedBuilder(Locale.EnglishUS);
 
+			const embed = new EmbedBuilder(Locale.EnglishUS);
 			expect(embed.toJSON().author?.name).toBe('testing onCreateEmbed');
 		});
 
@@ -30,9 +30,20 @@ describe('EmbedBuilder', () => {
 					embed.setAuthor({ name: locale });
 				}
 			});
-			const embed = new EmbedBuilder(Locale.EnglishUS);
 
+			const embed = new EmbedBuilder(Locale.EnglishUS);
 			expect(embed.toJSON().author?.name).toBe(Locale.EnglishUS);
+		});
+
+		it('properly passes keySegment', () => {
+			setConfig({
+				onCreateEmbed: (embed, locale, keySegment) => {
+					embed.setAuthor({ name: keySegment });
+				}
+			});
+
+			const embed = new EmbedBuilder(Locale.EnglishUS, 'hi');
+			expect(embed.toJSON().author?.name).toBe('hi');
 		});
 	});
 
@@ -145,7 +156,8 @@ describe('EmbedBuilder', () => {
 
 describe('EmbedBuilder validations', () => {
 	beforeEach(() => {
-		setConfig({ validators: true });
+		// biome-ignore lint/suspicious/noEmptyBlockStatements: resetting onCreateEmbed
+		setConfig({ validators: true, onCreateEmbed: () => {} });
 	});
 
 	describe('addFields', () => {
