@@ -1,5 +1,13 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { GetLocalizedStringOptions, joinKeys, resetConfig, resolveAllStrings, resolveDefaultString, resolveString, setConfig } from '../dist';
+import {
+	GetLocalizedStringOptions,
+	joinKeys,
+	resetConfig,
+	resolveAllStrings,
+	resolveDefaultString,
+	resolveString,
+	setConfig
+} from '../dist';
 
 beforeEach(() => {
 	resetConfig();
@@ -9,7 +17,8 @@ describe('Helpers', () => {
 	describe('getting strings', () => {
 		beforeEach(() => {
 			setConfig({
-				getLocalizedString: ({i18nKey, locale, namespace }: GetLocalizedStringOptions) => `${locale}:${namespace}:${i18nKey}`
+				getLocalizedString: ({ i18nKey, locale, namespace }: GetLocalizedStringOptions) =>
+					`${locale}:${namespace}:${i18nKey}`
 			});
 		});
 
@@ -35,7 +44,8 @@ describe('Helpers', () => {
 
 	it('handles namespace mapping', () => {
 		setConfig({
-			getLocalizedString: ({ i18nKey, locale, namespace }: GetLocalizedStringOptions) => `${locale}:${namespace}:${i18nKey}`,
+			getLocalizedString: ({ i18nKey, locale, namespace }: GetLocalizedStringOptions) =>
+				`${locale}:${namespace}:${i18nKey}`,
 			validators: false,
 			namespaces: { commands: 'namespace', components: 'namespace', embeds: 'namespace' }
 		});

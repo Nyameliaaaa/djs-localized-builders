@@ -1,4 +1,10 @@
-import { normalizeArray, type RestOrArray, SlashCommandIntegerOption, SlashCommandNumberOption, SlashCommandStringOption } from '@discordjs/builders';
+import {
+	normalizeArray,
+	type RestOrArray,
+	SlashCommandIntegerOption,
+	SlashCommandNumberOption,
+	SlashCommandStringOption
+} from '@discordjs/builders';
 import { APIApplicationCommandOptionChoice } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { joinKeys, resolveAllStrings, resolveDefaultString } from '$lib';
@@ -84,7 +90,8 @@ export class AutocompletableMixin<
 	}
 }
 
-export interface MinMaxNumberMixin<_T extends SlashCommandNumberOption | SlashCommandIntegerOption> extends AutocompletableMixin<_T, number> {}
+export interface MinMaxNumberMixin<_T extends SlashCommandNumberOption | SlashCommandIntegerOption>
+	extends AutocompletableMixin<_T, number> {}
 
 @mix(AutocompletableMixin)
 export class MinMaxNumberMixin<_T extends SlashCommandNumberOption | SlashCommandIntegerOption> {

@@ -27,10 +27,14 @@ export class NameMixin<_T extends ApplicationCommandBuilderResolvable> {
 	}
 }
 
-export interface NameAndDescriptionMixin<_T extends Exclude<ApplicationCommandBuilderResolvable, ContextMenuCommandBuilder>> extends NameMixin<_T> {}
+export interface NameAndDescriptionMixin<
+	_T extends Exclude<ApplicationCommandBuilderResolvable, ContextMenuCommandBuilder>
+> extends NameMixin<_T> {}
 
 @mix(NameMixin)
-export class NameAndDescriptionMixin<_T extends Exclude<ApplicationCommandBuilderResolvable, ContextMenuCommandBuilder>> {
+export class NameAndDescriptionMixin<
+	_T extends Exclude<ApplicationCommandBuilderResolvable, ContextMenuCommandBuilder>
+> {
 	setDescription(value: string) {
 		this.builder.setDescription(value);
 		return this;

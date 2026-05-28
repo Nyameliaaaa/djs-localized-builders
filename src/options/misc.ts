@@ -9,7 +9,9 @@ import {
 import { mix } from 'ts-mixer';
 import { KeySegmentMixin, OptionMixin } from '$mixins';
 
-export interface SlashCommandAttachmentOptionBuilder extends OptionMixin<SlashCommandAttachmentOption>, KeySegmentMixin {}
+export interface SlashCommandAttachmentOptionBuilder
+	extends OptionMixin<SlashCommandAttachmentOption>,
+		KeySegmentMixin {}
 /**
  * @group Options
  */

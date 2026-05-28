@@ -111,7 +111,14 @@ export class ButtonBuilder {
 
 	hydrateSelf(locale: LocaleString, parentBaseKey?: string) {
 		if (this.keySegment && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
-			this.builder.setLabel(resolveString(joinKeys([parentBaseKey, 'buttons', this.keySegment, 'label']), locale, 'components', this.labelArgs));
+			this.builder.setLabel(
+				resolveString(
+					joinKeys([parentBaseKey, 'buttons', this.keySegment, 'label']),
+					locale,
+					'components',
+					this.labelArgs
+				)
+			);
 		}
 
 		// case 4, 5

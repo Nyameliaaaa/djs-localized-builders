@@ -27,7 +27,11 @@ import type {
 } from '@discordjs/builders';
 import { Locale } from 'discord-api-types/v10';
 
-export type CommandResolvable = SlashCommandBuilder | SlashCommandSubcommandBuilder | ContextMenuCommandBuilder | SlashCommandSubcommandGroupBuilder;
+export type CommandResolvable =
+	| SlashCommandBuilder
+	| SlashCommandSubcommandBuilder
+	| ContextMenuCommandBuilder
+	| SlashCommandSubcommandGroupBuilder;
 
 export type OptionResolvable =
 	| SlashCommandAttachmentOption

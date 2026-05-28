@@ -2,7 +2,9 @@ import { SlashCommandMentionableOption, SlashCommandRoleOption, SlashCommandUser
 import { mix } from 'ts-mixer';
 import { KeySegmentMixin, OptionMixin } from '$mixins';
 
-export interface SlashCommandMentionableOptionBuilder extends OptionMixin<SlashCommandMentionableOption>, KeySegmentMixin {}
+export interface SlashCommandMentionableOptionBuilder
+	extends OptionMixin<SlashCommandMentionableOption>,
+		KeySegmentMixin {}
 
 /**
  * @group Options

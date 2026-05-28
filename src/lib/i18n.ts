@@ -1,4 +1,4 @@
-import type { ConfigType } from '$types';
+import type { ConfigType, Namespaces } from '$types';
 import { getConfig } from './config';
 
 /**
@@ -9,7 +9,9 @@ import { getConfig } from './config';
  */
 export function joinKeys(keySegments: (string | null | undefined)[]) {
 	const config = getConfig();
-	const filteredKeySegments = keySegments.filter(keySegment => typeof keySegment === 'string').filter(keySegment => keySegment.length > 0);
+	const filteredKeySegments = keySegments
+		.filter(keySegment => typeof keySegment === 'string')
+		.filter(keySegment => keySegment.length > 0);
 
 	switch (config.caseFormat) {
 		case 'uppercase': {
@@ -34,7 +36,12 @@ export function joinKeys(keySegments: (string | null | undefined)[]) {
  * @param options Interpolation arguments.
  * @group i18n
  */
-export function resolveString(string: string, lang: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+export function resolveString(
+	string: string,
+	lang: string,
+	namespace: Namespaces,
+	options: Record<string, unknown> = {}
+) {
 	const config = getConfig();
 	const val = config.getLocalizedString({
 		locale: lang,
@@ -57,7 +64,7 @@ export function resolveString(string: string, lang: string, namespace: 'embeds' 
  * @param options Interpolation arguments.
  * @group i18n
  */
-export function resolveDefaultString(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+export function resolveDefaultString(string: string, namespace: Namespaces, options: Record<string, unknown> = {}) {
 	const config = getConfig();
 	const val = config.getLocalizedString({
 		locale: 'en-US',
@@ -80,7 +87,7 @@ export function resolveDefaultString(string: string, namespace: 'embeds' | 'comp
  * @param options Interpolation arguments.
  * @group i18n
  */
-export function resolveAllStrings(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+export function resolveAllStrings(string: string, namespace: Namespaces, options: Record<string, unknown> = {}) {
 	const config = getConfig();
 	const ret: Record<string, string> = {};
 

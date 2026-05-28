@@ -9,7 +9,10 @@ import type { APISelectMenuDefaultValue, SelectMenuDefaultValueType, Snowflake }
 import { mix } from 'ts-mixer';
 import { BuilderMixin, KeySegmentMixin, SelectMenuMixin } from '$mixins';
 
-export interface MentionableSelectMenuBuilder extends BuilderMixin<MentionableBuilder>, KeySegmentMixin, SelectMenuMixin<MentionableBuilder> {}
+export interface MentionableSelectMenuBuilder
+	extends BuilderMixin<MentionableBuilder>,
+		KeySegmentMixin,
+		SelectMenuMixin<MentionableBuilder> {}
 
 @mix(BuilderMixin, KeySegmentMixin, SelectMenuMixin)
 export class MentionableSelectMenuBuilder {
@@ -28,21 +31,30 @@ export class MentionableSelectMenuBuilder {
 	}
 
 	addDefaultValues(
-		...values: RestOrArray<APISelectMenuDefaultValue<SelectMenuDefaultValueType.Role> | APISelectMenuDefaultValue<SelectMenuDefaultValueType.User>>
+		...values: RestOrArray<
+			| APISelectMenuDefaultValue<SelectMenuDefaultValueType.Role>
+			| APISelectMenuDefaultValue<SelectMenuDefaultValueType.User>
+		>
 	) {
 		this.builder.addDefaultValues(normalizeArray(values));
 		return this;
 	}
 
 	setDefaultValues(
-		...values: RestOrArray<APISelectMenuDefaultValue<SelectMenuDefaultValueType.Role> | APISelectMenuDefaultValue<SelectMenuDefaultValueType.User>>
+		...values: RestOrArray<
+			| APISelectMenuDefaultValue<SelectMenuDefaultValueType.Role>
+			| APISelectMenuDefaultValue<SelectMenuDefaultValueType.User>
+		>
 	) {
 		this.builder.setDefaultValues(normalizeArray(values));
 		return this;
 	}
 }
 
-export interface RoleSelectMenuBuilder extends BuilderMixin<RoleBuilder>, KeySegmentMixin, SelectMenuMixin<RoleBuilder> {}
+export interface RoleSelectMenuBuilder
+	extends BuilderMixin<RoleBuilder>,
+		KeySegmentMixin,
+		SelectMenuMixin<RoleBuilder> {}
 
 @mix(BuilderMixin, KeySegmentMixin, SelectMenuMixin)
 export class RoleSelectMenuBuilder {
@@ -61,7 +73,10 @@ export class RoleSelectMenuBuilder {
 	}
 }
 
-export interface UserSelectMenuBuilder extends BuilderMixin<UserBuilder>, KeySegmentMixin, SelectMenuMixin<UserBuilder> {}
+export interface UserSelectMenuBuilder
+	extends BuilderMixin<UserBuilder>,
+		KeySegmentMixin,
+		SelectMenuMixin<UserBuilder> {}
 
 @mix(BuilderMixin, KeySegmentMixin, SelectMenuMixin)
 export class UserSelectMenuBuilder {

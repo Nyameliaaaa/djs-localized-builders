@@ -1,4 +1,9 @@
-import { type AnyComponentBuilder, ActionRowBuilder as Builder, normalizeArray, RestOrArray } from '@discordjs/builders';
+import {
+	type AnyComponentBuilder,
+	ActionRowBuilder as Builder,
+	normalizeArray,
+	RestOrArray
+} from '@discordjs/builders';
 import { LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { BuilderMixin, LocaleKeySegmentMixin } from '$mixins';
@@ -30,7 +35,9 @@ export class ActionRowBuilder {
 			| RoleSelectMenuBuilder
 		>
 	) {
-		this.builder.addComponents(normalizeArray(compoonents).map(compoonent => compoonent.hydrateSelf(this.locale, this.keySegment).builder));
+		this.builder.addComponents(
+			normalizeArray(compoonents).map(compoonent => compoonent.hydrateSelf(this.locale, this.keySegment).builder)
+		);
 
 		return this;
 	}
@@ -45,7 +52,9 @@ export class ActionRowBuilder {
 			| RoleSelectMenuBuilder
 		>
 	) {
-		this.builder.setComponents(normalizeArray(compoonents).map(compoonent => compoonent.hydrateSelf(this.locale, this.keySegment).builder));
+		this.builder.setComponents(
+			normalizeArray(compoonents).map(compoonent => compoonent.hydrateSelf(this.locale, this.keySegment).builder)
+		);
 
 		return this;
 	}

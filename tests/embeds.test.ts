@@ -223,7 +223,9 @@ describe('EmbedBuilder validations', () => {
 
 		it('should reject name nameRef and nameArgs', () => {
 			const embed = new EmbedBuilder(Locale.EnglishUS, 'embed');
-			expect(() => embed.setAuthor({ name: 'hi', nameRef: 'hi', nameArgs: { hi: 'hi' } } as any)).toThrowError(TypeError);
+			expect(() => embed.setAuthor({ name: 'hi', nameRef: 'hi', nameArgs: { hi: 'hi' } } as any)).toThrowError(
+				TypeError
+			);
 		});
 	});
 
@@ -240,7 +242,9 @@ describe('EmbedBuilder validations', () => {
 
 		it('should reject text textRef and textArgs', () => {
 			const embed = new EmbedBuilder(Locale.EnglishUS, 'embed');
-			expect(() => embed.setFooter({ text: 'hi', textRef: 'hi', textArgs: { hi: 'hi' } } as any)).toThrowError(TypeError);
+			expect(() => embed.setFooter({ text: 'hi', textRef: 'hi', textArgs: { hi: 'hi' } } as any)).toThrowError(
+				TypeError
+			);
 		});
 	});
 });

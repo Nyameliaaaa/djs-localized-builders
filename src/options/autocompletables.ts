@@ -13,7 +13,9 @@ export class SlashCommandNumberOptionBuilder {
 	}
 }
 
-export interface SlashCommandIntegerOptionBuilder extends MinMaxNumberMixin<SlashCommandIntegerOption>, KeySegmentMixin {}
+export interface SlashCommandIntegerOptionBuilder
+	extends MinMaxNumberMixin<SlashCommandIntegerOption>,
+		KeySegmentMixin {}
 /**
  * @group Options
  */
@@ -24,7 +26,9 @@ export class SlashCommandIntegerOptionBuilder {
 	}
 }
 
-export interface SlashCommandStringOptionBuilder extends AutocompletableMixin<SlashCommandStringOption, string>, KeySegmentMixin {}
+export interface SlashCommandStringOptionBuilder
+	extends AutocompletableMixin<SlashCommandStringOption, string>,
+		KeySegmentMixin {}
 /**
  * @group Options
  */

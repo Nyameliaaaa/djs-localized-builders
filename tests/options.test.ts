@@ -49,7 +49,9 @@ describe('SlashCommandBuilder', () => {
 			});
 
 			it('should handle choices with a different value', () => {
-				const command = new SlashCommandBuilder('x').addStringOption('y', option => option.setChoices([{ key: 'z', value: 'z' }])).toJSON();
+				const command = new SlashCommandBuilder('x')
+					.addStringOption('y', option => option.setChoices([{ key: 'z', value: 'z' }]))
+					.toJSON();
 
 				// @ts-expect-error we also KNOW choices exists
 				expect(command.options![0].choices[0]).toMatchObject({
@@ -60,7 +62,9 @@ describe('SlashCommandBuilder', () => {
 			});
 
 			it('should handle mixed choices', () => {
-				const command = new SlashCommandBuilder('x').addStringOption('y', option => option.setChoices([{ key: 'a', value: 'b' }, 'c'])).toJSON();
+				const command = new SlashCommandBuilder('x')
+					.addStringOption('y', option => option.setChoices([{ key: 'a', value: 'b' }, 'c']))
+					.toJSON();
 
 				// @ts-expect-error we also KNOW choices exists
 				expect(command.options![0].choices).toMatchObject([
@@ -82,7 +86,9 @@ describe('SlashCommandBuilder', () => {
 	describe('subcommands', () => {
 		describe('option w/o choices', () => {
 			it('should set name, description and localizations', () => {
-				const command = new SlashCommandBuilder('x').addSubcommand('y', subcommand => subcommand.addAttachmentOption('z')).toJSON();
+				const command = new SlashCommandBuilder('x')
+					.addSubcommand('y', subcommand => subcommand.addAttachmentOption('z'))
+					.toJSON();
 
 				// @ts-expect-error we KNOW options exists
 				expect(command.options?.[0].options?.[0]).toMatchObject({
@@ -96,7 +102,9 @@ describe('SlashCommandBuilder', () => {
 
 		describe('options w/ choices', () => {
 			it('should set name, description and localizations', () => {
-				const command = new SlashCommandBuilder('x').addSubcommand('y', subcommand => subcommand.addStringOption('z')).toJSON();
+				const command = new SlashCommandBuilder('x')
+					.addSubcommand('y', subcommand => subcommand.addStringOption('z'))
+					.toJSON();
 
 				// @ts-expect-error we KNOW options exists
 				expect(command.options![0].options?.[0]).toMatchObject({
@@ -122,7 +130,9 @@ describe('SlashCommandBuilder', () => {
 				});
 
 				it('should handle choices with a different value', () => {
-					const command = new SlashCommandBuilder('x').addStringOption('y', option => option.setChoices([{ key: 'z', value: 'z' }])).toJSON();
+					const command = new SlashCommandBuilder('x')
+						.addStringOption('y', option => option.setChoices([{ key: 'z', value: 'z' }]))
+						.toJSON();
 
 					// @ts-expect-error we also KNOW choices exists
 					expect(command.options![0].choices[0]).toMatchObject({
@@ -133,7 +143,9 @@ describe('SlashCommandBuilder', () => {
 				});
 
 				it('should handle mixed choices', () => {
-					const command = new SlashCommandBuilder('x').addStringOption('y', option => option.setChoices([{ key: 'a', value: 'b' }, 'c'])).toJSON();
+					const command = new SlashCommandBuilder('x')
+						.addStringOption('y', option => option.setChoices([{ key: 'a', value: 'b' }, 'c']))
+						.toJSON();
 
 					// @ts-expect-error we also KNOW choices exists
 					expect(command.options![0].choices).toMatchObject([
@@ -157,7 +169,9 @@ describe('SlashCommandBuilder', () => {
 		describe('option w/o choices', () => {
 			it('should set name, description and localizations', () => {
 				const command = new SlashCommandBuilder('x')
-					.addSubcommandGroup('y', subcommandGroup => subcommandGroup.addSubcommand('z', subcommand => subcommand.addAttachmentOption('a')))
+					.addSubcommandGroup('y', subcommandGroup =>
+						subcommandGroup.addSubcommand('z', subcommand => subcommand.addAttachmentOption('a'))
+					)
 					.toJSON();
 
 				// @ts-expect-error we KNOW options exists
@@ -173,7 +187,9 @@ describe('SlashCommandBuilder', () => {
 		describe('options w/ choices', () => {
 			it('should set name, description and localizations', () => {
 				const command = new SlashCommandBuilder('x')
-					.addSubcommandGroup('y', subcommandGroup => subcommandGroup.addSubcommand('z', subcommand => subcommand.addStringOption('a')))
+					.addSubcommandGroup('y', subcommandGroup =>
+						subcommandGroup.addSubcommand('z', subcommand => subcommand.addStringOption('a'))
+					)
 					.toJSON();
 
 				// @ts-expect-error we KNOW options exists
@@ -189,7 +205,9 @@ describe('SlashCommandBuilder', () => {
 				it('should set name, description and localizations', () => {
 					const command = new SlashCommandBuilder('x')
 						.addSubcommandGroup('y', subcommandGroup =>
-							subcommandGroup.addSubcommand('z', subcommand => subcommand.addStringOption('a', option => option.addChoices('b')))
+							subcommandGroup.addSubcommand('z', subcommand =>
+								subcommand.addStringOption('a', option => option.addChoices('b'))
+							)
 						)
 						.toJSON();
 
@@ -204,7 +222,9 @@ describe('SlashCommandBuilder', () => {
 				it('should handle choices with a different value', () => {
 					const command = new SlashCommandBuilder('x')
 						.addSubcommandGroup('y', subcommandGroup =>
-							subcommandGroup.addSubcommand('z', subcommand => subcommand.addStringOption('a', option => option.addChoices({ key: 'b', value: 'c' })))
+							subcommandGroup.addSubcommand('z', subcommand =>
+								subcommand.addStringOption('a', option => option.addChoices({ key: 'b', value: 'c' }))
+							)
 						)
 						.toJSON();
 

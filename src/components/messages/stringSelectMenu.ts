@@ -6,7 +6,10 @@ import { BuilderMixin, KeySegmentMixin, SelectMenuMixin } from '$mixins';
 import { LocaleString } from '$types';
 import { StringSelectMenuOptionBuilder } from './stringMenuOption';
 
-export interface StringSelectMenuBuilder extends BuilderMixin<StringBuilder>, KeySegmentMixin, SelectMenuMixin<StringBuilder> {}
+export interface StringSelectMenuBuilder
+	extends BuilderMixin<StringBuilder>,
+		KeySegmentMixin,
+		SelectMenuMixin<StringBuilder> {}
 
 @mix(BuilderMixin, KeySegmentMixin, SelectMenuMixin)
 export class StringSelectMenuBuilder {

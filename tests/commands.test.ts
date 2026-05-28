@@ -49,7 +49,9 @@ describe('SlashCommandBuilder', () => {
 
 		describe('with subCommand', () => {
 			it('should set name, description and localizations', () => {
-				const command = new SlashCommandBuilder('x').addSubcommandGroup('y', subcomamndGroup => subcomamndGroup.addSubcommand('z')).toJSON();
+				const command = new SlashCommandBuilder('x')
+					.addSubcommandGroup('y', subcomamndGroup => subcomamndGroup.addSubcommand('z'))
+					.toJSON();
 
 				// @ts-expect-error we KNOW options exists here but we cannot assert
 				expect(command.options?.[0].options[0]).toMatchObject({

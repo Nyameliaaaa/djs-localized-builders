@@ -180,7 +180,14 @@ export class StringSelectMenuOptionBuilder {
 
 		// case 1, 2
 		if (this.keySegment && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
-			this.builder.setLabel(resolveString(joinKeys([parentBaseKey, 'options', this.keySegment, 'label']), locale, 'components', this.labelArgs));
+			this.builder.setLabel(
+				resolveString(
+					joinKeys([parentBaseKey, 'options', this.keySegment, 'label']),
+					locale,
+					'components',
+					this.labelArgs
+				)
+			);
 		}
 
 		// case 4, 5
@@ -195,7 +202,12 @@ export class StringSelectMenuOptionBuilder {
 		// case 1, 2
 		if (this.keySegment && parentBaseKey && this.descRequiresParentBaseKeyHydration) {
 			this.builder.setDescription(
-				resolveString(joinKeys([parentBaseKey, 'options', this.keySegment, 'description']), locale, 'components', this.descArgs)
+				resolveString(
+					joinKeys([parentBaseKey, 'options', this.keySegment, 'description']),
+					locale,
+					'components',
+					this.descArgs
+				)
 			);
 		}
 

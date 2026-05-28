@@ -1,9 +1,23 @@
-import { EmbedBuilder as Builder, isValidationEnabled, normalizeArray, RestOrArray, RGBTuple } from '@discordjs/builders';
+import {
+	EmbedBuilder as Builder,
+	isValidationEnabled,
+	normalizeArray,
+	RestOrArray,
+	RGBTuple
+} from '@discordjs/builders';
 import { APIEmbedField } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { getConfig, joinKeys, resolveString } from '$lib';
 import { BuilderMixin, LocaleKeySegmentMixin } from '$mixins';
-import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter, LocaleObject, LocaleParam, LocaleString } from '$types';
+import {
+	ArgsWithRawParam,
+	LocaleAuthor,
+	LocaleFieldOptions,
+	LocaleFooter,
+	LocaleObject,
+	LocaleParam,
+	LocaleString
+} from '$types';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleKeySegmentMixin {}
 
@@ -64,11 +78,21 @@ export class EmbedBuilder {
 		// key segment (overrides manual key ref)
 		if (this.keySegment && field.key) {
 			if (!field.name) {
-				returnField.name = resolveString(joinKeys([this.keySegment, 'fields', field.key, 'name']), this.locale, 'embeds', field.nameArgs);
+				returnField.name = resolveString(
+					joinKeys([this.keySegment, 'fields', field.key, 'name']),
+					this.locale,
+					'embeds',
+					field.nameArgs
+				);
 			}
 
 			if (!field.value) {
-				returnField.value = resolveString(joinKeys([this.keySegment, 'fields', field.key, 'value']), this.locale, 'embeds', field.valueArgs);
+				returnField.value = resolveString(
+					joinKeys([this.keySegment, 'fields', field.key, 'value']),
+					this.locale,
+					'embeds',
+					field.valueArgs
+				);
 			}
 		}
 
@@ -161,7 +185,10 @@ export class EmbedBuilder {
 
 		if (isValidationEnabled()) {
 			if (hasNoNameSources && !this.keySegment) {
-				throw new TypeError('You must provide either a key ref or raw value as a name when no embed base key is defined', { cause: author });
+				throw new TypeError(
+					'You must provide either a key ref or raw value as a name when no embed base key is defined',
+					{ cause: author }
+				);
 			}
 
 			if (hasRefAndRaw) {
@@ -201,7 +228,10 @@ export class EmbedBuilder {
 
 		if (isValidationEnabled()) {
 			if (hasNoTextSources && !this.keySegment) {
-				throw new TypeError('You must provide either a key ref or raw value as a name when no embed base key is defined', { cause: footer });
+				throw new TypeError(
+					'You must provide either a key ref or raw value as a name when no embed base key is defined',
+					{ cause: footer }
+				);
 			}
 
 			if (hasRefAndRaw) {
