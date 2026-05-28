@@ -52,9 +52,9 @@ const setValidators = () => {
 			commands: 'commands',
 			embeds: 'responses'
 		},
-        onMisingKey: (lang, namespace, key) => {
-            logger.error(lang, namespace, key);
-        }
+		onMisingKey: (lang, namespace, key) => {
+			logger.error(lang, namespace, key);
+		}
 	});
  * ```
  * @param newConfig The new configuration.
