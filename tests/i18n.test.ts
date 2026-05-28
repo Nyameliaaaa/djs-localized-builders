@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { GetLocalizedStringOptions, getAllStrings, getDefaultString, getString, joinKeys, resetConfig, setConfig } from '../dist';
+import { GetLocalizedStringOptions, resolveAllStrings, resolveDefaultString, resolveString, joinKeys, resetConfig, setConfig } from '../dist';
 
 beforeEach(() => {
 	resetConfig();
@@ -13,23 +13,23 @@ describe('Helpers', () => {
 			});
 		});
 
-		it('gets the default string', () => {
+		it('resolves the default string', () => {
 			setConfig({ validators: false });
-			expect(getDefaultString('x', 'commands')).toMatch('en-US:commands:x');
+			expect(resolveDefaultString('x', 'commands')).toMatch('en-US:commands:x');
 		});
 
-		it('gets the string in all locales', () => {
+		it('resolves the string in all locales', () => {
 			setConfig({ langs: ['en-US', 'fr'], validators: false });
 
-			expect(getAllStrings('x', 'commands')).toMatchObject({
+			expect(resolveAllStrings('x', 'commands')).toMatchObject({
 				'en-US': 'en-US:commands:x',
 				fr: 'fr:commands:x'
 			});
 		});
 
-		it('gets the string in fr locale', () => {
+		it('resolves the string in fr locale', () => {
 			setConfig({ validators: false });
-			expect(getString('x', 'fr', 'commands')).toMatch('fr:commands:x');
+			expect(resolveString('x', 'fr', 'commands')).toMatch('fr:commands:x');
 		});
 	});
 
@@ -40,7 +40,7 @@ describe('Helpers', () => {
 			namespaces: { commands: 'namespace', components: 'namespace', embeds: 'namespace' }
 		});
 
-		expect(getDefaultString('x', 'commands')).toMatch('en-US:namespace:x');
+		expect(resolveDefaultString('x', 'commands')).toMatch('en-US:namespace:x');
 	});
 
 	describe('joinKeys', () => {
