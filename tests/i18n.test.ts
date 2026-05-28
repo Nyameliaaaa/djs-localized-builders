@@ -19,7 +19,7 @@ describe('Helpers', () => {
 		});
 
 		it('resolves the string in all locales', () => {
-			setConfig({ langs: ['en-US', 'fr'], validators: false });
+			setConfig({ locales: ['en-US', 'fr'], validators: false });
 
 			expect(resolveAllStrings('x', 'commands')).toMatchObject({
 				'en-US': 'en-US:commands:x',

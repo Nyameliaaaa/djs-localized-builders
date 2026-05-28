@@ -104,7 +104,7 @@ export interface ConfigType {
 	 * @remarks Must be a valid Discord locale, see {@link https://docs.discord.com/developers/reference#locales}
 	 * @defaultValue `['en-US']`
 	 */
-	langs: string[];
+	locales: string[];
 
 	/**
 	 * Whether to enable validation of parameters.

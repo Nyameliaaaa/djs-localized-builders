@@ -19,7 +19,7 @@ setConfig({
   caseFormat: "lowercase",
   separatorChar: ".",
   validators: process.ENV.NODE_ENV === "development",
-  langs: i18nLib.langs,
+  locales: i18nLib.locales,
   namespaces: {
     components: "responses",
     commands: "commands",
@@ -32,6 +32,8 @@ setConfig({
 
 > **Warning**
 > You MUST configure the library AFTER your i18n library is initialized but BEFORE your commands are loaded in order to ensure the builders can properly recieve strings.
+
+For more info on configuration, see [the docs](https://nyamelia.pages.gay/djs-localized-builders/api/interfaces/ConfigType)
 
 ## The Philosphy
 

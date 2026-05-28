@@ -84,7 +84,7 @@ export function resolveAllStrings(string: string, namespace: 'embeds' | 'compone
 	const config = getConfig();
 	const ret: Record<string, string> = {};
 
-	for (const lang of config.langs) {
+	for (const lang of config.locales) {
 		ret[lang] = config.getLocalizedString({
 			locale: lang,
 			namespace: config.namespaces?.[namespace] ?? namespace,

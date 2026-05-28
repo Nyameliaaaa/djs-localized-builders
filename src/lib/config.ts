@@ -17,7 +17,7 @@ const defaultConfig: ConfigType = {
 	caseFormat: 'lowercase',
 	separatorChar: '.',
 	validators: true,
-	langs: ['en-US'],
+	locales: ['en-US'],
 	namespaces: {
 		components: 'components',
 		commands: 'commands',
@@ -46,7 +46,7 @@ const setValidators = () => {
 		caseFormat: 'lowercase',
 		separatorChar: '_',
 		validators: process.ENV.NODE_ENV === 'development',
-        langs: client.i18n.locales,
+        locales: client.i18n.locales,
 		namespaces: {
 			components: 'components',
 			commands: 'commands',

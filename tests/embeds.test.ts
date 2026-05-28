@@ -7,7 +7,7 @@ beforeEach(() => {
 	setConfig({
 		getLocalizedString: ({ i18nKey, locale }: GetLocalizedStringOptions) => `${locale}.${i18nKey}`,
 		validators: false,
-		langs: ['en-US', 'fr']
+		locales: ['en-US', 'fr']
 	});
 });
 
