@@ -1,7 +1,7 @@
 import { EmbedBuilder as Builder, isValidationEnabled, normalizeArray, RestOrArray, RGBTuple } from '@discordjs/builders';
 import { APIEmbedField } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { getConfig, resolveString, joinKeys } from '$lib';
+import { getConfig, joinKeys, resolveString } from '$lib';
 import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
 import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter, LocaleObject, LocaleParam, LocaleString } from '$types';
 

@@ -1,6 +1,6 @@
 import { SlashCommandSubcommandGroupBuilder as GroupBuilder, SlashCommandSubcommandBuilder as SubcommandBuilder } from '@discordjs/builders';
 import { hasMixin, mix } from 'ts-mixer';
-import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
+import { joinKeys, resolveAllStrings, resolveDefaultString } from '$lib';
 import { BaseKeyMixin, NameAndDescriptionMixin, SharedOptionsMixin } from '$mixins';
 import type { FuncAsInput } from '$types';
 

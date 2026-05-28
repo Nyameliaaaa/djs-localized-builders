@@ -1,6 +1,6 @@
 import { ContextMenuCommandBuilder as Builder, ContextMenuCommandType } from '@discordjs/builders';
 import { mix } from 'ts-mixer';
-import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
+import { joinKeys, resolveAllStrings, resolveDefaultString } from '$lib';
 import { BaseKeyMixin, NameMixin, PermsV2Mixin } from '$mixins';
 
 export interface ContextMenuCommandBuilder extends PermsV2Mixin<Builder>, NameMixin<Builder>, BaseKeyMixin {}

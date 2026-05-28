@@ -13,7 +13,7 @@ import {
 	SlashCommandUserOption
 } from '@discordjs/builders';
 import { hasMixin, mix } from 'ts-mixer';
-import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
+import { joinKeys, resolveAllStrings, resolveDefaultString } from '$lib';
 import {
 	SlashCommandAttachmentOptionBuilder,
 	SlashCommandBooleanOptionBuilder,

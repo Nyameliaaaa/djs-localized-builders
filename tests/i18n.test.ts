@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { GetLocalizedStringOptions, resolveAllStrings, resolveDefaultString, resolveString, joinKeys, resetConfig, setConfig } from '../dist';
+import { GetLocalizedStringOptions, joinKeys, resetConfig, resolveAllStrings, resolveDefaultString, resolveString, setConfig } from '../dist';
 
 beforeEach(() => {
 	resetConfig();

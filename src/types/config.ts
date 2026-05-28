@@ -1,7 +1,7 @@
 import { EmbedBuilder } from '$embeds';
 
 /**
- * Maps the internal namespace names used by {@link getString}, {@link getDefaultString}, and {@link getAllStrings} to the namespace names in your i18n files.
+ * Maps the internal namespace names used by {@link resolveString}, {@link resolveDefaultString}, and {@link resolveAllStrings} to the namespace names in your i18n files.
  * @group Configuration
  */
 export interface NamespaceMap {
@@ -64,7 +64,7 @@ export interface ConfigType {
 	getLocalizedString: (options: GetLocalizedStringOptions) => string;
 
 	/**
-	 * Called by {@link getString}, {@link getDefaultString}, and {@link getAllStrings} when an i18n key was not found.
+	 * Called by {@link resolveString}, {@link resolveDefaultString}, and {@link resolveAllStrings} when an i18n key was not found.
 	 * @param lang The locale where this i18n key was not found.
 	 * @param namespace The namespace where this i18n key was not found.
 	 * @param key The i18n key that was not found.
@@ -94,7 +94,7 @@ export interface ConfigType {
 	separatorChar: string;
 
 	/**
-	 * Maps the internal namespace names used by {@link getString}, {@link getDefaultString}, and {@link getAllStrings} to the namespace names in your i18n files.
+	 * Maps the internal namespace names used by {@link resolveString}, {@link resolveDefaultString}, and {@link resolveAllStrings} to the namespace names in your i18n files.
 	 * @defaultValue `{ commands: 'commands', components: 'components', embeds: 'embeds' }`
 	 */
 	namespaces?: NamespaceMap;

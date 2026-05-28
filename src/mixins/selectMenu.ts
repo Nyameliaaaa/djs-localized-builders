@@ -2,7 +2,7 @@ import { StringSelectMenuBuilder as DJSStringSelectMenuBuilder, isValidationEnab
 import type { LocalizationMap } from 'discord-api-types/v10';
 import { hasMixin, mix } from 'ts-mixer';
 import type { StringSelectMenuBuilder } from '$components';
-import { resolveString, joinKeys } from '$lib';
+import { joinKeys, resolveString } from '$lib';
 import type { ArgsWithRawOrKeyedParam, LocaleString, SelectMenuResolvable } from '$types';
 import { BaseKeyMixin, BuilderMixin } from './base';
 

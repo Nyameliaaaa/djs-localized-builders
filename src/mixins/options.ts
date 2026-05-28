@@ -1,7 +1,7 @@
 import { normalizeArray, type RestOrArray, SlashCommandIntegerOption, SlashCommandNumberOption, SlashCommandStringOption } from '@discordjs/builders';
 import { APIApplicationCommandOptionChoice } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
+import { joinKeys, resolveAllStrings, resolveDefaultString } from '$lib';
 import type { OptionResolvable } from '$types';
 import { BaseKeyMixin } from './base';
 import { NameAndDescriptionMixin } from './nameAndDescription';
