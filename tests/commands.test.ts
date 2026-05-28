@@ -4,9 +4,9 @@ import { ContextMenuCommandBuilder, type GetLocalizedStringOptions, SlashCommand
 
 beforeEach(() => {
 	setConfig({
-		getLocalizedString: ({ string, lang }: GetLocalizedStringOptions) => `${lang}.${string}`,
+		getLocalizedString: ({ i18nKey, locale }: GetLocalizedStringOptions) => `${locale}.${i18nKey}`,
 		validators: false,
-		langs: ['en-US', 'fr']
+		locales: ['en-US', 'fr']
 	});
 });
 
