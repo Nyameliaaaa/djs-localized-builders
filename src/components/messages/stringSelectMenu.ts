@@ -3,6 +3,7 @@ import type { LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { joinKeys } from '$lib';
 import { BaseKeyMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
+import { LocaleString } from '$types';
 import { StringSelectMenuOptionBuilder } from './stringMenuOption';
 
 export interface StringSelectMenuBuilder extends BuilderMixin<StringBuilder>, BaseKeyMixin, SelectMenuMixin<StringBuilder> {}
@@ -37,7 +38,7 @@ export class StringSelectMenuBuilder {
 		return this;
 	}
 
-	hydrateOptions(locale: keyof LocalizationMap, baseKey?: string) {
+	hydrateOptions(locale: LocaleString, baseKey?: string) {
 		if (this.baseKey && baseKey) {
 			this.builder.setOptions(
 				this.optionQueue.map(option => {

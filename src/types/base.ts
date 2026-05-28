@@ -25,6 +25,7 @@ import type {
 	TextInputBuilder,
 	UserSelectMenuBuilder
 } from '@discordjs/builders';
+import { Locale } from 'discord-api-types/v10';
 
 export type CommandResolvable = SlashCommandBuilder | SlashCommandSubcommandBuilder | ContextMenuCommandBuilder | SlashCommandSubcommandGroupBuilder;
 
@@ -57,3 +58,7 @@ export type ComponentResolvable =
 export type ApplicationCommandBuilderResolvable = CommandResolvable | OptionResolvable;
 export type BuilderResolvable = ApplicationCommandBuilderResolvable | ComponentResolvable | EmbedBuilder;
 export type FuncAsInput<T> = (option: T) => T;
+
+export type LocaleString = Locale | `${Locale}`;
+export type LocaleObject = { locale: LocaleString };
+export type LocaleParam = LocaleString | LocaleObject;

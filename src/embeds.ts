@@ -1,9 +1,9 @@
 import { EmbedBuilder as Builder, isValidationEnabled, normalizeArray, RestOrArray, RGBTuple } from '@discordjs/builders';
-import { APIEmbedField, type LocalizationMap } from 'discord-api-types/v10';
+import { APIEmbedField } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { getConfig, getString, joinKeys } from '$lib';
 import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
-import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter } from '$types';
+import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter, LocaleObject, LocaleParam, LocaleString } from '$types';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin {}
 
@@ -12,14 +12,13 @@ export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin 
  */
 @mix(LocaleBaseKeyMixin, BuilderMixin)
 export class EmbedBuilder {
-	constructor(locale: keyof LocalizationMap, baseKey?: string) {
+	constructor(locale: LocaleParam, baseKey?: string) {
 		this.builder = new Builder();
-		this.locale = locale;
-		this.baseKey = baseKey;
 	}
 
-	protected init(locale: keyof LocalizationMap, baseKey?: string) {
-		getConfig().onCreateEmbed(this, locale, baseKey);
+	protected init(locale: LocaleParam, baseKey?: string) {
+		const localeValue = typeof locale === 'string' ? locale : locale.locale;
+		getConfig().onCreateEmbed(this, localeValue, baseKey);
 	}
 
 	protected mapField(field: LocaleFieldOptions) {

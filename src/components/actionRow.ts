@@ -2,6 +2,7 @@ import { type AnyComponentBuilder, ActionRowBuilder as Builder, normalizeArray, 
 import { LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
+import { LocaleString } from '$types';
 import type {
 	ButtonBuilder,
 	ChannelSelectMenuBuilder,
@@ -15,7 +16,7 @@ export interface ActionRowBuilder extends LocaleBaseKeyMixin, BuilderMixin<Build
 
 @mix(LocaleBaseKeyMixin, BuilderMixin)
 export class ActionRowBuilder {
-	constructor(locale: keyof LocalizationMap, baseKey?: string) {
+	constructor(locale: LocaleString, baseKey?: string) {
 		this.builder = new Builder();
 	}
 

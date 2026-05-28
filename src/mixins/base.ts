@@ -1,5 +1,5 @@
-import type { LocalizationMap } from 'discord-api-types/v10';
-import type { BuilderResolvable } from '$types';
+import type { APIInteraction, LocalizationMap } from 'discord-api-types/v10';
+import type { BuilderResolvable, LocaleObject, LocaleParam, LocaleString } from '$types';
 
 export class BuilderMixin<T extends BuilderResolvable> {
 	/**
@@ -29,15 +29,15 @@ export class BaseKeyMixin {
 
 export class LocaleBaseKeyMixin {
 	public baseKey?: string;
-	public locale: keyof LocalizationMap;
+	public locale: LocaleString;
 
-	constructor(locale: keyof LocalizationMap, baseKey?: string) {
-		this.locale = locale;
+	constructor(locale: LocaleParam, baseKey?: string) {
+		this.locale = typeof locale === 'string' ? locale : locale.locale;
 		this.baseKey = baseKey;
 	}
 
-	protected init(locale: keyof LocalizationMap, baseKey?: string) {
-		this.locale = locale;
+	protected init(locale: LocaleParam, baseKey?: string) {
+		this.locale = typeof locale === 'string' ? locale : locale.locale;
 		this.baseKey = baseKey;
 	}
 }

@@ -3,7 +3,7 @@ import { APIMessageComponentEmoji, APISelectMenuOption, LocalizationMap } from '
 import { mix } from 'ts-mixer';
 import { getString, joinKeys } from '$lib';
 import { BaseKeyMixin, BuilderMixin } from '$mixins';
-import type { ArgsWithRawOrKeyedParam } from '$types';
+import type { ArgsWithRawOrKeyedParam, LocaleString } from '$types';
 
 export interface StringSelectMenuOptionBuilder extends BuilderMixin<StringOptionBuilder>, BaseKeyMixin {
 	setLabel(label: string, args?: ArgsWithRawOrKeyedParam): this;
@@ -169,7 +169,7 @@ export class StringSelectMenuOptionBuilder {
 		return this;
 	}
 
-	hydrateSelf(locale: keyof LocalizationMap, parentBaseKey?: string) {
+	hydrateSelf(locale: LocaleString, parentBaseKey?: string) {
 		// if there is no call to setValue() then we use the base key as the value
 		if (!this.builder.data.value && this.baseKey) {
 			console.log('hi');

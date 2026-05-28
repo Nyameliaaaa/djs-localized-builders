@@ -3,7 +3,7 @@ import type { APIMessageComponentEmoji, ButtonStyle, LocalizationMap } from 'dis
 import { mix } from 'ts-mixer';
 import { getString, joinKeys } from '$lib';
 import { BaseKeyMixin, BuilderMixin } from '$mixins';
-import type { ArgsWithRawOrKeyedParam } from '$types';
+import type { ArgsWithRawOrKeyedParam, LocaleString } from '$types';
 
 export interface ButtonBuilder extends BuilderMixin<Builder>, BaseKeyMixin {}
 
@@ -109,7 +109,7 @@ export class ButtonBuilder {
 		return this;
 	}
 
-	hydrateSelf(locale: keyof LocalizationMap, parentBaseKey?: string) {
+	hydrateSelf(locale: LocaleString, parentBaseKey?: string) {
 		if (this.baseKey && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
 			this.builder.setLabel(getString(joinKeys([parentBaseKey, 'buttons', this.baseKey, 'label']), locale, 'components', this.labelArgs));
 		}

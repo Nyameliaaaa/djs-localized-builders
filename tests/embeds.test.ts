@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: any is needed to silence typescript when testing invalid fields */
 import { Locale } from 'discord-api-types/v10';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { EmbedBuilder, type GetLocalizedStringOptions, setConfig } from '../dist';
+import { EmbedBuilder, type GetLocalizedStringOptions, resetConfig, setConfig } from '../dist';
 
 beforeEach(() => {
 	setConfig({
@@ -44,6 +44,36 @@ describe('EmbedBuilder', () => {
 
 			const embed = new EmbedBuilder(Locale.EnglishUS, 'hi');
 			expect(embed.toJSON().author?.name).toBe('hi');
+		});
+	});
+
+	describe('locale', () => {
+		beforeEach(() => {
+			setConfig({
+				onCreateEmbed: (embed, locale) => {
+					embed.setAuthor({ name: locale });
+				}
+			});
+		});
+
+		it('accepts Locale', () => {
+			const embed = new EmbedBuilder(Locale.EnglishUS);
+			expect(embed.toJSON().author?.name).toBe(Locale.EnglishUS);
+		});
+
+		it('accepts string', () => {
+			const embed = new EmbedBuilder('en-GB');
+			expect(embed.toJSON().author?.name).toBe('en-GB');
+		});
+
+		it('accepts interaction with Locale', () => {
+			const embed = new EmbedBuilder({ locale: Locale.French });
+			expect(embed.toJSON().author?.name).toBe(Locale.French);
+		});
+
+		it('accepts interaction with string', () => {
+			const embed = new EmbedBuilder({ locale: 'fr' });
+			expect(embed.toJSON().author?.name).toBe('fr');
 		});
 	});
 
@@ -156,8 +186,7 @@ describe('EmbedBuilder', () => {
 
 describe('EmbedBuilder validations', () => {
 	beforeEach(() => {
-		// biome-ignore lint/suspicious/noEmptyBlockStatements: resetting onCreateEmbed
-		setConfig({ validators: true, onCreateEmbed: () => {} });
+		resetConfig();
 	});
 
 	describe('addFields', () => {
