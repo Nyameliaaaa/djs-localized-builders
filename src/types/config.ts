@@ -2,7 +2,7 @@ import { EmbedBuilder } from '$embeds';
 
 /**
  * Maps the internal namespace names used by {@link getString}, {@link getDefaultString}, and {@link getAllStrings} to the namespace names in your i18n files.
- * @group Config
+ * @group Configuration
  */
 export interface NamespaceMap {
 	/**
@@ -26,7 +26,7 @@ export interface NamespaceMap {
 
 /**
  * Options passed to {@link ConfigType.getLocalizedString}
- * @group Config
+ * @group Configuration
  */
 export interface GetLocalizedStringOptions {
 	/**
@@ -52,7 +52,7 @@ export interface GetLocalizedStringOptions {
 
 /**
  * Configuration object for `djs-localized-builders`, used by {@link setConfig}
- * @group Config
+ * @group Configuration
  */
 export interface ConfigType {
 	/**

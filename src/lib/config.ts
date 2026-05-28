@@ -5,8 +5,8 @@ import { ConfigType } from '$types';
 settings.initFunction = 'init';
 settings.prototypeStrategy = 'proxy';
 
-let config: ConfigType = {
-	getLocalizedString: ({ string }) => `function_not_implemented_${string.toLocaleLowerCase()}`,
+const defaultConfig: ConfigType = {
+	getLocalizedString: ({ string }) => string,
 	onMissingKey: (lang, namespace, key) => {
 		throw new TypeError(`Key "${key}" was not found in the ${namespace} of ${lang}`, {
 			cause: { lang, namespace, key }
@@ -25,8 +25,18 @@ let config: ConfigType = {
 	}
 };
 
+let config: ConfigType = { ...defaultConfig };
+
+const setValidators = () => {
+	if (config.validators) {
+		enableValidators();
+	} else {
+		disableValidators();
+	}
+};
+
 /**
- * Set config for the library.
+ * Set the configuration for the library.
  * @example Example #1
  *  ```ts
 	setConfig({
@@ -36,32 +46,36 @@ let config: ConfigType = {
 		caseFormat: 'lowercase',
 		separatorChar: '_',
 		validators: process.ENV.NODE_ENV === 'development',
-        langs: client.i18n.langs , // use discord i18n codes
+        langs: client.i18n.langs,
 		namespaces: {
 			components: 'components',
 			commands: 'commands',
 			embeds: 'responses'
 		},
         onMisingKey: (lang, namespace, key) => {
-            logger.error(lang, namespace, key); // default function throws.
+            logger.error(lang, namespace, key);
         }
 	});
  * ```
- * @param newConfig The new config to use.
- * @group Config
+ * @param newConfig The new configuration.
+ * @group Configuration
  */
 export const setConfig = (newConfig: Partial<ConfigType>) => {
-	if (newConfig.validators) {
-		enableValidators();
-	} else {
-		disableValidators();
-	}
-
 	config = { ...config, ...newConfig };
+	setValidators();
 };
 
 /**
- * Get the currently selected config.
- * @group Config
+ * Reset the configuration to default.
+ * @group Configuration
+ */
+export const resetConfig = () => {
+	config = { ...defaultConfig };
+	setValidators();
+};
+
+/**
+ * Get the current configuration.
+ * @group Configuration
  */
 export const getConfig = (): ConfigType => config;

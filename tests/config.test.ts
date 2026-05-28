@@ -1,9 +1,9 @@
 import { isValidationEnabled } from '@discordjs/builders';
 import { describe, expect, it } from 'vitest';
-import { getConfig, setConfig } from '../dist';
+import { getConfig, resetConfig, setConfig } from '../dist';
 
 describe('Config', () => {
-	it('sets config', () => {
+	it('sets configuration', () => {
 		setConfig({
 			langs: ['en-US', 'fr']
 		});
@@ -25,5 +25,10 @@ describe('Config', () => {
 		});
 
 		expect(isValidationEnabled()).toEqual(false);
+	});
+
+	it('resets configuration', () => {
+		resetConfig();
+		expect(isValidationEnabled()).toEqual(true);
 	});
 });
