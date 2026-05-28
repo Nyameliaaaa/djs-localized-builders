@@ -2,7 +2,7 @@ import { isValidationEnabled, StringSelectMenuOptionBuilder as StringOptionBuild
 import { APIMessageComponentEmoji, APISelectMenuOption, LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { joinKeys, resolveString } from '$lib';
-import { KeySegmentMixin, BuilderMixin } from '$mixins';
+import { BuilderMixin, KeySegmentMixin } from '$mixins';
 import type { ArgsWithRawOrKeyedParam, LocaleString } from '$types';
 
 export interface StringSelectMenuOptionBuilder extends BuilderMixin<StringOptionBuilder>, KeySegmentMixin {

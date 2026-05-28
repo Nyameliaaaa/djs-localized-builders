@@ -7,7 +7,7 @@ import {
 } from '@discordjs/builders';
 import type { APISelectMenuDefaultValue, SelectMenuDefaultValueType, Snowflake } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { KeySegmentMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
+import { BuilderMixin, KeySegmentMixin, SelectMenuMixin } from '$mixins';
 
 export interface MentionableSelectMenuBuilder extends BuilderMixin<MentionableBuilder>, KeySegmentMixin, SelectMenuMixin<MentionableBuilder> {}
 

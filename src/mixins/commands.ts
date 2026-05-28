@@ -26,7 +26,7 @@ import {
 	SlashCommandUserOptionBuilder
 } from '$options';
 import type { FuncAsInput, OptionResolvable } from '$types';
-import { KeySegmentMixin, BuilderMixin } from './base';
+import { BuilderMixin, KeySegmentMixin } from './base';
 import { NameAndDescriptionMixin } from './nameAndDescription';
 import { AutocompletableMixin, OptionMixin } from './options';
 

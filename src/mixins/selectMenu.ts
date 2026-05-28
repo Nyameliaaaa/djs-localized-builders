@@ -4,7 +4,7 @@ import { hasMixin, mix } from 'ts-mixer';
 import type { StringSelectMenuBuilder } from '$components';
 import { joinKeys, resolveString } from '$lib';
 import type { ArgsWithRawOrKeyedParam, LocaleString, SelectMenuResolvable } from '$types';
-import { KeySegmentMixin, BuilderMixin } from './base';
+import { BuilderMixin, KeySegmentMixin } from './base';
 
 export interface SelectMenuMixin<Builder extends SelectMenuResolvable> extends BuilderMixin<Builder>, KeySegmentMixin {}
 

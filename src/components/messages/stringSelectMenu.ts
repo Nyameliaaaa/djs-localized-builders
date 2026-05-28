@@ -2,7 +2,7 @@ import { normalizeArray, RestOrArray, StringSelectMenuBuilder as StringBuilder }
 import type { LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { joinKeys } from '$lib';
-import { KeySegmentMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
+import { BuilderMixin, KeySegmentMixin, SelectMenuMixin } from '$mixins';
 import { LocaleString } from '$types';
 import { StringSelectMenuOptionBuilder } from './stringMenuOption';
 
