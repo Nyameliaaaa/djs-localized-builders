@@ -1,4 +1,4 @@
-import { getConfig } from '../index';
+import { getConfig } from '$lib';
 
 /**
  * Joins multiple i18n key segments.
@@ -60,11 +60,7 @@ export function getString(
  * @param options Interpolation arguments.
  * @group Helpers
  */
-export function getDefaultString(
-    string: string,
-    namespace: 'embeds' | 'components' | 'commands',
-    options: Record<string, any> = {}
-) {
+export function getDefaultString(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, any> = {}) {
     const config = getConfig();
     const val = config.getLocalizedString({
         lang: 'en-US',
@@ -87,11 +83,7 @@ export function getDefaultString(
  * @param options Interpolation arguments.
  * @group Helpers
  */
-export function getAllStrings(
-    string: string,
-    namespace: 'embeds' | 'components' | 'commands',
-    options: Record<string, any> = {}
-) {
+export function getAllStrings(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, any> = {}) {
     const config = getConfig();
     const ret: Record<string, string> = {};
 

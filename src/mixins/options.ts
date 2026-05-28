@@ -1,15 +1,15 @@
+import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { BaseKeyMixin, NameAndDescriptionMixin } from '$mixins';
+import type { OptionResolvable } from '$types';
 import {
     normalizeArray,
-    RestOrArray,
+    type RestOrArray,
     SlashCommandIntegerOption,
     SlashCommandNumberOption,
     SlashCommandStringOption
 } from '@discordjs/builders';
 import { APIApplicationCommandOptionChoice } from 'discord-api-types/v10';
-import { getAllStrings, getDefaultString, joinKeys, OptionResolvable } from '$index';
 import { mix } from 'ts-mixer';
-import { BaseKeyMixin } from './base';
-import { NameAndDescriptionMixin } from './index';
 
 export interface OptionMixin<T extends OptionResolvable> extends NameAndDescriptionMixin<T>, BaseKeyMixin {}
 

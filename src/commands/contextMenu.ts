@@ -1,5 +1,5 @@
 import { ContextMenuCommandBuilder as Builder, ContextMenuCommandType } from '@discordjs/builders';
-import { getAllStrings, getDefaultString, joinKeys } from '$index';
+import { getAllStrings, getDefaultString, joinKeys } from '$lib';
 import { BaseKeyMixin, PermsV2Mixin, NameMixin } from '$mixins';
 import { mix, settings } from 'ts-mixer';
 settings.initFunction = 'init';

@@ -1,5 +1,19 @@
+import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { AutocompletableMixin, BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, OptionMixin } from '$mixins';
 import {
-    ContextMenuCommandBuilder,
+    SlashCommandAttachmentOptionBuilder,
+    SlashCommandBooleanOptionBuilder,
+    SlashCommandChannelOptionBuilder,
+    SlashCommandIntegerOptionBuilder,
+    SlashCommandMentionableOptionBuilder,
+    SlashCommandNumberOptionBuilder,
+    SlashCommandRoleOptionBuilder,
+    SlashCommandStringOptionBuilder,
+    SlashCommandUserOptionBuilder
+} from '$options';
+import type { FuncAsInput, OptionResolvable } from '$types';
+import {
+    type ContextMenuCommandBuilder,
     SlashCommandAttachmentOption,
     SlashCommandBooleanOption,
     SlashCommandBuilder,
@@ -9,24 +23,10 @@ import {
     SlashCommandNumberOption,
     SlashCommandRoleOption,
     SlashCommandStringOption,
-    SlashCommandSubcommandBuilder,
+    type SlashCommandSubcommandBuilder,
     SlashCommandUserOption
 } from '@discordjs/builders';
-import { getAllStrings, getDefaultString, joinKeys } from '$lib';
-import { AutocompletableMixin, BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, OptionMixin } from '$mixins';
-import {
-    SlashCommandIntegerOptionBuilder,
-    SlashCommandMentionableOptionBuilder,
-    SlashCommandNumberOptionBuilder,
-    SlashCommandRoleOptionBuilder,
-    SlashCommandStringOptionBuilder,
-    SlashCommandUserOptionBuilder,
-    SlashCommandAttachmentOptionBuilder,
-    SlashCommandBooleanOptionBuilder,
-    SlashCommandChannelOptionBuilder
-} from '$options';
 import { hasMixin, mix } from 'ts-mixer';
-import { FuncAsInput, OptionResolvable } from '$types';
 
 export interface PermsV2Mixin<T extends SlashCommandBuilder | ContextMenuCommandBuilder> extends BuilderMixin<T> {}
 

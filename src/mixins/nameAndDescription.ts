@@ -1,8 +1,8 @@
-import { ContextMenuCommandBuilder } from '@discordjs/builders';
-import { LocalizationMap } from 'discord-api-types/v10';
-import { ApplicationCommandBuilderResolvable } from '$types';
+import { BuilderMixin } from '$mixins';
+import type { ApplicationCommandBuilderResolvable } from '$types';
+import type { ContextMenuCommandBuilder } from '@discordjs/builders';
+import type { LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { BuilderMixin } from './base';
 
 export interface NameMixin<T extends ApplicationCommandBuilderResolvable> extends BuilderMixin<T> {}
 

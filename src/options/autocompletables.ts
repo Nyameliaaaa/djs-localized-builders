@@ -24,9 +24,7 @@ export class SlashCommandIntegerOptionBuilder {
     }
 }
 
-export interface SlashCommandStringOptionBuilder
-    extends AutocompletableMixin<SlashCommandStringOption, string>,
-        BaseKeyMixin {}
+export interface SlashCommandStringOptionBuilder extends AutocompletableMixin<SlashCommandStringOption, string>, BaseKeyMixin {}
 /**
  * @group Options
  */

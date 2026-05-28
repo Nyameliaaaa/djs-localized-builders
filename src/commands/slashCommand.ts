@@ -1,13 +1,8 @@
-import { SlashCommandBuilder as Builder } from '@discordjs/builders';
-import {
-    getAllStrings,
-    getDefaultString,
-    joinKeys,
-    FuncAsInput,
-    SlashCommandSubcommandBuilder,
-    SlashCommandSubcommandGroupBuilder
-} from '$index';
+import { SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from '$commands';
+import { getAllStrings, getDefaultString, joinKeys } from '$lib';
 import { BaseKeyMixin, PermsV2Mixin, SharedOptionsMixin } from '$mixins';
+import type { FuncAsInput } from '$types';
+import { SlashCommandBuilder as Builder } from '@discordjs/builders';
 import { hasMixin, mix, settings } from 'ts-mixer';
 settings.initFunction = 'init';
 
