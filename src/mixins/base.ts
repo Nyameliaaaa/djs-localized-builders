@@ -2,6 +2,9 @@ import { LocalizationMap } from 'discord-api-types/v10';
 import type { BuilderResolvable } from '$types';
 
 export class BuilderMixin<T extends BuilderResolvable> {
+    /**
+     * @internal
+     */
     public builder!: T;
 
     toJSON() {
@@ -16,6 +19,9 @@ export class BaseKeyMixin {
         this.baseKey = baseKey;
     }
 
+    /**
+     * @internal
+     */
     protected init(baseKey?: string) {
         this.baseKey = baseKey;
     }

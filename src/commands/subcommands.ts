@@ -3,7 +3,7 @@ import {
     SlashCommandSubcommandGroupBuilder as GroupBuilder
 } from '@discordjs/builders';
 import { getAllStrings, getDefaultString, joinKeys, FuncAsInput } from '$index';
-import { BaseKeyMixin, BuilderMixin, NameAndDescriptionMixin, SharedOptionsMixin } from '$mixins';
+import { BaseKeyMixin, NameAndDescriptionMixin, SharedOptionsMixin } from '$mixins';
 import { hasMixin, mix } from 'ts-mixer';
 
 export interface SlashCommandSubcommandBuilder extends SharedOptionsMixin<SubcommandBuilder>, BaseKeyMixin {}
@@ -17,6 +17,9 @@ export class SlashCommandSubcommandBuilder {
         this.builder = new SubcommandBuilder();
     }
 
+    /**
+     * @internal
+     */
     hydrateSelf(baseKey: string) {
         if (this.baseKey) {
             this.baseKey = joinKeys([baseKey, 'subcommands', this.baseKey]).slice(0);
@@ -39,11 +42,14 @@ export interface SlashCommandSubcommandGroupBuilder extends NameAndDescriptionMi
     addSubcommand(option: SlashCommandSubcommandBuilder): this;
 }
 
-@mix(NameAndDescriptionMixin, BaseKeyMixin)
 /**
  * @group Commands
  */
+@mix(NameAndDescriptionMixin, BaseKeyMixin)
 export class SlashCommandSubcommandGroupBuilder {
+    /**
+     * @internal
+     */
     subcommandQueue: SlashCommandSubcommandBuilder[] = [];
 
     constructor(baseKey?: string) {
@@ -81,6 +87,9 @@ export class SlashCommandSubcommandGroupBuilder {
         return this;
     }
 
+    /**
+     * @internal
+     */
     hydrateSelf(baseKey: string) {
         if (this.baseKey) {
             this.baseKey = joinKeys([baseKey, 'groups', this.baseKey]).slice(0);

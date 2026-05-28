@@ -103,20 +103,13 @@ export class SelectMenuMixin<Builder extends SelectMenuResolvable> {
         // case 1, 2
         if (this.baseKey && parentBaseKey && this.placeholderRequiresParentBaseKeyHydration) {
             this.builder.setPlaceholder(
-                getString(
-                    joinKeys([parentBaseKey, 'options', this.baseKey, 'label']),
-                    locale,
-                    'components',
-                    this.placeholderArgs
-                )
+                getString(joinKeys([parentBaseKey, 'options', this.baseKey, 'label']), locale, 'components', this.placeholderArgs)
             );
         }
 
         // case 4, 5
         if (this.nonBaseKeyplaceholderLocaleString) {
-            this.builder.setPlaceholder(
-                getString(this.nonBaseKeyplaceholderLocaleString, locale, 'components', this.placeholderArgs)
-            );
+            this.builder.setPlaceholder(getString(this.nonBaseKeyplaceholderLocaleString, locale, 'components', this.placeholderArgs));
         }
 
         if (hasMixin(this, StringSelectMenuBuilder)) {

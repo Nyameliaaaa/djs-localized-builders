@@ -24,7 +24,7 @@ export default defineConfig({
         ],
 
         outline: {
-            level: 'deep'
+            level: [2, 3]
         },
 
         socialLinks: [{ icon: 'github', link: 'https://git.gay/nyamelia/djs-localized-builders' }],

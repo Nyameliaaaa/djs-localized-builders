@@ -33,18 +33,30 @@ export class SlashCommandBuilder {
         this.builder = new Builder();
     }
 
+    /**
+     * @internal
+     */
     private isSubcommandFunc(input: any): input is FuncAsInput<SlashCommandSubcommandBuilder> {
         return typeof input === 'function' && !this.isSubcommand(input);
     }
 
+    /**
+     * @internal
+     */
     private isSubcommand(input: any): input is SlashCommandSubcommandBuilder {
         return hasMixin(input, SlashCommandSubcommandBuilder);
     }
 
+    /**
+     * @internal
+     */
     private isGroupFunc(input: any): input is FuncAsInput<SlashCommandSubcommandGroupBuilder> {
         return typeof input === 'function' && !this.isGroup(input);
     }
 
+    /**
+     * @internal
+     */
     private isGroup(input: any): input is SlashCommandSubcommandGroupBuilder {
         return hasMixin(input, SlashCommandSubcommandGroupBuilder);
     }
@@ -93,6 +105,11 @@ export class SlashCommandBuilder {
         return this;
     }
 
+    /**
+     * Hydration of {@link SlashCommandBuilder}.
+     * @param baseKey The i18n key segment to resolve with.
+     * @internal
+     */
     protected init(baseKey?: string) {
         if (baseKey) {
             this.setName(getDefaultString(joinKeys([baseKey, 'name']), 'commands'));

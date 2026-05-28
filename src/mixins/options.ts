@@ -35,7 +35,7 @@ export class AutocompletableMixin<
     T extends SlashCommandNumberOption | SlashCommandIntegerOption | SlashCommandStringOption,
     V extends number | string = T extends SlashCommandNumberOption | SlashCommandIntegerOption ? number : string
 > {
-    choiceQueue: Array<V | { key: string; value: V }> = [];
+    private choiceQueue: Array<V | { key: string; value: V }> = [];
 
     setAutocomplete(autocomplete: boolean) {
         this.builder.setAutocomplete(autocomplete);
@@ -52,6 +52,9 @@ export class AutocompletableMixin<
         return this;
     }
 
+    /**
+     * @internal
+     */
     hydrateChoices(baseKey: string) {
         const preparedChoices = this.choiceQueue.map(val => {
             const key = joinKeys([baseKey, 'choices', val instanceof Object ? val.key.toString() : val.toString()]);

@@ -94,8 +94,12 @@ export interface SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommand
 
 @mix(BuilderMixin, NameAndDescriptionMixin, BaseKeyMixin)
 export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubcommandBuilder> {
-    public optionQueue: OptionMixin<OptionResolvable>[] = [];
+    private optionQueue: OptionMixin<OptionResolvable>[] = [];
 
+    /**
+     * @remarks This method is protected not private intentionally, as it used by {@link SlashCommandBuilder}
+     * @internal
+     */
     protected isString(input: any): input is string {
         return typeof input === 'string';
     }
@@ -175,6 +179,9 @@ export class SharedOptionsMixin<T extends SlashCommandBuilder | SlashCommandSubc
         return this;
     }
 
+    /**
+     * @internal
+     */
     hydrateOptions() {
         for (const option of this.optionQueue) {
             this.hydrateOption(option);

@@ -15,6 +15,9 @@ export class ContextMenuCommandBuilder {
         this.builder = new Builder();
     }
 
+    /**
+     * @internal
+     */
     protected init(baseKey?: string) {
         if (baseKey) {
             this.setName(getDefaultString(joinKeys([baseKey, 'context']), 'commands'));
