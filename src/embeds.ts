@@ -1,7 +1,7 @@
 import { EmbedBuilder as Builder, isValidationEnabled, normalizeArray, RestOrArray, RGBTuple } from '@discordjs/builders';
 import { APIEmbedField } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { getConfig, getString, joinKeys } from '$lib';
+import { getConfig, resolveString, joinKeys } from '$lib';
 import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
 import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter, LocaleObject, LocaleParam, LocaleString } from '$types';
 
@@ -54,21 +54,21 @@ export class EmbedBuilder {
 
 		// if we have a name or value ref key
 		if (field.nameRef) {
-			returnField.name = getString(field.nameRef, this.locale, 'embeds', field.nameArgs);
+			returnField.name = resolveString(field.nameRef, this.locale, 'embeds', field.nameArgs);
 		}
 
 		if (field.valueRef) {
-			returnField.value = getString(field.valueRef, this.locale, 'embeds', field.valueArgs);
+			returnField.value = resolveString(field.valueRef, this.locale, 'embeds', field.valueArgs);
 		}
 
 		// basekey (overrides manual key ref)
 		if (this.baseKey && field.key) {
 			if (!field.name) {
-				returnField.name = getString(joinKeys([this.baseKey, 'fields', field.key, 'name']), this.locale, 'embeds', field.nameArgs);
+				returnField.name = resolveString(joinKeys([this.baseKey, 'fields', field.key, 'name']), this.locale, 'embeds', field.nameArgs);
 			}
 
 			if (!field.value) {
-				returnField.value = getString(joinKeys([this.baseKey, 'fields', field.key, 'value']), this.locale, 'embeds', field.valueArgs);
+				returnField.value = resolveString(joinKeys([this.baseKey, 'fields', field.key, 'value']), this.locale, 'embeds', field.valueArgs);
 			}
 		}
 
@@ -90,18 +90,18 @@ export class EmbedBuilder {
 	setTitle(titleOrArgs?: string | Record<string, unknown>, args: ArgsWithRawParam = {}) {
 		let title = '';
 		if (this.baseKey && typeof titleOrArgs === 'object') {
-			title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
+			title = resolveString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
 		}
 
 		if (this.baseKey && !titleOrArgs) {
-			title = getString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds');
+			title = resolveString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds');
 		}
 
 		if (typeof titleOrArgs === 'string') {
 			if (args.raw) {
 				title = titleOrArgs;
 			} else {
-				title = getString(titleOrArgs, this.locale, 'embeds', args);
+				title = resolveString(titleOrArgs, this.locale, 'embeds', args);
 			}
 		}
 
@@ -116,18 +116,18 @@ export class EmbedBuilder {
 		let desc = '';
 
 		if (this.baseKey && typeof descriptionOrArgs === 'object') {
-			desc = getString(joinKeys([this.baseKey, 'description']), this.locale, 'embeds', descriptionOrArgs);
+			desc = resolveString(joinKeys([this.baseKey, 'description']), this.locale, 'embeds', descriptionOrArgs);
 		}
 
 		if (this.baseKey && !descriptionOrArgs) {
-			desc = getString(joinKeys([this.baseKey, 'description']), this.locale, 'embeds');
+			desc = resolveString(joinKeys([this.baseKey, 'description']), this.locale, 'embeds');
 		}
 
 		if (typeof descriptionOrArgs === 'string') {
 			if (args.raw) {
 				desc = descriptionOrArgs;
 			} else {
-				desc = getString(descriptionOrArgs, this.locale, 'embeds', args);
+				desc = resolveString(descriptionOrArgs, this.locale, 'embeds', args);
 			}
 		}
 
@@ -174,11 +174,11 @@ export class EmbedBuilder {
 		}
 
 		if (usesBaseKey) {
-			name = getString(joinKeys([this.baseKey!, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
+			name = resolveString(joinKeys([this.baseKey!, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
 		}
 
 		if (author.nameRef) {
-			name = getString(author.nameRef, this.locale, 'embeds', author.nameArgs);
+			name = resolveString(author.nameRef, this.locale, 'embeds', author.nameArgs);
 		}
 
 		if (author.name) {
@@ -214,11 +214,11 @@ export class EmbedBuilder {
 		}
 
 		if (usesBaseKey) {
-			text = getString(joinKeys([this.baseKey!, 'footer', 'text']), this.locale, 'embeds', footer.textArgs);
+			text = resolveString(joinKeys([this.baseKey!, 'footer', 'text']), this.locale, 'embeds', footer.textArgs);
 		}
 
 		if (footer.textRef) {
-			text = getString(footer.textRef, this.locale, 'embeds', footer.textArgs);
+			text = resolveString(footer.textRef, this.locale, 'embeds', footer.textArgs);
 		}
 
 		if (footer.text) {

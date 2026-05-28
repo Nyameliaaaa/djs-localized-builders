@@ -1,6 +1,6 @@
 import { ContextMenuCommandBuilder as Builder, ContextMenuCommandType } from '@discordjs/builders';
 import { mix } from 'ts-mixer';
-import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
 import { BaseKeyMixin, NameMixin, PermsV2Mixin } from '$mixins';
 
 export interface ContextMenuCommandBuilder extends PermsV2Mixin<Builder>, NameMixin<Builder>, BaseKeyMixin {}
@@ -19,8 +19,8 @@ export class ContextMenuCommandBuilder {
 	 */
 	protected init(baseKey?: string) {
 		if (baseKey) {
-			this.setName(getDefaultString(joinKeys([baseKey, 'context']), 'commands'));
-			this.setNameLocalizations(getAllStrings(joinKeys([baseKey, 'context']), 'commands'));
+			this.setName(resolveDefaultString(joinKeys([baseKey, 'context']), 'commands'));
+			this.setNameLocalizations(resolveAllStrings(joinKeys([baseKey, 'context']), 'commands'));
 		}
 	}
 

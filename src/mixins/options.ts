@@ -1,7 +1,7 @@
 import { normalizeArray, type RestOrArray, SlashCommandIntegerOption, SlashCommandNumberOption, SlashCommandStringOption } from '@discordjs/builders';
 import { APIApplicationCommandOptionChoice } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
 import type { OptionResolvable } from '$types';
 import { BaseKeyMixin } from './base';
 import { NameAndDescriptionMixin } from './nameAndDescription';
@@ -54,8 +54,8 @@ export class AutocompletableMixin<
 		const preparedChoices = this.choiceQueue.map(val => {
 			const key = joinKeys([baseKey, 'choices', val instanceof Object ? val.key.toString() : val.toString()]);
 
-			const name = getDefaultString(key, 'commands');
-			const name_localizations = getAllStrings(key, 'commands');
+			const name = resolveDefaultString(key, 'commands');
+			const name_localizations = resolveAllStrings(key, 'commands');
 
 			return {
 				name,

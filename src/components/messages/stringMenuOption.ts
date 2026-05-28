@@ -1,7 +1,7 @@
 import { isValidationEnabled, StringSelectMenuOptionBuilder as StringOptionBuilder } from '@discordjs/builders';
 import { APIMessageComponentEmoji, APISelectMenuOption, LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { getString, joinKeys } from '$lib';
+import { resolveString, joinKeys } from '$lib';
 import { BaseKeyMixin, BuilderMixin } from '$mixins';
 import type { ArgsWithRawOrKeyedParam, LocaleString } from '$types';
 
@@ -180,12 +180,12 @@ export class StringSelectMenuOptionBuilder {
 
 		// case 1, 2
 		if (this.baseKey && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
-			this.builder.setLabel(getString(joinKeys([parentBaseKey, 'options', this.baseKey, 'label']), locale, 'components', this.labelArgs));
+			this.builder.setLabel(resolveString(joinKeys([parentBaseKey, 'options', this.baseKey, 'label']), locale, 'components', this.labelArgs));
 		}
 
 		// case 4, 5
 		if (this.nonBaseKeyLabelLocaleString) {
-			this.builder.setLabel(getString(this.nonBaseKeyLabelLocaleString, locale, 'components', this.labelArgs));
+			this.builder.setLabel(resolveString(this.nonBaseKeyLabelLocaleString, locale, 'components', this.labelArgs));
 		}
 
 		// !SECTION
@@ -194,12 +194,14 @@ export class StringSelectMenuOptionBuilder {
 
 		// case 1, 2
 		if (this.baseKey && parentBaseKey && this.descRequiresParentBaseKeyHydration) {
-			this.builder.setDescription(getString(joinKeys([parentBaseKey, 'options', this.baseKey, 'description']), locale, 'components', this.descArgs));
+			this.builder.setDescription(
+				resolveString(joinKeys([parentBaseKey, 'options', this.baseKey, 'description']), locale, 'components', this.descArgs)
+			);
 		}
 
 		// case 4, 5
 		if (this.nonBaseKeyDescLocaleString) {
-			this.builder.setDescription(getString(this.nonBaseKeyDescLocaleString, locale, 'components', this.descArgs));
+			this.builder.setDescription(resolveString(this.nonBaseKeyDescLocaleString, locale, 'components', this.descArgs));
 		}
 
 		// !SECTION

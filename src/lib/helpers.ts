@@ -5,7 +5,7 @@ import { getConfig } from './config';
  * Joins multiple i18n key segments.
  * @param keySegments The i18n key segments.
  * @returns The joined i18n key segments, formatted according to {@link ConfigType.caseFormat} and {@link ConfigType.separatorChar}.
- * @group Helpers
+ * @group i18n
  */
 export function joinKeys(keySegments: (string | null | undefined)[]) {
 	const config = getConfig();
@@ -32,9 +32,9 @@ export function joinKeys(keySegments: (string | null | undefined)[]) {
  * @param lang The locale to resolve from.
  * @param namespace The namespace to resolve from.
  * @param options Interpolation arguments.
- * @group Helpers
+ * @group i18n
  */
-export function getString(string: string, lang: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+export function resolveString(string: string, lang: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
 	const config = getConfig();
 	const val = config.getLocalizedString({
 		lang,
@@ -55,9 +55,9 @@ export function getString(string: string, lang: string, namespace: 'embeds' | 'c
  * @param string The i18n key.
  * @param namespace The namespace to resolve from.
  * @param options Interpolation arguments.
- * @group Helpers
+ * @group i18n
  */
-export function getDefaultString(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+export function resolveDefaultString(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
 	const config = getConfig();
 	const val = config.getLocalizedString({
 		lang: 'en-US',
@@ -78,9 +78,9 @@ export function getDefaultString(string: string, namespace: 'embeds' | 'componen
  * @param string The i18n key.
  * @param namespace The namespace to resolve from.
  * @param options Interpolation arguments.
- * @group Helpers
+ * @group i18n
  */
-export function getAllStrings(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+export function resolveAllStrings(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
 	const config = getConfig();
 	const ret: Record<string, string> = {};
 

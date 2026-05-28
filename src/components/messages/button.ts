@@ -1,7 +1,7 @@
 import { ButtonBuilder as Builder, isValidationEnabled } from '@discordjs/builders';
 import type { APIMessageComponentEmoji, ButtonStyle, LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { getString, joinKeys } from '$lib';
+import { resolveString, joinKeys } from '$lib';
 import { BaseKeyMixin, BuilderMixin } from '$mixins';
 import type { ArgsWithRawOrKeyedParam, LocaleString } from '$types';
 
@@ -111,12 +111,12 @@ export class ButtonBuilder {
 
 	hydrateSelf(locale: LocaleString, parentBaseKey?: string) {
 		if (this.baseKey && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
-			this.builder.setLabel(getString(joinKeys([parentBaseKey, 'buttons', this.baseKey, 'label']), locale, 'components', this.labelArgs));
+			this.builder.setLabel(resolveString(joinKeys([parentBaseKey, 'buttons', this.baseKey, 'label']), locale, 'components', this.labelArgs));
 		}
 
 		// case 4, 5
 		if (this.nonBaseKeyLabelLocaleString) {
-			this.builder.setLabel(getString(this.nonBaseKeyLabelLocaleString, locale, 'components', this.labelArgs));
+			this.builder.setLabel(resolveString(this.nonBaseKeyLabelLocaleString, locale, 'components', this.labelArgs));
 		}
 
 		return this;

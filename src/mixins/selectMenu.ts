@@ -2,7 +2,7 @@ import { StringSelectMenuBuilder as DJSStringSelectMenuBuilder, isValidationEnab
 import type { LocalizationMap } from 'discord-api-types/v10';
 import { hasMixin, mix } from 'ts-mixer';
 import type { StringSelectMenuBuilder } from '$components';
-import { getString, joinKeys } from '$lib';
+import { resolveString, joinKeys } from '$lib';
 import type { ArgsWithRawOrKeyedParam, LocaleString, SelectMenuResolvable } from '$types';
 import { BaseKeyMixin, BuilderMixin } from './base';
 
@@ -110,12 +110,14 @@ export class SelectMenuMixin<Builder extends SelectMenuResolvable> {
 	hydrateSelf(locale: LocaleString, parentBaseKey?: string): this {
 		// case 1, 2
 		if (this.baseKey && parentBaseKey && this.placeholderRequiresParentBaseKeyHydration) {
-			this.builder.setPlaceholder(getString(joinKeys([parentBaseKey, 'options', this.baseKey, 'label']), locale, 'components', this.placeholderArgs));
+			this.builder.setPlaceholder(
+				resolveString(joinKeys([parentBaseKey, 'options', this.baseKey, 'label']), locale, 'components', this.placeholderArgs)
+			);
 		}
 
 		// case 4, 5
 		if (this.nonBaseKeyplaceholderLocaleString) {
-			this.builder.setPlaceholder(getString(this.nonBaseKeyplaceholderLocaleString, locale, 'components', this.placeholderArgs));
+			this.builder.setPlaceholder(resolveString(this.nonBaseKeyplaceholderLocaleString, locale, 'components', this.placeholderArgs));
 		}
 
 		if (this.isStringSelectMenu()) {

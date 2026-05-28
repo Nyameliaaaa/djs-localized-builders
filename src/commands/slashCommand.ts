@@ -1,6 +1,6 @@
 import { SlashCommandBuilder as Builder } from '@discordjs/builders';
 import { hasMixin, mix } from 'ts-mixer';
-import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
 import { BaseKeyMixin, PermsV2Mixin, SharedOptionsMixin } from '$mixins';
 import type { FuncAsInput } from '$types';
 import { SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from './subcommands';
@@ -106,10 +106,10 @@ export class SlashCommandBuilder {
 	 */
 	protected init(baseKey?: string) {
 		if (baseKey) {
-			this.setName(getDefaultString(joinKeys([baseKey, 'name']), 'commands'));
-			this.setDescription(getDefaultString(joinKeys([baseKey, 'description']), 'commands'));
-			this.setNameLocalizations(getAllStrings(joinKeys([baseKey, 'name']), 'commands'));
-			this.setDescriptionLocalizations(getAllStrings(joinKeys([baseKey, 'description']), 'commands'));
+			this.setName(resolveDefaultString(joinKeys([baseKey, 'name']), 'commands'));
+			this.setDescription(resolveDefaultString(joinKeys([baseKey, 'description']), 'commands'));
+			this.setNameLocalizations(resolveAllStrings(joinKeys([baseKey, 'name']), 'commands'));
+			this.setDescriptionLocalizations(resolveAllStrings(joinKeys([baseKey, 'description']), 'commands'));
 		}
 	}
 }

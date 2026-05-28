@@ -13,7 +13,7 @@ import {
 	SlashCommandUserOption
 } from '@discordjs/builders';
 import { hasMixin, mix } from 'ts-mixer';
-import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
 import {
 	SlashCommandAttachmentOptionBuilder,
 	SlashCommandBooleanOptionBuilder,
@@ -128,10 +128,10 @@ export class SharedOptionsMixin<_T extends SlashCommandBuilder | SlashCommandSub
 		if (option.baseKey) {
 			option.baseKey = joinKeys([this.baseKey, 'options', option.baseKey]).slice(0);
 
-			option.setName(getDefaultString(joinKeys([option.baseKey, 'name']), 'commands'));
-			option.setDescription(getDefaultString(joinKeys([option.baseKey, 'description']), 'commands'));
-			option.setNameLocalizations(getAllStrings(joinKeys([option.baseKey, 'name']), 'commands'));
-			option.setDescriptionLocalizations(getAllStrings(joinKeys([option.baseKey, 'description']), 'commands'));
+			option.setName(resolveDefaultString(joinKeys([option.baseKey, 'name']), 'commands'));
+			option.setDescription(resolveDefaultString(joinKeys([option.baseKey, 'description']), 'commands'));
+			option.setNameLocalizations(resolveAllStrings(joinKeys([option.baseKey, 'name']), 'commands'));
+			option.setDescriptionLocalizations(resolveAllStrings(joinKeys([option.baseKey, 'description']), 'commands'));
 
 			if (hasMixin(option, AutocompletableMixin)) {
 				option.hydrateChoices(option.baseKey);

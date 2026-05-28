@@ -1,6 +1,6 @@
 import { SlashCommandSubcommandGroupBuilder as GroupBuilder, SlashCommandSubcommandBuilder as SubcommandBuilder } from '@discordjs/builders';
 import { hasMixin, mix } from 'ts-mixer';
-import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { resolveAllStrings, resolveDefaultString, joinKeys } from '$lib';
 import { BaseKeyMixin, NameAndDescriptionMixin, SharedOptionsMixin } from '$mixins';
 import type { FuncAsInput } from '$types';
 
@@ -22,10 +22,10 @@ export class SlashCommandSubcommandBuilder {
 		if (this.baseKey) {
 			this.baseKey = joinKeys([baseKey, 'subcommands', this.baseKey]).slice(0);
 
-			this.setName(getDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
-			this.setDescription(getDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
-			this.setNameLocalizations(getAllStrings(joinKeys([this.baseKey, 'name']), 'commands'));
-			this.setDescriptionLocalizations(getAllStrings(joinKeys([this.baseKey, 'description']), 'commands'));
+			this.setName(resolveDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
+			this.setDescription(resolveDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
+			this.setNameLocalizations(resolveAllStrings(joinKeys([this.baseKey, 'name']), 'commands'));
+			this.setDescriptionLocalizations(resolveAllStrings(joinKeys([this.baseKey, 'description']), 'commands'));
 
 			this.hydrateOptions();
 		}
@@ -92,10 +92,10 @@ export class SlashCommandSubcommandGroupBuilder {
 		if (this.baseKey) {
 			this.baseKey = joinKeys([baseKey, 'groups', this.baseKey]).slice(0);
 
-			this.setName(getDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
-			this.setDescription(getDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
-			this.setNameLocalizations(getAllStrings(joinKeys([this.baseKey, 'name']), 'commands'));
-			this.setDescriptionLocalizations(getAllStrings(joinKeys([this.baseKey, 'description']), 'commands'));
+			this.setName(resolveDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
+			this.setDescription(resolveDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
+			this.setNameLocalizations(resolveAllStrings(joinKeys([this.baseKey, 'name']), 'commands'));
+			this.setDescriptionLocalizations(resolveAllStrings(joinKeys([this.baseKey, 'description']), 'commands'));
 
 			for (const subcommand of this.subcommandQueue) {
 				this.builder.addSubcommand(subcommand.hydrateSelf(this.baseKey).builder);
