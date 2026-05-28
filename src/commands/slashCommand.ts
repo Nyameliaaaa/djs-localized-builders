@@ -73,7 +73,7 @@ export class SlashCommandBuilder {
 			subcommand = keyOrInput;
 		}
 
-		this.builder.addSubcommand(subcommand!.hydrateSelf(this.baseKey ?? '').builder);
+		this.builder.addSubcommand(subcommand!.hydrateSelf(this.baseKey).builder);
 		return this;
 	}
 
@@ -95,7 +95,7 @@ export class SlashCommandBuilder {
 			subcommandGroup = keyOrInput;
 		}
 
-		this.builder.addSubcommandGroup(subcommandGroup!.hydrateSelf(this.baseKey ?? '').builder);
+		this.builder.addSubcommandGroup(subcommandGroup!.hydrateSelf(this.baseKey).builder);
 		return this;
 	}
 

@@ -3,24 +3,25 @@ import { getConfig } from './config';
 
 /**
  * Joins multiple i18n key segments.
- * @param keys The i18n key segments.
+ * @param keySegments The i18n key segments.
  * @returns The joined i18n key segments, formatted according to {@link ConfigType.caseFormat} and {@link ConfigType.separatorChar}.
  * @group Helpers
  */
-export function joinKeys(keys: string[]) {
+export function joinKeys(keySegments: (string | null | undefined)[]) {
 	const config = getConfig();
+	const filteredKeySegments = keySegments.filter(keySegment => typeof keySegment === 'string').filter(keySegment => keySegment.length > 0);
 
 	switch (config.caseFormat) {
 		case 'uppercase': {
-			return keys.map(key => key.toUpperCase()).join(config.separatorChar);
+			return filteredKeySegments.map(keySegment => keySegment.toUpperCase()).join(config.separatorChar);
 		}
 
 		case 'lowercase': {
-			return keys.map(key => key.toLowerCase()).join(config.separatorChar);
+			return filteredKeySegments.map(keySegment => keySegment.toLowerCase()).join(config.separatorChar);
 		}
 
 		case 'keep': {
-			return keys.join(config.separatorChar);
+			return filteredKeySegments.join(config.separatorChar);
 		}
 	}
 }

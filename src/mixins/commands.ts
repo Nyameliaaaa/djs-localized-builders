@@ -126,7 +126,7 @@ export class SharedOptionsMixin<_T extends SlashCommandBuilder | SlashCommandSub
 
 	private hydrateOption(option: OptionMixin<OptionResolvable>) {
 		if (option.baseKey) {
-			option.baseKey = joinKeys([this.baseKey ?? '', 'options', option.baseKey]).slice(0);
+			option.baseKey = joinKeys([this.baseKey, 'options', option.baseKey]).slice(0);
 
 			option.setName(getDefaultString(joinKeys([option.baseKey, 'name']), 'commands'));
 			option.setDescription(getDefaultString(joinKeys([option.baseKey, 'description']), 'commands'));

@@ -18,7 +18,7 @@ export class SlashCommandSubcommandBuilder {
 	/**
 	 * @internal
 	 */
-	hydrateSelf(baseKey: string) {
+	hydrateSelf(baseKey?: string) {
 		if (this.baseKey) {
 			this.baseKey = joinKeys([baseKey, 'subcommands', this.baseKey]).slice(0);
 
@@ -88,7 +88,7 @@ export class SlashCommandSubcommandGroupBuilder {
 	/**
 	 * @internal
 	 */
-	hydrateSelf(baseKey: string) {
+	hydrateSelf(baseKey?: string) {
 		if (this.baseKey) {
 			this.baseKey = joinKeys([baseKey, 'groups', this.baseKey]).slice(0);
 

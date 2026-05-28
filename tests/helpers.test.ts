@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { GetLocalizedStringOptions, getAllStrings, getDefaultString, getString, joinKeys, setConfig } from '../dist';
+import { GetLocalizedStringOptions, getAllStrings, getDefaultString, getString, joinKeys, resetConfig, setConfig } from '../dist';
+
+beforeEach(() => {
+	resetConfig();
+});
 
 describe('Helpers', () => {
 	describe('getting strings', () => {
@@ -50,13 +54,6 @@ describe('Helpers', () => {
 		});
 
 		describe('caseFormat', () => {
-			beforeEach(() => {
-				setConfig({
-					getLocalizedString: ({ string }: GetLocalizedStringOptions) => `${string}`,
-					separatorChar: '.'
-				});
-			});
-
 			it('handles uppercase', () => {
 				setConfig({ caseFormat: 'uppercase' });
 
@@ -105,6 +102,20 @@ describe('Helpers', () => {
 				});
 
 				expect(joinKeys(['A', 'b'])).toMatch('A:b');
+			});
+		});
+
+		describe('null/empty handling', () => {
+			it('handles null', () => {
+				expect(joinKeys(['a', null, 'b'])).toMatch('a.b');
+			});
+
+			it('handles empty string', () => {
+				expect(joinKeys(['a', '', 'b'])).toMatch('a.b');
+			});
+
+			it('handles null + empty string', () => {
+				expect(joinKeys(['a', '', null, 'b'])).toMatch('a.b');
 			});
 		});
 	});
