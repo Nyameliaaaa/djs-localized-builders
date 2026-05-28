@@ -12,22 +12,26 @@ export default defineConfig({
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
 			{ text: 'Home', link: '/' },
-			{ text: 'Examples', link: '/examples' }
+			{ text: 'Examples', link: '/examples/' },
+			{ text: 'API Reference', link: '/api/' }
 		],
 
 		sidebar: [
 			{
 				text: 'Examples',
-				items: [{ text: 'Examples', link: '/examples' }]
+				items: [{ text: 'Examples', link: '/examples/' }]
 			},
-			{ text: 'API Reference', items: [{ text: 'All Items', link: '/api' }, ...typedocSidebar] }
+			{ text: 'API Reference', items: [{ text: 'All Exports', link: '/api/' }, ...typedocSidebar] }
 		],
 
 		outline: {
 			level: [2, 3]
 		},
 
-		socialLinks: [{ icon: 'github', link: 'https://git.gay/nyamelia/djs-localized-builders' }],
+		socialLinks: [
+			{ icon: 'forgejo', link: 'https://git.gay/nyamelia/djs-localized-builders' },
+			{ icon: 'npm', link: 'https://www.npmjs.com/package/djs-localized-builders' }
+		],
 
 		footer: {
 			message: 'Released under the MIT License.',
@@ -44,3 +48,4 @@ export default defineConfig({
 		}
 	}
 });
+	
