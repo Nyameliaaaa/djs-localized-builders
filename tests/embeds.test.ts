@@ -13,17 +13,26 @@ beforeEach(() => {
 
 describe('EmbedBuilder', () => {
 	describe('Config#onLocaleEmbed', () => {
-		beforeEach(() => {
+		it('properly calls onLocaleEmbed', () => {
 			setConfig({
 				onCreateEmbed: (embed, locale) => {
 					embed.setAuthor({ name: 'testing onCreateEmbed' });
 				}
 			});
+			const embed = new EmbedBuilder(Locale.EnglishUS);
+
+			expect(embed.toJSON().author?.name).toBe('testing onCreateEmbed');
 		});
 
-		it('properly calls onLocaleEmbed', () => {
+		it('properly passes locale', () => {
+			setConfig({
+				onCreateEmbed: (embed, locale) => {
+					embed.setAuthor({ name: locale });
+				}
+			});
 			const embed = new EmbedBuilder(Locale.EnglishUS);
-			expect(embed.toJSON().author?.name).toBe('testing onCreateEmbed');
+
+			expect(embed.toJSON().author?.name).toBe(Locale.EnglishUS);
 		});
 	});
 

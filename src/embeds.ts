@@ -19,7 +19,7 @@ export class EmbedBuilder {
 	}
 
 	protected init(locale: keyof LocalizationMap, baseKey?: string) {
-		getConfig().onCreateEmbed(this, locale);
+		getConfig().onCreateEmbed(this, locale, baseKey);
 	}
 
 	protected mapField(field: LocaleFieldOptions) {

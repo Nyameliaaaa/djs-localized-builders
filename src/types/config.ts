@@ -72,12 +72,13 @@ export interface ConfigType {
 	onMissingKey: (lang: string, namespace: string, key: string) => void;
 
 	/**
-	 * Called when an instance of {@link EmbedBuilder} is created.
+	 * Called when an {@link EmbedBuilder} is instantiated.
 	 * @remarks Use this to apply default properties to all embeds, such as a default color or footer.
 	 * @param embed The EmbedBuilder instance.
-	 * @param locale The locale of the instance.
+	 * @param locale The embed's locale.
+	 * @param keySegment The embed's key segment, if any.
 	 */
-	onCreateEmbed: (embed: EmbedBuilder, locale: string) => Promise<void> | void;
+	onCreateEmbed: (embed: EmbedBuilder, locale: string, keySegment?: string) => Promise<void> | void;
 
 	/**
 	 * Casing format of your i18n keys.
