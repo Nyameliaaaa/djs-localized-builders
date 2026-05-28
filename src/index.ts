@@ -1,8 +1,5 @@
-import { settings } from 'ts-mixer';
-settings.initFunction = 'init';
-settings.prototypeStrategy = 'proxy';
-
-export * from './types';
+// biome-ignore assist/source/organizeImports: import order is intentional for ts-mixer initi
+export type * from './types';
 export * from './lib';
 export * from './options';
 export * from './commands';

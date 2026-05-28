@@ -1,24 +1,28 @@
 import { disableValidators, enableValidators } from '@discordjs/builders';
+import { settings } from 'ts-mixer';
 import { ConfigType } from '$types';
 
-let config: ConfigType = {
-    getLocalizedString: ({ string }) => `function_not_implemented_${string.toLocaleLowerCase()}`,
-    onMissingKey: (lang, namespace, key) => {
-        throw new TypeError(`Key "${key}" was not found in the ${namespace} of ${lang}`, {
-            cause: { lang, namespace, key }
-        });
-    },
+settings.initFunction = 'init';
+settings.prototypeStrategy = 'proxy';
 
-    onCreateEmbed: (embed, locale) => {},
-    caseFormat: 'lowercase',
-    separatorChar: '.',
-    validators: true,
-    langs: ['en-US'],
-    namespaces: {
-        components: 'components',
-        commands: 'commands',
-        embeds: 'embeds'
-    }
+let config: ConfigType = {
+	getLocalizedString: ({ string }) => `function_not_implemented_${string.toLocaleLowerCase()}`,
+	onMissingKey: (lang, namespace, key) => {
+		throw new TypeError(`Key "${key}" was not found in the ${namespace} of ${lang}`, {
+			cause: { lang, namespace, key }
+		});
+	},
+	// biome-ignore lint/suspicious/noEmptyBlockStatements: intentional no-op default
+	onCreateEmbed: (embed, locale) => {},
+	caseFormat: 'lowercase',
+	separatorChar: '.',
+	validators: true,
+	langs: ['en-US'],
+	namespaces: {
+		components: 'components',
+		commands: 'commands',
+		embeds: 'embeds'
+	}
 };
 
 /**
@@ -47,13 +51,13 @@ let config: ConfigType = {
  * @group Config
  */
 export const setConfig = (newConfig: Partial<ConfigType>) => {
-    if (newConfig.validators) {
-        enableValidators();
-    } else {
-        disableValidators();
-    }
+	if (newConfig.validators) {
+		enableValidators();
+	} else {
+		disableValidators();
+	}
 
-    config = { ...config, ...newConfig };
+	config = { ...config, ...newConfig };
 };
 
 /**

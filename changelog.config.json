@@ -1,21 +1,21 @@
 {
-    "repo": {
-        "repo": "nyamelia/djs-localized-builders",
-        "provider": "github",
-        "domain": "git.gay"
-    },
-    "types": {
-        "enhance": {
-            "title": "Enhancements"
-        },
-        "feat": {
-            "title": "Features"
-        },
-        "fix": {
-            "title": "Bug Fixes"
-        },
+	"repo": {
+		"repo": "nyamelia/djs-localized-builders",
+		"provider": "github",
+		"domain": "git.gay"
+	},
+	"types": {
+		"enhance": {
+			"title": "Enhancements"
+		},
+		"feat": {
+			"title": "Features"
+		},
+		"fix": {
+			"title": "Bug Fixes"
+		},
 		"perf": {
 			"title": "Performance"
 		}
-    }
+	}
 }

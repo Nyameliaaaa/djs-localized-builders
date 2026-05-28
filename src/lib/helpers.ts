@@ -1,4 +1,5 @@
-import { getConfig } from '$lib';
+import type { ConfigType } from '$types';
+import { getConfig } from './config';
 
 /**
  * Joins multiple i18n key segments.
@@ -7,21 +8,21 @@ import { getConfig } from '$lib';
  * @group Helpers
  */
 export function joinKeys(keys: string[]) {
-    const config = getConfig();
+	const config = getConfig();
 
-    switch (config.caseFormat) {
-        case 'uppercase': {
-            return keys.map(key => key.toUpperCase()).join(config.separatorChar);
-        }
+	switch (config.caseFormat) {
+		case 'uppercase': {
+			return keys.map(key => key.toUpperCase()).join(config.separatorChar);
+		}
 
-        case 'lowercase': {
-            return keys.map(key => key.toLowerCase()).join(config.separatorChar);
-        }
+		case 'lowercase': {
+			return keys.map(key => key.toLowerCase()).join(config.separatorChar);
+		}
 
-        case 'keep': {
-            return keys.join(config.separatorChar);
-        }
-    }
+		case 'keep': {
+			return keys.join(config.separatorChar);
+		}
+	}
 }
 
 /**
@@ -32,25 +33,20 @@ export function joinKeys(keys: string[]) {
  * @param options Interpolation arguments.
  * @group Helpers
  */
-export function getString(
-    string: string,
-    lang: string,
-    namespace: 'embeds' | 'components' | 'commands',
-    options: Record<string, any> = {}
-) {
-    const config = getConfig();
-    const val = config.getLocalizedString({
-        lang,
-        namespace: config.namespaces?.[namespace] ?? namespace,
-        string,
-        options
-    });
+export function getString(string: string, lang: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+	const config = getConfig();
+	const val = config.getLocalizedString({
+		lang,
+		namespace: config.namespaces?.[namespace] ?? namespace,
+		string,
+		options
+	});
 
-    if (config.validators && (!val || val.includes(string))) {
-        config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
-    }
+	if (config.validators && (!val || val.includes(string))) {
+		config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
+	}
 
-    return val;
+	return val;
 }
 
 /**
@@ -60,20 +56,20 @@ export function getString(
  * @param options Interpolation arguments.
  * @group Helpers
  */
-export function getDefaultString(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, any> = {}) {
-    const config = getConfig();
-    const val = config.getLocalizedString({
-        lang: 'en-US',
-        namespace: config.namespaces?.[namespace] ?? namespace,
-        string,
-        options
-    });
+export function getDefaultString(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+	const config = getConfig();
+	const val = config.getLocalizedString({
+		lang: 'en-US',
+		namespace: config.namespaces?.[namespace] ?? namespace,
+		string,
+		options
+	});
 
-    if (config.validators && (!val || val.includes(string))) {
-        config.onMissingKey('en-US', config.namespaces?.[namespace] ?? namespace, string);
-    }
+	if (config.validators && (!val || val.includes(string))) {
+		config.onMissingKey('en-US', config.namespaces?.[namespace] ?? namespace, string);
+	}
 
-    return val;
+	return val;
 }
 
 /**
@@ -83,22 +79,22 @@ export function getDefaultString(string: string, namespace: 'embeds' | 'componen
  * @param options Interpolation arguments.
  * @group Helpers
  */
-export function getAllStrings(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, any> = {}) {
-    const config = getConfig();
-    const ret: Record<string, string> = {};
+export function getAllStrings(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
+	const config = getConfig();
+	const ret: Record<string, string> = {};
 
-    for (const lang of config.langs) {
-        ret[lang] = config.getLocalizedString({
-            lang,
-            namespace: config.namespaces?.[namespace] ?? namespace,
-            string,
-            options
-        });
+	for (const lang of config.langs) {
+		ret[lang] = config.getLocalizedString({
+			lang,
+			namespace: config.namespaces?.[namespace] ?? namespace,
+			string,
+			options
+		});
 
-        if (config.validators && (!ret[lang] || ret[lang].includes(string))) {
-            config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
-        }
-    }
+		if (config.validators && (!ret[lang] || ret[lang].includes(string))) {
+			config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
+		}
+	}
 
-    return ret;
+	return ret;
 }

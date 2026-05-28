@@ -1,76 +1,71 @@
 {
-    "name": "djs-localized-builders",
-    "description": "A set of builders for discord.js, built with localization in mind.",
-    "version": "0.4.0",
-    "main": "dist/index.js",
-    "module": "dist/index.mjs",
-    "types": "dist/index.d.ts",
-    "exports": {
-        "types": "./dist/index.d.ts",
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.js"
-    },
-    "files": [
-        "dist"
-    ],
-    "scripts": {
-        "test:unit": "vitest",
-        "pretest:run": "pnpm build",
-        "test:run": "vitest run",
-        "test:ui": "vitest --ui",
-        "test:ci": "npm run test:typescript && npm run lint",
-        "test:typescript": "tsc --noEmit",
-        "build": "tsup",
-        "lint": "eslint .",
-        "lint:fix": "eslint --fix",
-        "release": "changelogen",
-        "prepare": "husky",
-        "docs:build:api": "typedoc",
-        "docs:dev": "pnpm docs:build:api && vitepress dev docs",
-        "docs:build": "pnpm docs:build:api && vitepress build docs"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://git.gay/nyamelia/djs-localized-builders.git"
-    },
-    "keywords": [],
-    "author": "Amelia Rose <nyameliaaaaa@proton.me>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://git.gay/nyamelia/djs-localized-builders/issues"
-    },
-    "homepage": "https://git.gay/nyamelia/djs-localized-builders#readme",
-    "devDependencies": {
-        "@commitlint/cli": "^21.0.1",
-        "@commitlint/config-conventional": "^21.0.1",
-        "@discordjs/builders": "^1.14.1",
-        "@eslint/eslintrc": "^3.3.5",
-        "@eslint/js": "^10.0.1",
-        "@types/node": "^25.9.1",
-        "@typescript-eslint/eslint-plugin": "^8.60.0",
-        "@typescript-eslint/parser": "^8.60.0",
-        "@vitest/ui": "3.2.4",
-        "changelogen": "^0.6.2",
-        "discord-api-types": "^0.38.48",
-        "eslint": "^10.4.0",
-        "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-prettier": "^5.5.5",
-        "eslint-plugin-tsdoc": "^0.5.2",
-        "globals": "^17.6.0",
-        "husky": "^9.1.7",
-        "tsup": "^8.5.1",
-        "typedoc": "^0.28.19",
-        "typedoc-plugin-markdown": "^4.11.0",
-        "typedoc-vitepress-theme": "^1.1.2",
-        "typescript": "^6.0.3",
-        "vitepress": "^1.6.4",
-        "vitest": "^3.2.4"
-    },
-    "peerDependencies": {
-        "@discordjs/builders": "^1.10.0"
-    },
-    "dependencies": {
-        "ts-mixer": "^6.0.4"
-    },
-    "packageManager": "pnpm@11.3.0+sha512.2c403d6594527287672b1f7056343a1f7c3634036a67ffabfcc2b3d7595d843768f8787148d1b57cf7956c90606bbd192857c363af19e96d2d0ec9ec5741d215"
+	"name": "djs-localized-builders",
+	"description": "A set of builders for discord.js, built with localization in mind.",
+	"version": "0.4.0",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"exports": {
+		"types": "./dist/index.d.ts",
+		"import": "./dist/index.mjs",
+		"require": "./dist/index.js"
+	},
+	"files": ["dist"],
+	"scripts": {
+		"test:unit": "vitest",
+		"pretest:run": "pnpm build",
+		"test:run": "vitest run",
+		"test:ui": "vitest --ui",
+		"test:ci": "npm run test:typescript && npm run lint",
+		"test:typescript": "tsc --noEmit",
+		"build": "tsup",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
+		"format": "biome format --write .",
+		"release": "changelogen",
+		"prepare": "husky",
+		"docs:build:api": "typedoc",
+		"docs:dev": "pnpm docs:build:api && vitepress dev docs",
+		"docs:build": "pnpm docs:build:api && vitepress build docs"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://git.gay/nyamelia/djs-localized-builders.git"
+	},
+	"keywords": [],
+	"author": {
+		"name": "Amelia Rose",
+		"email": "nyameliaaaaa@proton.me",
+		"url": "https://nyamelia.is-immensely.gay"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://git.gay/nyamelia/djs-localized-builders/issues"
+	},
+	"homepage": "https://git.gay/nyamelia/djs-localized-builders#readme",
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.15",
+		"@commitlint/cli": "^21.0.1",
+		"@commitlint/config-conventional": "^21.0.1",
+		"@discordjs/builders": "^1.14.1",
+		"@types/node": "^25.9.1",
+		"@vitest/ui": "3.2.4",
+		"changelogen": "^0.6.2",
+		"discord-api-types": "^0.38.48",
+		"husky": "^9.1.7",
+		"tsup": "^8.5.1",
+		"typedoc": "^0.28.19",
+		"typedoc-plugin-markdown": "^4.11.0",
+		"typedoc-vitepress-theme": "^1.1.2",
+		"typescript": "^6.0.3",
+		"vitepress": "^1.6.4",
+		"vitest": "^3.2.4"
+	},
+	"peerDependencies": {
+		"@discordjs/builders": "^1.10.0"
+	},
+	"dependencies": {
+		"ts-mixer": "^6.0.4"
+	},
+	"packageManager": "pnpm@11.3.0+sha512.2c403d6594527287672b1f7056343a1f7c3634036a67ffabfcc2b3d7595d843768f8787148d1b57cf7956c90606bbd192857c363af19e96d2d0ec9ec5741d215"
 }

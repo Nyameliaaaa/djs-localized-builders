@@ -7,7 +7,7 @@ on:
 
 jobs:
     lint:
-        name: ESLint
+        name: Biome
         runs-on: docker
 
         steps:
@@ -22,7 +22,7 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Run ESLint
+            - name: Run Biome
               run: pnpm run lint
 
     typescript:
@@ -43,3 +43,22 @@ jobs:
 
             - name: Run TypeScript compiler
               run: pnpm run test:typescript
+
+    vitest:
+        name: Vitest
+        runs-on: docker
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Install Node v24
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 24
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Run Vitest
+              run: pnpm run test:run

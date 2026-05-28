@@ -1,60 +1,57 @@
-import { RestOrArray, StringSelectMenuBuilder as StringBuilder, normalizeArray } from '@discordjs/builders';
-import { StringSelectMenuOptionBuilder } from '$components';
+import { normalizeArray, RestOrArray, StringSelectMenuBuilder as StringBuilder } from '@discordjs/builders';
 import type { LocalizationMap } from 'discord-api-types/v10';
+import { mix } from 'ts-mixer';
 import { joinKeys } from '$lib';
 import { BaseKeyMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
-import { mix } from 'ts-mixer';
+import { StringSelectMenuOptionBuilder } from './stringMenuOption';
 
-export interface StringSelectMenuBuilder
-    extends BuilderMixin<StringBuilder>,
-        BaseKeyMixin,
-        SelectMenuMixin<StringBuilder> {}
+export interface StringSelectMenuBuilder extends BuilderMixin<StringBuilder>, BaseKeyMixin, SelectMenuMixin<StringBuilder> {}
 
 @mix(BuilderMixin, BaseKeyMixin, SelectMenuMixin)
 export class StringSelectMenuBuilder {
-    optionQueue: StringSelectMenuOptionBuilder[] = [];
+	optionQueue: StringSelectMenuOptionBuilder[] = [];
 
-    constructor(baseKey?: string) {
-        this.builder = new StringBuilder();
-        this.baseKey = baseKey;
-    }
+	constructor(baseKey?: string) {
+		this.builder = new StringBuilder();
+		this.baseKey = baseKey;
+	}
 
-    addOptions(...options: RestOrArray<StringSelectMenuOptionBuilder>) {
-        const normalizedOptions = normalizeArray(options);
-        this.optionQueue.push(...normalizedOptions);
-        return this;
-    }
+	addOptions(...options: RestOrArray<StringSelectMenuOptionBuilder>) {
+		const normalizedOptions = normalizeArray(options);
+		this.optionQueue.push(...normalizedOptions);
+		return this;
+	}
 
-    setOptions(...options: RestOrArray<StringSelectMenuOptionBuilder>) {
-        this.optionQueue = normalizeArray(options);
-        return this;
-    }
+	setOptions(...options: RestOrArray<StringSelectMenuOptionBuilder>) {
+		this.optionQueue = normalizeArray(options);
+		return this;
+	}
 
-    spliceOptions(index: number, deleteCount: number, ...options: RestOrArray<StringSelectMenuOptionBuilder>) {
-        options = normalizeArray(options);
-        const clone = [...normalizeArray(this.optionQueue)];
+	spliceOptions(index: number, deleteCount: number, ...options: RestOrArray<StringSelectMenuOptionBuilder>) {
+		options = normalizeArray(options);
+		const clone = [...normalizeArray(this.optionQueue)];
 
-        clone.splice(index, deleteCount, ...options);
-        this.optionQueue.splice(index, deleteCount, ...clone);
+		clone.splice(index, deleteCount, ...options);
+		this.optionQueue.splice(index, deleteCount, ...clone);
 
-        return this;
-    }
+		return this;
+	}
 
-    hydrateOptions(locale: keyof LocalizationMap, baseKey?: string) {
-        if (this.baseKey && baseKey) {
-            this.builder.setOptions(
-                this.optionQueue.map(option => {
-                    if (this.baseKey) {
-                        option.hydrateSelf(locale, joinKeys([baseKey, 'select_menus', this.baseKey]));
-                    }
+	hydrateOptions(locale: keyof LocalizationMap, baseKey?: string) {
+		if (this.baseKey && baseKey) {
+			this.builder.setOptions(
+				this.optionQueue.map(option => {
+					if (this.baseKey) {
+						option.hydrateSelf(locale, joinKeys([baseKey, 'select_menus', this.baseKey]));
+					}
 
-                    return option.builder;
-                })
-            );
+					return option.builder;
+				})
+			);
 
-            this.optionQueue = [];
-        }
+			this.optionQueue = [];
+		}
 
-        return this;
-    }
+		return this;
+	}
 }

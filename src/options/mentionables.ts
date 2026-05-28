@@ -1,19 +1,17 @@
 import { SlashCommandMentionableOption, SlashCommandRoleOption, SlashCommandUserOption } from '@discordjs/builders';
-import { BaseKeyMixin, OptionMixin } from '$mixins';
 import { mix } from 'ts-mixer';
+import { BaseKeyMixin, OptionMixin } from '$mixins';
 
-export interface SlashCommandMentionableOptionBuilder
-    extends OptionMixin<SlashCommandMentionableOption>,
-        BaseKeyMixin {}
+export interface SlashCommandMentionableOptionBuilder extends OptionMixin<SlashCommandMentionableOption>, BaseKeyMixin {}
 
 /**
  * @group Options
  */
 @mix(OptionMixin, BaseKeyMixin)
 export class SlashCommandMentionableOptionBuilder {
-    constructor(baseKey?: string) {
-        this.builder = new SlashCommandMentionableOption();
-    }
+	constructor(baseKey?: string) {
+		this.builder = new SlashCommandMentionableOption();
+	}
 }
 
 export interface SlashCommandUserOptionBuilder extends OptionMixin<SlashCommandUserOption>, BaseKeyMixin {}
@@ -23,9 +21,9 @@ export interface SlashCommandUserOptionBuilder extends OptionMixin<SlashCommandU
  */
 @mix(OptionMixin, BaseKeyMixin)
 export class SlashCommandUserOptionBuilder {
-    constructor(baseKey?: string) {
-        this.builder = new SlashCommandUserOption();
-    }
+	constructor(baseKey?: string) {
+		this.builder = new SlashCommandUserOption();
+	}
 }
 
 export interface SlashCommandRoleOptionBuilder extends OptionMixin<SlashCommandRoleOption>, BaseKeyMixin {}
@@ -34,7 +32,7 @@ export interface SlashCommandRoleOptionBuilder extends OptionMixin<SlashCommandR
  */
 @mix(OptionMixin, BaseKeyMixin)
 export class SlashCommandRoleOptionBuilder {
-    constructor(baseKey?: string) {
-        this.builder = new SlashCommandRoleOption();
-    }
+	constructor(baseKey?: string) {
+		this.builder = new SlashCommandRoleOption();
+	}
 }

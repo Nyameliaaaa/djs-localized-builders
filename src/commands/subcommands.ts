@@ -1,11 +1,8 @@
-import {
-    SlashCommandSubcommandBuilder as SubcommandBuilder,
-    SlashCommandSubcommandGroupBuilder as GroupBuilder
-} from '@discordjs/builders';
-import { getAllStrings, getDefaultString, joinKeys } from '$lib';
-import type { FuncAsInput } from '$types';
-import { BaseKeyMixin, NameAndDescriptionMixin, SharedOptionsMixin } from '$mixins';
+import { SlashCommandSubcommandGroupBuilder as GroupBuilder, SlashCommandSubcommandBuilder as SubcommandBuilder } from '@discordjs/builders';
 import { hasMixin, mix } from 'ts-mixer';
+import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import { BaseKeyMixin, NameAndDescriptionMixin, SharedOptionsMixin } from '$mixins';
+import type { FuncAsInput } from '$types';
 
 export interface SlashCommandSubcommandBuilder extends SharedOptionsMixin<SubcommandBuilder>, BaseKeyMixin {}
 
@@ -14,33 +11,33 @@ export interface SlashCommandSubcommandBuilder extends SharedOptionsMixin<Subcom
  */
 @mix(SharedOptionsMixin, BaseKeyMixin)
 export class SlashCommandSubcommandBuilder {
-    constructor(baseKey?: string) {
-        this.builder = new SubcommandBuilder();
-    }
+	constructor(baseKey?: string) {
+		this.builder = new SubcommandBuilder();
+	}
 
-    /**
-     * @internal
-     */
-    hydrateSelf(baseKey: string) {
-        if (this.baseKey) {
-            this.baseKey = joinKeys([baseKey, 'subcommands', this.baseKey]).slice(0);
+	/**
+	 * @internal
+	 */
+	hydrateSelf(baseKey: string) {
+		if (this.baseKey) {
+			this.baseKey = joinKeys([baseKey, 'subcommands', this.baseKey]).slice(0);
 
-            this.setName(getDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
-            this.setDescription(getDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
-            this.setNameLocalizations(getAllStrings(joinKeys([this.baseKey, 'name']), 'commands'));
-            this.setDescriptionLocalizations(getAllStrings(joinKeys([this.baseKey, 'description']), 'commands'));
+			this.setName(getDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
+			this.setDescription(getDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
+			this.setNameLocalizations(getAllStrings(joinKeys([this.baseKey, 'name']), 'commands'));
+			this.setDescriptionLocalizations(getAllStrings(joinKeys([this.baseKey, 'description']), 'commands'));
 
-            this.hydrateOptions();
-        }
+			this.hydrateOptions();
+		}
 
-        return this;
-    }
+		return this;
+	}
 }
 
 export interface SlashCommandSubcommandGroupBuilder extends NameAndDescriptionMixin<GroupBuilder>, BaseKeyMixin {
-    addSubcommand(key: string, input?: FuncAsInput<SlashCommandSubcommandBuilder>): this;
-    addSubcommand(option: FuncAsInput<SlashCommandSubcommandBuilder>): this;
-    addSubcommand(option: SlashCommandSubcommandBuilder): this;
+	addSubcommand(key: string, input?: FuncAsInput<SlashCommandSubcommandBuilder>): this;
+	addSubcommand(option: FuncAsInput<SlashCommandSubcommandBuilder>): this;
+	addSubcommand(option: SlashCommandSubcommandBuilder): this;
 }
 
 /**
@@ -48,65 +45,65 @@ export interface SlashCommandSubcommandGroupBuilder extends NameAndDescriptionMi
  */
 @mix(NameAndDescriptionMixin, BaseKeyMixin)
 export class SlashCommandSubcommandGroupBuilder {
-    /**
-     * @internal
-     */
-    subcommandQueue: SlashCommandSubcommandBuilder[] = [];
+	/**
+	 * @internal
+	 */
+	subcommandQueue: SlashCommandSubcommandBuilder[] = [];
 
-    constructor(baseKey?: string) {
-        this.builder = new GroupBuilder();
-    }
+	constructor(baseKey?: string) {
+		this.builder = new GroupBuilder();
+	}
 
-    private isString(input: any): input is string {
-        return typeof input === 'string';
-    }
+	private isString(input: unknown): input is string {
+		return typeof input === 'string';
+	}
 
-    private isFunction(input: any): input is FuncAsInput<SlashCommandSubcommandBuilder> {
-        return typeof input === 'function' && !this.isSubcommand(input);
-    }
+	private isFunction(input: unknown): input is FuncAsInput<SlashCommandSubcommandBuilder> {
+		return typeof input === 'function' && !this.isSubcommand(input);
+	}
 
-    private isSubcommand<T>(input: any): input is SlashCommandSubcommandBuilder {
-        return hasMixin(input, SlashCommandSubcommandBuilder);
-    }
+	private isSubcommand(input: unknown): input is SlashCommandSubcommandBuilder {
+		return hasMixin(input, SlashCommandSubcommandBuilder);
+	}
 
-    addSubcommand(
-        keyOrInput: string | FuncAsInput<SlashCommandSubcommandBuilder> | SlashCommandSubcommandBuilder,
-        input: FuncAsInput<SlashCommandSubcommandBuilder> = option => option
-    ) {
-        if (this.isString(keyOrInput)) {
-            this.subcommandQueue.push(input(new SlashCommandSubcommandBuilder(keyOrInput)));
-        }
+	addSubcommand(
+		keyOrInput: string | FuncAsInput<SlashCommandSubcommandBuilder> | SlashCommandSubcommandBuilder,
+		input: FuncAsInput<SlashCommandSubcommandBuilder> = option => option
+	) {
+		if (this.isString(keyOrInput)) {
+			this.subcommandQueue.push(input(new SlashCommandSubcommandBuilder(keyOrInput)));
+		}
 
-        if (this.isFunction(keyOrInput)) {
-            this.subcommandQueue.push(keyOrInput(new SlashCommandSubcommandBuilder()));
-        }
+		if (this.isFunction(keyOrInput)) {
+			this.subcommandQueue.push(keyOrInput(new SlashCommandSubcommandBuilder()));
+		}
 
-        if (this.isSubcommand(keyOrInput)) {
-            this.subcommandQueue.push(keyOrInput);
-        }
+		if (this.isSubcommand(keyOrInput)) {
+			this.subcommandQueue.push(keyOrInput);
+		}
 
-        return this;
-    }
+		return this;
+	}
 
-    /**
-     * @internal
-     */
-    hydrateSelf(baseKey: string) {
-        if (this.baseKey) {
-            this.baseKey = joinKeys([baseKey, 'groups', this.baseKey]).slice(0);
+	/**
+	 * @internal
+	 */
+	hydrateSelf(baseKey: string) {
+		if (this.baseKey) {
+			this.baseKey = joinKeys([baseKey, 'groups', this.baseKey]).slice(0);
 
-            this.setName(getDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
-            this.setDescription(getDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
-            this.setNameLocalizations(getAllStrings(joinKeys([this.baseKey, 'name']), 'commands'));
-            this.setDescriptionLocalizations(getAllStrings(joinKeys([this.baseKey, 'description']), 'commands'));
+			this.setName(getDefaultString(joinKeys([this.baseKey, 'name']), 'commands'));
+			this.setDescription(getDefaultString(joinKeys([this.baseKey, 'description']), 'commands'));
+			this.setNameLocalizations(getAllStrings(joinKeys([this.baseKey, 'name']), 'commands'));
+			this.setDescriptionLocalizations(getAllStrings(joinKeys([this.baseKey, 'description']), 'commands'));
 
-            for (const subcommand of this.subcommandQueue) {
-                this.builder.addSubcommand(subcommand.hydrateSelf(this.baseKey).builder);
-            }
+			for (const subcommand of this.subcommandQueue) {
+				this.builder.addSubcommand(subcommand.hydrateSelf(this.baseKey).builder);
+			}
 
-            this.subcommandQueue = [];
-        }
+			this.subcommandQueue = [];
+		}
 
-        return this;
-    }
+		return this;
+	}
 }

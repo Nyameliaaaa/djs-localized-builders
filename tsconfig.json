@@ -1,33 +1,33 @@
 {
-    "include": ["src/**/*"],
-    "compilerOptions": {
-        "target": "es2022",
-        "lib": ["esnext"],
-        "rootDir": "src",
-        "outDir": "dist",
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "types": ["node"],
-        "sourceMap": true,
-        "declaration": true,
-        "esModuleInterop": true,
-        "resolveJsonModule": true,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
-        "noEmitOnError": true,
-        "strict": true,
-        "experimentalDecorators": true,
-        "paths": {
-            "$lib": ["./src/lib/index.ts"],
-            "$mixins": ["./src/mixins/index.ts"],
-            "$types": ["./src/types/index.ts"],
-            "$index": ["./src/index.ts"],
-            "$options": ["./src/options/index.ts"],
-            "$commands": ["./src/commands/index.ts"],
-            "$components": ["./src/components/index.ts"],
-            "$embeds": ["./src/embeds.ts"],
-            "$dist": ["./dist/index.d.ts", "./dist/index.d.mts"]
-        },
-        "ignoreDeprecations": "6.0"
-    }
+	"include": ["src/**/*"],
+	"compilerOptions": {
+		"target": "es2022",
+		"lib": ["esnext"],
+		"rootDir": "src",
+		"outDir": "dist",
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"types": ["node"],
+		"sourceMap": true,
+		"declaration": true,
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"noEmitOnError": true,
+		"strict": true,
+		"experimentalDecorators": true,
+		"paths": {
+			"$lib": ["./src/lib/index.ts"],
+			"$mixins": ["./src/mixins/index.ts"],
+			"$types": ["./src/types/index.ts"],
+			"$index": ["./src/index.ts"],
+			"$options": ["./src/options/index.ts"],
+			"$commands": ["./src/commands/index.ts"],
+			"$components": ["./src/components/index.ts"],
+			"$embeds": ["./src/embeds.ts"],
+			"$dist": ["./dist/index.d.ts", "./dist/index.d.mts"]
+		},
+		"ignoreDeprecations": "6.0"
+	}
 }

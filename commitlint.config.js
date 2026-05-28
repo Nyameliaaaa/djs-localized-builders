@@ -1,16 +1,63 @@
-const conventionalCommit = require('./conventionalCommit.json');
+const conventionalCommit = {
+	types: {
+		build: {
+			description: 'Changes which affect CI configuration files and scripts'
+		},
+		chore: {
+			description: "Changes which aren't user-facing"
+		},
+		enhance: {
+			description: 'Changes which improve a feature'
+		},
+		docs: {
+			description: 'Changes which affect documentation'
+		},
+		feat: {
+			description: 'Changes which introduce a new feature'
+		},
+		fix: {
+			description: 'Changes which patch a bug'
+		},
+		perf: {
+			description: 'changes which improve performance.'
+		},
+		refactor: {
+			description: 'Changes which neither fix a bug nor add a feature'
+		},
+		revert: {
+			description: 'Changes which revert a previous commit'
+		},
+		style: {
+			description: "Changes which don't affect code logic, such as white-spaces, formatting, missing semi-colons"
+		},
+		test: {
+			description: 'Changes which add missing tests or correct existing tests'
+		},
+		ci: {
+			description: 'Changes which change or add CI workflows'
+		}
+	},
+	scopes: {
+		config: {},
+		types: {},
+		embed: {},
+		commands: {},
+		options: {},
+		components: {}
+	}
+};
 
 const typesEnum = Object.keys(conventionalCommit.types);
 const scopesEnum = Object.keys(conventionalCommit.scopes);
 
-module.exports = {
-    extends: ['@commitlint/config-conventional'],
-    rules: {
-        'type-enum': [2, 'always', typesEnum],
-        'scope-case': [2, 'always', ['camel-case']],
-        'scope-enum': [2, 'always', scopesEnum],
-        'subject-empty': [2, 'never'],
-        'subject-case': [2, 'always', ['lower-case']],
-        'header-max-length': [2, 'always', 72]
-    }
+export default {
+	extends: ['@commitlint/config-conventional'],
+	rules: {
+		'type-enum': [2, 'always', typesEnum],
+		'scope-case': [2, 'always', ['camel-case']],
+		'scope-enum': [2, 'always', scopesEnum],
+		'subject-empty': [2, 'never'],
+		'subject-case': [2, 'always', ['lower-case']],
+		'header-max-length': [2, 'always', 72]
+	}
 };

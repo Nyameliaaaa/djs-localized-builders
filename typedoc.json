@@ -1,10 +1,10 @@
 {
-    "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
-    "entryPoints": ["src/index.ts"],
-    "out": "docs/api",
-    "tsconfig": "./tsconfig.json",
-    "docsRoot": "docs",
-    "sourceLinkTemplate": "https://git.gay/nyamelia/djs-localized-builders/src/branch/main/{path}#L{line}",
-    "readme": "none",
-    "excludeInternal": true
+	"plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
+	"entryPoints": ["src/index.ts"],
+	"out": "docs/api",
+	"tsconfig": "./tsconfig.json",
+	"docsRoot": "docs",
+	"sourceLinkTemplate": "https://git.gay/nyamelia/djs-localized-builders/src/branch/main/{path}#L{line}",
+	"readme": "none",
+	"excludeInternal": true
 }

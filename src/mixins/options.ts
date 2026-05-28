@@ -1,114 +1,108 @@
-import { getAllStrings, getDefaultString, joinKeys } from '$lib';
-import { BaseKeyMixin, NameAndDescriptionMixin } from '$mixins';
-import type { OptionResolvable } from '$types';
-import {
-    normalizeArray,
-    type RestOrArray,
-    SlashCommandIntegerOption,
-    SlashCommandNumberOption,
-    SlashCommandStringOption
-} from '@discordjs/builders';
+import { normalizeArray, type RestOrArray, SlashCommandIntegerOption, SlashCommandNumberOption, SlashCommandStringOption } from '@discordjs/builders';
 import { APIApplicationCommandOptionChoice } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
+import { getAllStrings, getDefaultString, joinKeys } from '$lib';
+import type { OptionResolvable } from '$types';
+import { BaseKeyMixin } from './base';
+import { NameAndDescriptionMixin } from './nameAndDescription';
 
-export interface OptionMixin<T extends OptionResolvable> extends NameAndDescriptionMixin<T>, BaseKeyMixin {}
+export interface OptionMixin<_T extends OptionResolvable> extends NameAndDescriptionMixin<_T>, BaseKeyMixin {}
 
 @mix(NameAndDescriptionMixin, BaseKeyMixin)
-export class OptionMixin<T extends OptionResolvable> {
-    setRequired(required: boolean) {
-        this.builder.setRequired(required);
-        return this;
-    }
+export class OptionMixin<_T extends OptionResolvable> {
+	setRequired(required: boolean) {
+		this.builder.setRequired(required);
+		return this;
+	}
 
-    get required() {
-        return this.builder.required;
-    }
+	get required() {
+		return this.builder.required;
+	}
 }
 
 export interface AutocompletableMixin<
-    T extends SlashCommandNumberOption | SlashCommandIntegerOption | SlashCommandStringOption,
-    V extends number | string = T extends SlashCommandNumberOption | SlashCommandIntegerOption ? number : string
-> extends OptionMixin<T> {}
+	_T extends SlashCommandNumberOption | SlashCommandIntegerOption | SlashCommandStringOption,
+	_V extends number | string = _T extends SlashCommandNumberOption | SlashCommandIntegerOption ? number : string
+> extends OptionMixin<_T> {}
 
 @mix(OptionMixin)
 export class AutocompletableMixin<
-    T extends SlashCommandNumberOption | SlashCommandIntegerOption | SlashCommandStringOption,
-    V extends number | string = T extends SlashCommandNumberOption | SlashCommandIntegerOption ? number : string
+	_T extends SlashCommandNumberOption | SlashCommandIntegerOption | SlashCommandStringOption,
+	_V extends number | string = _T extends SlashCommandNumberOption | SlashCommandIntegerOption ? number : string
 > {
-    private choiceQueue: Array<V | { key: string; value: V }> = [];
+	private choiceQueue: Array<_V | { key: string; value: _V }> = [];
 
-    setAutocomplete(autocomplete: boolean) {
-        this.builder.setAutocomplete(autocomplete);
-        return this;
-    }
+	setAutocomplete(autocomplete: boolean) {
+		this.builder.setAutocomplete(autocomplete);
+		return this;
+	}
 
-    addChoices(...choices: RestOrArray<V | { key: string; value: V }>) {
-        this.choiceQueue.push(...normalizeArray(choices));
-        return this;
-    }
+	addChoices(...choices: RestOrArray<_V | { key: string; value: _V }>) {
+		this.choiceQueue.push(...normalizeArray(choices));
+		return this;
+	}
 
-    setChoices(...choices: RestOrArray<V | { key: string; value: V }>) {
-        this.choiceQueue = normalizeArray(choices);
-        return this;
-    }
+	setChoices(...choices: RestOrArray<_V | { key: string; value: _V }>) {
+		this.choiceQueue = normalizeArray(choices);
+		return this;
+	}
 
-    /**
-     * @internal
-     */
-    hydrateChoices(baseKey: string) {
-        const preparedChoices = this.choiceQueue.map(val => {
-            const key = joinKeys([baseKey, 'choices', val instanceof Object ? val.key.toString() : val.toString()]);
+	/**
+	 * @internal
+	 */
+	hydrateChoices(baseKey: string) {
+		const preparedChoices = this.choiceQueue.map(val => {
+			const key = joinKeys([baseKey, 'choices', val instanceof Object ? val.key.toString() : val.toString()]);
 
-            const name = getDefaultString(key, 'commands');
-            const name_localizations = getAllStrings(key, 'commands');
+			const name = getDefaultString(key, 'commands');
+			const name_localizations = getAllStrings(key, 'commands');
 
-            return {
-                name,
-                name_localizations,
-                value: val instanceof Object ? val.value : val
-            };
-        });
+			return {
+				name,
+				name_localizations,
+				value: val instanceof Object ? val.value : val
+			};
+		});
 
-        this.choiceQueue = [];
+		this.choiceQueue = [];
 
-        if (this.builder instanceof SlashCommandIntegerOption || this.builder instanceof SlashCommandNumberOption) {
-            this.builder.setChoices(...(preparedChoices as APIApplicationCommandOptionChoice<number>[]));
-        } else {
-            this.builder.setChoices(...(preparedChoices as APIApplicationCommandOptionChoice<string>[]));
-        }
+		if (this.builder instanceof SlashCommandIntegerOption || this.builder instanceof SlashCommandNumberOption) {
+			this.builder.setChoices(...(preparedChoices as APIApplicationCommandOptionChoice<number>[]));
+		} else {
+			this.builder.setChoices(...(preparedChoices as APIApplicationCommandOptionChoice<string>[]));
+		}
 
-        return this;
-    }
+		return this;
+	}
 
-    get choices() {
-        return this.builder.choices;
-    }
+	get choices() {
+		return this.builder.choices;
+	}
 
-    get autocomplete() {
-        return this.builder.autocomplete;
-    }
+	get autocomplete() {
+		return this.builder.autocomplete;
+	}
 }
 
-export interface MinMaxNumberMixin<T extends SlashCommandNumberOption | SlashCommandIntegerOption>
-    extends AutocompletableMixin<T, number> {}
+export interface MinMaxNumberMixin<_T extends SlashCommandNumberOption | SlashCommandIntegerOption> extends AutocompletableMixin<_T, number> {}
 
 @mix(AutocompletableMixin)
-export class MinMaxNumberMixin<T extends SlashCommandNumberOption | SlashCommandIntegerOption> {
-    setMinValue(value: number) {
-        this.builder.setMinValue(value);
-        return this;
-    }
+export class MinMaxNumberMixin<_T extends SlashCommandNumberOption | SlashCommandIntegerOption> {
+	setMinValue(value: number) {
+		this.builder.setMinValue(value);
+		return this;
+	}
 
-    setMaxValue(value: number) {
-        this.builder.setMaxValue(value);
-        return this;
-    }
+	setMaxValue(value: number) {
+		this.builder.setMaxValue(value);
+		return this;
+	}
 
-    get minValue() {
-        return this.builder.min_value;
-    }
+	get minValue() {
+		return this.builder.min_value;
+	}
 
-    get maxValue() {
-        return this.builder.max_value;
-    }
+	get maxValue() {
+		return this.builder.max_value;
+	}
 }

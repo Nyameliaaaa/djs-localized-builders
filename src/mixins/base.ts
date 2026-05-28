@@ -1,43 +1,43 @@
-import type { BuilderResolvable } from '$types';
 import type { LocalizationMap } from 'discord-api-types/v10';
+import type { BuilderResolvable } from '$types';
 
 export class BuilderMixin<T extends BuilderResolvable> {
-    /**
-     * @internal
-     */
-    public builder!: T;
+	/**
+	 * @internal
+	 */
+	public builder!: T;
 
-    toJSON() {
-        return this.builder.toJSON() as ReturnType<T['toJSON']>;
-    }
+	toJSON() {
+		return this.builder.toJSON() as ReturnType<T['toJSON']>;
+	}
 }
 
 export class BaseKeyMixin {
-    public baseKey?: string;
+	public baseKey?: string;
 
-    constructor(baseKey?: string) {
-        this.baseKey = baseKey;
-    }
+	constructor(baseKey?: string) {
+		this.baseKey = baseKey;
+	}
 
-    /**
-     * @internal
-     */
-    protected init(baseKey?: string) {
-        this.baseKey = baseKey;
-    }
+	/**
+	 * @internal
+	 */
+	protected init(baseKey?: string) {
+		this.baseKey = baseKey;
+	}
 }
 
 export class LocaleBaseKeyMixin {
-    public baseKey?: string;
-    public locale: keyof LocalizationMap;
+	public baseKey?: string;
+	public locale: keyof LocalizationMap;
 
-    constructor(locale: keyof LocalizationMap, baseKey?: string) {
-        this.locale = locale;
-        this.baseKey = baseKey;
-    }
+	constructor(locale: keyof LocalizationMap, baseKey?: string) {
+		this.locale = locale;
+		this.baseKey = baseKey;
+	}
 
-    protected init(locale: keyof LocalizationMap, baseKey?: string) {
-        this.locale = locale;
-        this.baseKey = baseKey;
-    }
+	protected init(locale: keyof LocalizationMap, baseKey?: string) {
+		this.locale = locale;
+		this.baseKey = baseKey;
+	}
 }
