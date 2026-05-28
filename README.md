@@ -10,16 +10,16 @@ Install `djs-localized-builders` and `@discordjs/builders` (should be installed 
 // initalize i18n here
 
 setConfig({
-  getLocalizedString: ({ namespace, string, lang, options }) => {
-    return i18nLib.getString({ namespace, string, lang, options }) ?? string;
+  getLocalizedString: ({ namespace, i18nKey, locale, arguments }) => {
+    return i18nLib.getString({ namespace, i18nKey, locale, arguments }) ?? i18nKey;
   },
   onMissingKey: (lang, namespace, key) => {
     logger.throw(lang, namespace, key);
-  }, // not including this line will make it fallback to default behavior of throwing a TypeError
-  caseFormat: "lowercase", // can be lowercase, uppercase or keep.
+  },
+  caseFormat: "lowercase",
   separatorChar: ".",
   validators: process.ENV.NODE_ENV === "development",
-  langs: i18nLib.langs, // using discord lang codes is required.
+  langs: i18nLib.langs,
   namespaces: {
     components: "responses",
     commands: "commands",

@@ -37,10 +37,10 @@ export function joinKeys(keySegments: (string | null | undefined)[]) {
 export function resolveString(string: string, lang: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
 	const config = getConfig();
 	const val = config.getLocalizedString({
-		lang,
+		locale: lang,
 		namespace: config.namespaces?.[namespace] ?? namespace,
-		string,
-		options
+		i18nKey: string,
+		arguments: options
 	});
 
 	if (config.validators && (!val || val.includes(string))) {
@@ -60,10 +60,10 @@ export function resolveString(string: string, lang: string, namespace: 'embeds' 
 export function resolveDefaultString(string: string, namespace: 'embeds' | 'components' | 'commands', options: Record<string, unknown> = {}) {
 	const config = getConfig();
 	const val = config.getLocalizedString({
-		lang: 'en-US',
+		locale: 'en-US',
 		namespace: config.namespaces?.[namespace] ?? namespace,
-		string,
-		options
+		i18nKey: string,
+		arguments: options
 	});
 
 	if (config.validators && (!val || val.includes(string))) {
@@ -86,10 +86,10 @@ export function resolveAllStrings(string: string, namespace: 'embeds' | 'compone
 
 	for (const lang of config.langs) {
 		ret[lang] = config.getLocalizedString({
-			lang,
+			locale: lang,
 			namespace: config.namespaces?.[namespace] ?? namespace,
-			string,
-			options
+			i18nKey: string,
+			arguments: options
 		});
 
 		if (config.validators && (!ret[lang] || ret[lang].includes(string))) {

@@ -37,17 +37,17 @@ export interface GetLocalizedStringOptions {
 	/**
 	 * The i18n key to resolve.
 	 */
-	string: string;
+	i18nKey: string;
 
 	/**
 	 * The locale to resolve the i18n key from.
 	 */
-	lang: string;
+	locale: string;
 
 	/**
 	 * Interpolation arguments passed to the localized string.
 	 */
-	options?: Record<string, unknown>;
+	arguments?: Record<string, unknown>;
 }
 
 /**
@@ -58,7 +58,7 @@ export interface ConfigType {
 	/**
 	 * Resolves a localized string.
 	 * @remarks The library will not function without this!
-	 * Returning {@link GetLocalizedStringOptions#string} will call {@link ConfigType.onMissingKey}
+	 * Returning {@link GetLocalizedStringOptions#i18nKey} will call {@link ConfigType.onMissingKey}
 	 * @param options - See {@link GetLocalizedStringOptions}.
 	 */
 	getLocalizedString: (options: GetLocalizedStringOptions) => string;
@@ -113,3 +113,8 @@ export interface ConfigType {
 	 */
 	validators?: boolean;
 }
+
+/**
+ * @internal
+ */
+export type Namespaces = keyof NamespaceMap;

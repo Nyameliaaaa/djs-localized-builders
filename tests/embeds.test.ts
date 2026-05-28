@@ -5,7 +5,7 @@ import { EmbedBuilder, type GetLocalizedStringOptions, resetConfig, setConfig } 
 
 beforeEach(() => {
 	setConfig({
-		getLocalizedString: ({ string, lang }: GetLocalizedStringOptions) => `${lang}.${string}`,
+		getLocalizedString: ({ i18nKey, locale }: GetLocalizedStringOptions) => `${locale}.${i18nKey}`,
 		validators: false,
 		langs: ['en-US', 'fr']
 	});

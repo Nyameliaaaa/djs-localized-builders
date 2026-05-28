@@ -6,7 +6,7 @@ settings.initFunction = 'init';
 settings.prototypeStrategy = 'proxy';
 
 const defaultConfig: ConfigType = {
-	getLocalizedString: ({ string }) => string,
+	getLocalizedString: ({ i18nKey }) => i18nKey,
 	onMissingKey: (lang, namespace, key) => {
 		throw new TypeError(`Key "${key}" was not found in the ${namespace} of ${lang}`, {
 			cause: { lang, namespace, key }
@@ -40,13 +40,13 @@ const setValidators = () => {
  * @example Example #1
  *  ```ts
 	setConfig({
-		getLocalizedString: ({ namespace, string, lang, options }) => {
-			return client.i18n.getString({ namespace, string, lang, options }) ?? string
+		getLocalizedString: ({ namespace, i18nKey, locale, arguments }) => {
+			return client.i18n.getString({ namespace, i18nKey, locale, arguments }) ?? i18nKey
 		},
 		caseFormat: 'lowercase',
 		separatorChar: '_',
 		validators: process.ENV.NODE_ENV === 'development',
-        langs: client.i18n.langs,
+        langs: client.i18n.locales,
 		namespaces: {
 			components: 'components',
 			commands: 'commands',

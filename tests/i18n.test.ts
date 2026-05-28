@@ -9,7 +9,7 @@ describe('Helpers', () => {
 	describe('getting strings', () => {
 		beforeEach(() => {
 			setConfig({
-				getLocalizedString: ({ string, lang, namespace }: GetLocalizedStringOptions) => `${lang}:${namespace}:${string}`
+				getLocalizedString: ({i18nKey, locale, namespace }: GetLocalizedStringOptions) => `${locale}:${namespace}:${i18nKey}`
 			});
 		});
 
@@ -35,7 +35,7 @@ describe('Helpers', () => {
 
 	it('handles namespace mapping', () => {
 		setConfig({
-			getLocalizedString: ({ string, lang, namespace }: GetLocalizedStringOptions) => `${lang}:${namespace}:${string}`,
+			getLocalizedString: ({ i18nKey, locale, namespace }: GetLocalizedStringOptions) => `${locale}:${namespace}:${i18nKey}`,
 			validators: false,
 			namespaces: { commands: 'namespace', components: 'namespace', embeds: 'namespace' }
 		});
@@ -46,7 +46,7 @@ describe('Helpers', () => {
 	describe('joinKeys', () => {
 		it('handles a custom separator char', () => {
 			setConfig({
-				getLocalizedString: ({ string }: GetLocalizedStringOptions) => `${string}`,
+				getLocalizedString: ({ i18nKey }: GetLocalizedStringOptions) => `${i18nKey}`,
 				separatorChar: ':'
 			});
 
@@ -76,7 +76,7 @@ describe('Helpers', () => {
 		describe('handles separatorChar WITH caseFormat', () => {
 			it('handles uppercase', () => {
 				setConfig({
-					getLocalizedString: ({ string }: GetLocalizedStringOptions) => `${string}`,
+					getLocalizedString: ({ i18nKey }: GetLocalizedStringOptions) => `${i18nKey}`,
 					caseFormat: 'uppercase',
 					separatorChar: ':'
 				});
@@ -86,7 +86,7 @@ describe('Helpers', () => {
 
 			it('handles lowercase', () => {
 				setConfig({
-					getLocalizedString: ({ string }: GetLocalizedStringOptions) => `${string}`,
+					getLocalizedString: ({ i18nKey }: GetLocalizedStringOptions) => `${i18nKey}`,
 					caseFormat: 'lowercase',
 					separatorChar: ':'
 				});
@@ -96,7 +96,7 @@ describe('Helpers', () => {
 
 			it('handles keep', () => {
 				setConfig({
-					getLocalizedString: ({ string, lang, namespace }: GetLocalizedStringOptions) => `${string}`,
+					getLocalizedString: ({ i18nKey }: GetLocalizedStringOptions) => `${i18nKey}`,
 					caseFormat: 'keep',
 					separatorChar: ':'
 				});
