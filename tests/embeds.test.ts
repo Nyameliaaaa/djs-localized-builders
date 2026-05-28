@@ -201,7 +201,7 @@ describe('EmbedBuilder validations', () => {
 			},
 			{
 				field: { key: 'x', nameRef: 'y', value: 'z' },
-				error: 'Cannot have a field baseKey and a locale reference name/value'
+				error: 'Cannot have a field keySegment and a locale reference name/value'
 			},
 			{ field: {}, error: 'Embed field cannot be empty' }
 		])('should reject invalid field: $field', ({ field, error }) => {

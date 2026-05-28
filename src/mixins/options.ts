@@ -3,12 +3,12 @@ import { APIApplicationCommandOptionChoice } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { joinKeys, resolveAllStrings, resolveDefaultString } from '$lib';
 import type { OptionResolvable } from '$types';
-import { BaseKeyMixin } from './base';
+import { KeySegmentMixin } from './base';
 import { NameAndDescriptionMixin } from './nameAndDescription';
 
-export interface OptionMixin<_T extends OptionResolvable> extends NameAndDescriptionMixin<_T>, BaseKeyMixin {}
+export interface OptionMixin<_T extends OptionResolvable> extends NameAndDescriptionMixin<_T>, KeySegmentMixin {}
 
-@mix(NameAndDescriptionMixin, BaseKeyMixin)
+@mix(NameAndDescriptionMixin, KeySegmentMixin)
 export class OptionMixin<_T extends OptionResolvable> {
 	setRequired(required: boolean) {
 		this.builder.setRequired(required);
@@ -50,9 +50,9 @@ export class AutocompletableMixin<
 	/**
 	 * @internal
 	 */
-	hydrateChoices(baseKey: string) {
+	hydrateChoices(parentKeySegment: string) {
 		const preparedChoices = this.choiceQueue.map(val => {
-			const key = joinKeys([baseKey, 'choices', val instanceof Object ? val.key.toString() : val.toString()]);
+			const key = joinKeys([parentKeySegment, 'choices', val instanceof Object ? val.key.toString() : val.toString()]);
 
 			const name = resolveDefaultString(key, 'commands');
 			const name_localizations = resolveAllStrings(key, 'commands');

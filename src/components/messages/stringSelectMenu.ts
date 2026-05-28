@@ -2,19 +2,19 @@ import { normalizeArray, RestOrArray, StringSelectMenuBuilder as StringBuilder }
 import type { LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { joinKeys } from '$lib';
-import { BaseKeyMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
+import { KeySegmentMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
 import { LocaleString } from '$types';
 import { StringSelectMenuOptionBuilder } from './stringMenuOption';
 
-export interface StringSelectMenuBuilder extends BuilderMixin<StringBuilder>, BaseKeyMixin, SelectMenuMixin<StringBuilder> {}
+export interface StringSelectMenuBuilder extends BuilderMixin<StringBuilder>, KeySegmentMixin, SelectMenuMixin<StringBuilder> {}
 
-@mix(BuilderMixin, BaseKeyMixin, SelectMenuMixin)
+@mix(BuilderMixin, KeySegmentMixin, SelectMenuMixin)
 export class StringSelectMenuBuilder {
 	optionQueue: StringSelectMenuOptionBuilder[] = [];
 
 	constructor(baseKey?: string) {
 		this.builder = new StringBuilder();
-		this.baseKey = baseKey;
+		this.keySegment = baseKey;
 	}
 
 	addOptions(...options: RestOrArray<StringSelectMenuOptionBuilder>) {
@@ -39,11 +39,11 @@ export class StringSelectMenuBuilder {
 	}
 
 	hydrateOptions(locale: LocaleString, baseKey?: string) {
-		if (this.baseKey && baseKey) {
+		if (this.keySegment && baseKey) {
 			this.builder.setOptions(
 				this.optionQueue.map(option => {
-					if (this.baseKey) {
-						option.hydrateSelf(locale, joinKeys([baseKey, 'select_menus', this.baseKey]));
+					if (this.keySegment) {
+						option.hydrateSelf(locale, joinKeys([baseKey, 'select_menus', this.keySegment]));
 					}
 
 					return option.builder;

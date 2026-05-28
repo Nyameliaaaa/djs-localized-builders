@@ -2,23 +2,23 @@ import { EmbedBuilder as Builder, isValidationEnabled, normalizeArray, RestOrArr
 import { APIEmbedField } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { getConfig, joinKeys, resolveString } from '$lib';
-import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
+import { BuilderMixin, LocaleKeySegmentMixin } from '$mixins';
 import { ArgsWithRawParam, LocaleAuthor, LocaleFieldOptions, LocaleFooter, LocaleObject, LocaleParam, LocaleString } from '$types';
 
-export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleBaseKeyMixin {}
+export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleKeySegmentMixin {}
 
 /**
  * @group Embeds
  */
-@mix(LocaleBaseKeyMixin, BuilderMixin)
+@mix(LocaleKeySegmentMixin, BuilderMixin)
 export class EmbedBuilder {
-	constructor(locale: LocaleParam, baseKey?: string) {
+	constructor(locale: LocaleParam, keySegment?: string) {
 		this.builder = new Builder();
 	}
 
-	protected init(locale: LocaleParam, baseKey?: string) {
+	protected init(locale: LocaleParam, keySegment?: string) {
 		const localeValue = typeof locale === 'string' ? locale : locale.locale;
-		getConfig().onCreateEmbed(this, localeValue, baseKey);
+		getConfig().onCreateEmbed(this, localeValue, keySegment);
 	}
 
 	protected mapField(field: LocaleFieldOptions) {
@@ -42,7 +42,7 @@ export class EmbedBuilder {
 			}
 
 			if (hasRefsAndKey) {
-				throw new TypeError('Cannot have a field baseKey and a locale reference name/value.', { cause: field });
+				throw new TypeError('Cannot have a field keySegment and a locale reference name/value.', { cause: field });
 			}
 
 			if (hasRawNameAndArgs || hasRawValueAndArgs) {
@@ -61,18 +61,18 @@ export class EmbedBuilder {
 			returnField.value = resolveString(field.valueRef, this.locale, 'embeds', field.valueArgs);
 		}
 
-		// basekey (overrides manual key ref)
-		if (this.baseKey && field.key) {
+		// key segment (overrides manual key ref)
+		if (this.keySegment && field.key) {
 			if (!field.name) {
-				returnField.name = resolveString(joinKeys([this.baseKey, 'fields', field.key, 'name']), this.locale, 'embeds', field.nameArgs);
+				returnField.name = resolveString(joinKeys([this.keySegment, 'fields', field.key, 'name']), this.locale, 'embeds', field.nameArgs);
 			}
 
 			if (!field.value) {
-				returnField.value = resolveString(joinKeys([this.baseKey, 'fields', field.key, 'value']), this.locale, 'embeds', field.valueArgs);
+				returnField.value = resolveString(joinKeys([this.keySegment, 'fields', field.key, 'value']), this.locale, 'embeds', field.valueArgs);
 			}
 		}
 
-		// handle raw opts (override manual key ref and basekey)
+		// handle raw opts (override manual key ref and key segment)
 		if (field.name) {
 			returnField.name = field.name;
 		}
@@ -89,12 +89,12 @@ export class EmbedBuilder {
 	setTitle(): this;
 	setTitle(titleOrArgs?: string | Record<string, unknown>, args: ArgsWithRawParam = {}) {
 		let title = '';
-		if (this.baseKey && typeof titleOrArgs === 'object') {
-			title = resolveString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds', titleOrArgs);
+		if (this.keySegment && typeof titleOrArgs === 'object') {
+			title = resolveString(joinKeys([this.keySegment, 'title']), this.locale, 'embeds', titleOrArgs);
 		}
 
-		if (this.baseKey && !titleOrArgs) {
-			title = resolveString(joinKeys([this.baseKey, 'title']), this.locale, 'embeds');
+		if (this.keySegment && !titleOrArgs) {
+			title = resolveString(joinKeys([this.keySegment, 'title']), this.locale, 'embeds');
 		}
 
 		if (typeof titleOrArgs === 'string') {
@@ -115,12 +115,12 @@ export class EmbedBuilder {
 	setDescription(descriptionOrArgs?: string | Record<string, unknown>, args: ArgsWithRawParam = {}) {
 		let desc = '';
 
-		if (this.baseKey && typeof descriptionOrArgs === 'object') {
-			desc = resolveString(joinKeys([this.baseKey, 'description']), this.locale, 'embeds', descriptionOrArgs);
+		if (this.keySegment && typeof descriptionOrArgs === 'object') {
+			desc = resolveString(joinKeys([this.keySegment, 'description']), this.locale, 'embeds', descriptionOrArgs);
 		}
 
-		if (this.baseKey && !descriptionOrArgs) {
-			desc = resolveString(joinKeys([this.baseKey, 'description']), this.locale, 'embeds');
+		if (this.keySegment && !descriptionOrArgs) {
+			desc = resolveString(joinKeys([this.keySegment, 'description']), this.locale, 'embeds');
 		}
 
 		if (typeof descriptionOrArgs === 'string') {
@@ -157,10 +157,10 @@ export class EmbedBuilder {
 		const hasNoNameSources = !(author.nameRef ?? author.name);
 		const hasRefAndRaw = author.name && author.nameRef;
 		const hasRawAndArgs = author.name && author.nameArgs;
-		const usesBaseKey = (hasNoNameSources || isEmpty) && Boolean(this.baseKey);
+		const usesKeySegment = (hasNoNameSources || isEmpty) && Boolean(this.keySegment);
 
 		if (isValidationEnabled()) {
-			if (hasNoNameSources && !this.baseKey) {
+			if (hasNoNameSources && !this.keySegment) {
 				throw new TypeError('You must provide either a key ref or raw value as a name when no embed base key is defined', { cause: author });
 			}
 
@@ -173,8 +173,8 @@ export class EmbedBuilder {
 			}
 		}
 
-		if (usesBaseKey) {
-			name = resolveString(joinKeys([this.baseKey!, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
+		if (usesKeySegment) {
+			name = resolveString(joinKeys([this.keySegment!, 'author', 'name']), this.locale, 'embeds', author.nameArgs);
 		}
 
 		if (author.nameRef) {
@@ -197,10 +197,10 @@ export class EmbedBuilder {
 		const hasNoTextSources = !(footer.textRef ?? footer.text);
 		const hasRefAndRaw = footer.text && footer.textRef;
 		const hasRawAndArgs = footer.text && footer.textArgs;
-		const usesBaseKey = (hasNoTextSources || isEmpty) && Boolean(this.baseKey);
+		const usesKeySegment = (hasNoTextSources || isEmpty) && Boolean(this.keySegment);
 
 		if (isValidationEnabled()) {
-			if (hasNoTextSources && !this.baseKey) {
+			if (hasNoTextSources && !this.keySegment) {
 				throw new TypeError('You must provide either a key ref or raw value as a name when no embed base key is defined', { cause: footer });
 			}
 
@@ -213,8 +213,8 @@ export class EmbedBuilder {
 			}
 		}
 
-		if (usesBaseKey) {
-			text = resolveString(joinKeys([this.baseKey!, 'footer', 'text']), this.locale, 'embeds', footer.textArgs);
+		if (usesKeySegment) {
+			text = resolveString(joinKeys([this.keySegment!, 'footer', 'text']), this.locale, 'embeds', footer.textArgs);
 		}
 
 		if (footer.textRef) {

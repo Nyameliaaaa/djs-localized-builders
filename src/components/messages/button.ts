@@ -2,12 +2,12 @@ import { ButtonBuilder as Builder, isValidationEnabled } from '@discordjs/builde
 import type { APIMessageComponentEmoji, ButtonStyle, LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { joinKeys, resolveString } from '$lib';
-import { BaseKeyMixin, BuilderMixin } from '$mixins';
+import { KeySegmentMixin, BuilderMixin } from '$mixins';
 import type { ArgsWithRawOrKeyedParam, LocaleString } from '$types';
 
-export interface ButtonBuilder extends BuilderMixin<Builder>, BaseKeyMixin {}
+export interface ButtonBuilder extends BuilderMixin<Builder>, KeySegmentMixin {}
 
-@mix(BuilderMixin, BaseKeyMixin)
+@mix(BuilderMixin, KeySegmentMixin)
 export class ButtonBuilder {
 	labelArgs: Record<string, unknown>;
 	private nonBaseKeyLabelLocaleString = '';
@@ -52,7 +52,7 @@ export class ButtonBuilder {
 		 */
 
 		if (isValidationEnabled()) {
-			if (!this.baseKey && (!labelOrArgs || typeof labelOrArgs === 'object')) {
+			if (!this.keySegment && (!labelOrArgs || typeof labelOrArgs === 'object')) {
 				throw new TypeError('Missing baseKey or string value!');
 			}
 
@@ -61,7 +61,7 @@ export class ButtonBuilder {
 			}
 		}
 
-		if (this.baseKey && !(typeof labelOrArgs === 'string')) {
+		if (this.keySegment && !(typeof labelOrArgs === 'string')) {
 			this.labelRequiresParentBaseKeyHydration = true;
 
 			if (typeof labelOrArgs === 'object') {
@@ -110,8 +110,8 @@ export class ButtonBuilder {
 	}
 
 	hydrateSelf(locale: LocaleString, parentBaseKey?: string) {
-		if (this.baseKey && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
-			this.builder.setLabel(resolveString(joinKeys([parentBaseKey, 'buttons', this.baseKey, 'label']), locale, 'components', this.labelArgs));
+		if (this.keySegment && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
+			this.builder.setLabel(resolveString(joinKeys([parentBaseKey, 'buttons', this.keySegment, 'label']), locale, 'components', this.labelArgs));
 		}
 
 		// case 4, 5

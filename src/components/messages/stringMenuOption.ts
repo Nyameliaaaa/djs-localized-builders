@@ -2,10 +2,10 @@ import { isValidationEnabled, StringSelectMenuOptionBuilder as StringOptionBuild
 import { APIMessageComponentEmoji, APISelectMenuOption, LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { joinKeys, resolveString } from '$lib';
-import { BaseKeyMixin, BuilderMixin } from '$mixins';
+import { KeySegmentMixin, BuilderMixin } from '$mixins';
 import type { ArgsWithRawOrKeyedParam, LocaleString } from '$types';
 
-export interface StringSelectMenuOptionBuilder extends BuilderMixin<StringOptionBuilder>, BaseKeyMixin {
+export interface StringSelectMenuOptionBuilder extends BuilderMixin<StringOptionBuilder>, KeySegmentMixin {
 	setLabel(label: string, args?: ArgsWithRawOrKeyedParam): this;
 	setLabel(args: Record<string, unknown>): this;
 	setLabel(): this;
@@ -15,7 +15,7 @@ export interface StringSelectMenuOptionBuilder extends BuilderMixin<StringOption
 	setDescription(): this;
 }
 
-@mix(BuilderMixin, BaseKeyMixin)
+@mix(BuilderMixin, KeySegmentMixin)
 export class StringSelectMenuOptionBuilder {
 	private labelArgs: Record<string, unknown> = {};
 	private labelRequiresParentBaseKeyHydration = false;
@@ -60,7 +60,7 @@ export class StringSelectMenuOptionBuilder {
 		 */
 
 		if (isValidationEnabled()) {
-			if (!this.baseKey && (!labelOrArgs || typeof labelOrArgs === 'object')) {
+			if (!this.keySegment && (!labelOrArgs || typeof labelOrArgs === 'object')) {
 				throw new TypeError('Missing baseKey or string value!');
 			}
 
@@ -69,7 +69,7 @@ export class StringSelectMenuOptionBuilder {
 			}
 		}
 
-		if (this.baseKey && !(typeof labelOrArgs === 'string')) {
+		if (this.keySegment && !(typeof labelOrArgs === 'string')) {
 			this.labelRequiresParentBaseKeyHydration = true;
 
 			if (typeof labelOrArgs === 'object') {
@@ -123,7 +123,7 @@ export class StringSelectMenuOptionBuilder {
 		 */
 
 		if (isValidationEnabled()) {
-			if (!this.baseKey && (!descriptionOrArgs || typeof descriptionOrArgs === 'object')) {
+			if (!this.keySegment && (!descriptionOrArgs || typeof descriptionOrArgs === 'object')) {
 				throw new TypeError('Missing baseKey or string value!');
 			}
 
@@ -132,7 +132,7 @@ export class StringSelectMenuOptionBuilder {
 			}
 		}
 
-		if (this.baseKey && !(typeof descriptionOrArgs === 'string')) {
+		if (this.keySegment && !(typeof descriptionOrArgs === 'string')) {
 			this.descRequiresParentBaseKeyHydration = true;
 
 			if (typeof descriptionOrArgs === 'object') {
@@ -171,16 +171,16 @@ export class StringSelectMenuOptionBuilder {
 
 	hydrateSelf(locale: LocaleString, parentBaseKey?: string) {
 		// if there is no call to setValue() then we use the base key as the value
-		if (!this.builder.data.value && this.baseKey) {
+		if (!this.builder.data.value && this.keySegment) {
 			console.log('hi');
-			this.builder.setValue(this.baseKey);
+			this.builder.setValue(this.keySegment);
 		}
 
 		// SECTION - Label
 
 		// case 1, 2
-		if (this.baseKey && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
-			this.builder.setLabel(resolveString(joinKeys([parentBaseKey, 'options', this.baseKey, 'label']), locale, 'components', this.labelArgs));
+		if (this.keySegment && parentBaseKey && this.labelRequiresParentBaseKeyHydration) {
+			this.builder.setLabel(resolveString(joinKeys([parentBaseKey, 'options', this.keySegment, 'label']), locale, 'components', this.labelArgs));
 		}
 
 		// case 4, 5
@@ -193,9 +193,9 @@ export class StringSelectMenuOptionBuilder {
 		// SECTION - Description
 
 		// case 1, 2
-		if (this.baseKey && parentBaseKey && this.descRequiresParentBaseKeyHydration) {
+		if (this.keySegment && parentBaseKey && this.descRequiresParentBaseKeyHydration) {
 			this.builder.setDescription(
-				resolveString(joinKeys([parentBaseKey, 'options', this.baseKey, 'description']), locale, 'components', this.descArgs)
+				resolveString(joinKeys([parentBaseKey, 'options', this.keySegment, 'description']), locale, 'components', this.descArgs)
 			);
 		}
 

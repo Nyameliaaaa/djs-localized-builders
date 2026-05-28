@@ -7,11 +7,11 @@ import {
 } from '@discordjs/builders';
 import type { APISelectMenuDefaultValue, SelectMenuDefaultValueType, Snowflake } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { BaseKeyMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
+import { KeySegmentMixin, BuilderMixin, SelectMenuMixin } from '$mixins';
 
-export interface MentionableSelectMenuBuilder extends BuilderMixin<MentionableBuilder>, BaseKeyMixin, SelectMenuMixin<MentionableBuilder> {}
+export interface MentionableSelectMenuBuilder extends BuilderMixin<MentionableBuilder>, KeySegmentMixin, SelectMenuMixin<MentionableBuilder> {}
 
-@mix(BuilderMixin, BaseKeyMixin, SelectMenuMixin)
+@mix(BuilderMixin, KeySegmentMixin, SelectMenuMixin)
 export class MentionableSelectMenuBuilder {
 	constructor(baseKey?: string) {
 		this.builder = new MentionableBuilder();
@@ -42,9 +42,9 @@ export class MentionableSelectMenuBuilder {
 	}
 }
 
-export interface RoleSelectMenuBuilder extends BuilderMixin<RoleBuilder>, BaseKeyMixin, SelectMenuMixin<RoleBuilder> {}
+export interface RoleSelectMenuBuilder extends BuilderMixin<RoleBuilder>, KeySegmentMixin, SelectMenuMixin<RoleBuilder> {}
 
-@mix(BuilderMixin, BaseKeyMixin, SelectMenuMixin)
+@mix(BuilderMixin, KeySegmentMixin, SelectMenuMixin)
 export class RoleSelectMenuBuilder {
 	constructor(baseKey?: string) {
 		this.builder = new RoleBuilder();
@@ -61,9 +61,9 @@ export class RoleSelectMenuBuilder {
 	}
 }
 
-export interface UserSelectMenuBuilder extends BuilderMixin<UserBuilder>, BaseKeyMixin, SelectMenuMixin<UserBuilder> {}
+export interface UserSelectMenuBuilder extends BuilderMixin<UserBuilder>, KeySegmentMixin, SelectMenuMixin<UserBuilder> {}
 
-@mix(BuilderMixin, BaseKeyMixin, SelectMenuMixin)
+@mix(BuilderMixin, KeySegmentMixin, SelectMenuMixin)
 export class UserSelectMenuBuilder {
 	constructor(baseKey?: string) {
 		this.builder = new UserBuilder();

@@ -1,7 +1,7 @@
 import { type AnyComponentBuilder, ActionRowBuilder as Builder, normalizeArray, RestOrArray } from '@discordjs/builders';
 import { LocalizationMap } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
-import { BuilderMixin, LocaleBaseKeyMixin } from '$mixins';
+import { BuilderMixin, LocaleKeySegmentMixin } from '$mixins';
 import { LocaleString } from '$types';
 import type {
 	ButtonBuilder,
@@ -12,11 +12,11 @@ import type {
 	UserSelectMenuBuilder
 } from './messages';
 
-export interface ActionRowBuilder extends LocaleBaseKeyMixin, BuilderMixin<Builder<AnyComponentBuilder>> {}
+export interface ActionRowBuilder extends LocaleKeySegmentMixin, BuilderMixin<Builder<AnyComponentBuilder>> {}
 
-@mix(LocaleBaseKeyMixin, BuilderMixin)
+@mix(LocaleKeySegmentMixin, BuilderMixin)
 export class ActionRowBuilder {
-	constructor(locale: LocaleString, baseKey?: string) {
+	constructor(locale: LocaleString, keySegment?: string) {
 		this.builder = new Builder();
 	}
 
@@ -30,7 +30,7 @@ export class ActionRowBuilder {
 			| RoleSelectMenuBuilder
 		>
 	) {
-		this.builder.addComponents(normalizeArray(compoonents).map(compoonent => compoonent.hydrateSelf(this.locale, this.baseKey).builder));
+		this.builder.addComponents(normalizeArray(compoonents).map(compoonent => compoonent.hydrateSelf(this.locale, this.keySegment).builder));
 
 		return this;
 	}
@@ -45,7 +45,7 @@ export class ActionRowBuilder {
 			| RoleSelectMenuBuilder
 		>
 	) {
-		this.builder.setComponents(normalizeArray(compoonents).map(compoonent => compoonent.hydrateSelf(this.locale, this.baseKey).builder));
+		this.builder.setComponents(normalizeArray(compoonents).map(compoonent => compoonent.hydrateSelf(this.locale, this.keySegment).builder));
 
 		return this;
 	}

@@ -4,11 +4,11 @@ import { hasMixin, mix } from 'ts-mixer';
 import type { StringSelectMenuBuilder } from '$components';
 import { joinKeys, resolveString } from '$lib';
 import type { ArgsWithRawOrKeyedParam, LocaleString, SelectMenuResolvable } from '$types';
-import { BaseKeyMixin, BuilderMixin } from './base';
+import { KeySegmentMixin, BuilderMixin } from './base';
 
-export interface SelectMenuMixin<Builder extends SelectMenuResolvable> extends BuilderMixin<Builder>, BaseKeyMixin {}
+export interface SelectMenuMixin<Builder extends SelectMenuResolvable> extends BuilderMixin<Builder>, KeySegmentMixin {}
 
-@mix(BuilderMixin, BaseKeyMixin)
+@mix(BuilderMixin, KeySegmentMixin)
 // biome-ignore lint/correctness/noUnusedVariables: legacy
 export class SelectMenuMixin<Builder extends SelectMenuResolvable> {
 	placeholderArgs: Record<string, unknown> = {};
@@ -56,7 +56,7 @@ export class SelectMenuMixin<Builder extends SelectMenuResolvable> {
 		 */
 
 		if (isValidationEnabled()) {
-			if (!this.baseKey && (!placeholderOrArgs || typeof placeholderOrArgs === 'object')) {
+			if (!this.keySegment && (!placeholderOrArgs || typeof placeholderOrArgs === 'object')) {
 				throw new TypeError('Missing baseKey or string value!');
 			}
 
@@ -65,7 +65,7 @@ export class SelectMenuMixin<Builder extends SelectMenuResolvable> {
 			}
 		}
 
-		if (this.baseKey && !(typeof placeholderOrArgs === 'string')) {
+		if (this.keySegment && !(typeof placeholderOrArgs === 'string')) {
 			this.placeholderRequiresParentBaseKeyHydration = true;
 
 			if (typeof placeholderOrArgs === 'object') {
@@ -109,9 +109,9 @@ export class SelectMenuMixin<Builder extends SelectMenuResolvable> {
 
 	hydrateSelf(locale: LocaleString, parentBaseKey?: string): this {
 		// case 1, 2
-		if (this.baseKey && parentBaseKey && this.placeholderRequiresParentBaseKeyHydration) {
+		if (this.keySegment && parentBaseKey && this.placeholderRequiresParentBaseKeyHydration) {
 			this.builder.setPlaceholder(
-				resolveString(joinKeys([parentBaseKey, 'options', this.baseKey, 'label']), locale, 'components', this.placeholderArgs)
+				resolveString(joinKeys([parentBaseKey, 'options', this.keySegment, 'label']), locale, 'components', this.placeholderArgs)
 			);
 		}
 

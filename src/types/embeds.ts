@@ -39,7 +39,7 @@ type FieldValueSource =
 			valueRef?: never;
 	  };
 
-type BaseKeySource =
+type KeySegmentSource =
 	| {
 			key: string;
 			// Base Key overrides local ref keys
@@ -59,7 +59,7 @@ export type LocaleFieldOptions = {
 	valueArgs?: Record<string, unknown>;
 } & FieldNameSource &
 	FieldValueSource &
-	BaseKeySource;
+	KeySegmentSource;
 
 export type TextLocaleAuthor = {
 	nameRef?: string;

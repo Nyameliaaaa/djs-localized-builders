@@ -12,32 +12,32 @@ export class BuilderMixin<T extends BuilderResolvable> {
 	}
 }
 
-export class BaseKeyMixin {
-	public baseKey?: string;
+export class KeySegmentMixin {
+	public keySegment?: string;
 
-	constructor(baseKey?: string) {
-		this.baseKey = baseKey;
+	constructor(keySegment?: string) {
+		this.keySegment = keySegment;
 	}
 
 	/**
 	 * @internal
 	 */
-	protected init(baseKey?: string) {
-		this.baseKey = baseKey;
+	protected init(keySegment?: string) {
+		this.keySegment = keySegment;
 	}
 }
 
-export class LocaleBaseKeyMixin {
-	public baseKey?: string;
+export class LocaleKeySegmentMixin {
+	public keySegment?: string;
 	public locale: LocaleString;
 
-	constructor(locale: LocaleParam, baseKey?: string) {
+	constructor(locale: LocaleParam, keySegment?: string) {
 		this.locale = typeof locale === 'string' ? locale : locale.locale;
-		this.baseKey = baseKey;
+		this.keySegment = keySegment;
 	}
 
-	protected init(locale: LocaleParam, baseKey?: string) {
+	protected init(locale: LocaleParam, keySegment?: string) {
 		this.locale = typeof locale === 'string' ? locale : locale.locale;
-		this.baseKey = baseKey;
+		this.keySegment = keySegment;
 	}
 }

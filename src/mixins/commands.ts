@@ -26,7 +26,7 @@ import {
 	SlashCommandUserOptionBuilder
 } from '$options';
 import type { FuncAsInput, OptionResolvable } from '$types';
-import { BaseKeyMixin, BuilderMixin } from './base';
+import { KeySegmentMixin, BuilderMixin } from './base';
 import { NameAndDescriptionMixin } from './nameAndDescription';
 import { AutocompletableMixin, OptionMixin } from './options';
 
@@ -56,7 +56,7 @@ export class PermsV2Mixin<_T extends SlashCommandBuilder | ContextMenuCommandBui
 export interface SharedOptionsMixin<_T extends SlashCommandBuilder | SlashCommandSubcommandBuilder>
 	extends NameAndDescriptionMixin<_T>,
 		BuilderMixin<_T>,
-		BaseKeyMixin {
+		KeySegmentMixin {
 	addAttachmentOption(key: string, input?: FuncAsInput<SlashCommandAttachmentOptionBuilder>): this;
 	addAttachmentOption(option: FuncAsInput<SlashCommandAttachmentOptionBuilder>): this;
 	addAttachmentOption(option: SlashCommandAttachmentOptionBuilder): this;
@@ -94,7 +94,7 @@ export interface SharedOptionsMixin<_T extends SlashCommandBuilder | SlashComman
 	addUserOption(option: SlashCommandUserOptionBuilder): this;
 }
 
-@mix(BuilderMixin, NameAndDescriptionMixin, BaseKeyMixin)
+@mix(BuilderMixin, NameAndDescriptionMixin, KeySegmentMixin)
 export class SharedOptionsMixin<_T extends SlashCommandBuilder | SlashCommandSubcommandBuilder> {
 	private optionQueue: OptionMixin<OptionResolvable>[] = [];
 
@@ -125,16 +125,16 @@ export class SharedOptionsMixin<_T extends SlashCommandBuilder | SlashCommandSub
 	}
 
 	private hydrateOption(option: OptionMixin<OptionResolvable>) {
-		if (option.baseKey) {
-			option.baseKey = joinKeys([this.baseKey, 'options', option.baseKey]).slice(0);
+		if (option.keySegment) {
+			option.keySegment = joinKeys([this.keySegment, 'options', option.keySegment]).slice(0);
 
-			option.setName(resolveDefaultString(joinKeys([option.baseKey, 'name']), 'commands'));
-			option.setDescription(resolveDefaultString(joinKeys([option.baseKey, 'description']), 'commands'));
-			option.setNameLocalizations(resolveAllStrings(joinKeys([option.baseKey, 'name']), 'commands'));
-			option.setDescriptionLocalizations(resolveAllStrings(joinKeys([option.baseKey, 'description']), 'commands'));
+			option.setName(resolveDefaultString(joinKeys([option.keySegment, 'name']), 'commands'));
+			option.setDescription(resolveDefaultString(joinKeys([option.keySegment, 'description']), 'commands'));
+			option.setNameLocalizations(resolveAllStrings(joinKeys([option.keySegment, 'name']), 'commands'));
+			option.setDescriptionLocalizations(resolveAllStrings(joinKeys([option.keySegment, 'description']), 'commands'));
 
 			if (hasMixin(option, AutocompletableMixin)) {
-				option.hydrateChoices(option.baseKey);
+				option.hydrateChoices(option.keySegment);
 			}
 		}
 	}

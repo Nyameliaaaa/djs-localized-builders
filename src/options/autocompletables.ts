@@ -1,36 +1,36 @@
 import { SlashCommandIntegerOption, SlashCommandNumberOption, SlashCommandStringOption } from '@discordjs/builders';
 import { mix } from 'ts-mixer';
-import { AutocompletableMixin, BaseKeyMixin, MinMaxNumberMixin } from '$mixins';
+import { AutocompletableMixin, KeySegmentMixin, MinMaxNumberMixin } from '$mixins';
 
-export interface SlashCommandNumberOptionBuilder extends MinMaxNumberMixin<SlashCommandNumberOption>, BaseKeyMixin {}
+export interface SlashCommandNumberOptionBuilder extends MinMaxNumberMixin<SlashCommandNumberOption>, KeySegmentMixin {}
 /**
  * @group Options
  */
-@mix(MinMaxNumberMixin, BaseKeyMixin)
+@mix(MinMaxNumberMixin, KeySegmentMixin)
 export class SlashCommandNumberOptionBuilder {
-	constructor(baseKey?: string) {
+	constructor(keySegment?: string) {
 		this.builder = new SlashCommandNumberOption();
 	}
 }
 
-export interface SlashCommandIntegerOptionBuilder extends MinMaxNumberMixin<SlashCommandIntegerOption>, BaseKeyMixin {}
+export interface SlashCommandIntegerOptionBuilder extends MinMaxNumberMixin<SlashCommandIntegerOption>, KeySegmentMixin {}
 /**
  * @group Options
  */
-@mix(MinMaxNumberMixin, BaseKeyMixin)
+@mix(MinMaxNumberMixin, KeySegmentMixin)
 export class SlashCommandIntegerOptionBuilder {
-	constructor(baseKey?: string) {
+	constructor(keySegment?: string) {
 		this.builder = new SlashCommandIntegerOption();
 	}
 }
 
-export interface SlashCommandStringOptionBuilder extends AutocompletableMixin<SlashCommandStringOption, string>, BaseKeyMixin {}
+export interface SlashCommandStringOptionBuilder extends AutocompletableMixin<SlashCommandStringOption, string>, KeySegmentMixin {}
 /**
  * @group Options
  */
-@mix(AutocompletableMixin, BaseKeyMixin)
+@mix(AutocompletableMixin, KeySegmentMixin)
 export class SlashCommandStringOptionBuilder {
-	constructor(baseKey?: string) {
+	constructor(keySegment?: string) {
 		this.builder = new SlashCommandStringOption();
 	}
 

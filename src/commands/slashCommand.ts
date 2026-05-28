@@ -1,14 +1,14 @@
 import { SlashCommandBuilder as Builder } from '@discordjs/builders';
 import { hasMixin, mix } from 'ts-mixer';
 import { joinKeys, resolveAllStrings, resolveDefaultString } from '$lib';
-import { BaseKeyMixin, PermsV2Mixin, SharedOptionsMixin } from '$mixins';
+import { KeySegmentMixin, PermsV2Mixin, SharedOptionsMixin } from '$mixins';
 import type { FuncAsInput } from '$types';
 import { SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } from './subcommands';
 
 /**
  * @group Commands
  */
-export interface SlashCommandBuilder extends PermsV2Mixin<Builder>, SharedOptionsMixin<Builder>, BaseKeyMixin {
+export interface SlashCommandBuilder extends PermsV2Mixin<Builder>, SharedOptionsMixin<Builder>, KeySegmentMixin {
 	addSubcommand(key: string, input?: FuncAsInput<SlashCommandSubcommandBuilder>): this;
 	addSubcommand(option: FuncAsInput<SlashCommandSubcommandBuilder>): this;
 	addSubcommand(option: SlashCommandSubcommandBuilder): this;
@@ -21,9 +21,9 @@ export interface SlashCommandBuilder extends PermsV2Mixin<Builder>, SharedOption
 /**
  * @group Commands
  */
-@mix(PermsV2Mixin, SharedOptionsMixin, BaseKeyMixin)
+@mix(PermsV2Mixin, SharedOptionsMixin, KeySegmentMixin)
 export class SlashCommandBuilder {
-	constructor(baseKey?: string) {
+	constructor(keySegment?: string) {
 		this.builder = new Builder();
 	}
 
@@ -73,7 +73,7 @@ export class SlashCommandBuilder {
 			subcommand = keyOrInput;
 		}
 
-		this.builder.addSubcommand(subcommand!.hydrateSelf(this.baseKey).builder);
+		this.builder.addSubcommand(subcommand!.hydrateSelf(this.keySegment).builder);
 		return this;
 	}
 
@@ -95,21 +95,21 @@ export class SlashCommandBuilder {
 			subcommandGroup = keyOrInput;
 		}
 
-		this.builder.addSubcommandGroup(subcommandGroup!.hydrateSelf(this.baseKey).builder);
+		this.builder.addSubcommandGroup(subcommandGroup!.hydrateSelf(this.keySegment).builder);
 		return this;
 	}
 
 	/**
 	 * Hydration of {@link SlashCommandBuilder}.
-	 * @param baseKey The i18n key segment to resolve with.
+	 * @param keySegment The i18n key segment to resolve with.
 	 * @internal
 	 */
-	protected init(baseKey?: string) {
-		if (baseKey) {
-			this.setName(resolveDefaultString(joinKeys([baseKey, 'name']), 'commands'));
-			this.setDescription(resolveDefaultString(joinKeys([baseKey, 'description']), 'commands'));
-			this.setNameLocalizations(resolveAllStrings(joinKeys([baseKey, 'name']), 'commands'));
-			this.setDescriptionLocalizations(resolveAllStrings(joinKeys([baseKey, 'description']), 'commands'));
+	protected init(keySegment?: string) {
+		if (keySegment) {
+			this.setName(resolveDefaultString(joinKeys([keySegment, 'name']), 'commands'));
+			this.setDescription(resolveDefaultString(joinKeys([keySegment, 'description']), 'commands'));
+			this.setNameLocalizations(resolveAllStrings(joinKeys([keySegment, 'name']), 'commands'));
+			this.setDescriptionLocalizations(resolveAllStrings(joinKeys([keySegment, 'description']), 'commands'));
 		}
 	}
 }
