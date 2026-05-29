@@ -10,9 +10,7 @@
 		"import": "./dist/index.mjs",
 		"require": "./dist/index.js"
 	},
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
 		"test:unit": "vitest",
 		"pretest:run": "pnpm build",
@@ -21,7 +19,7 @@
 		"test:ci": "npm run test:typescript && npm run lint",
 		"test:typescript": "tsc --noEmit",
 		"build": "tsup",
-		"lint": "biome check .",
+		"lint": "biome ci .",
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write .",
 		"release": "changelogen --release",
