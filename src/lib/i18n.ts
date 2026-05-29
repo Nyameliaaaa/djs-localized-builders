@@ -30,78 +30,59 @@ export function joinKeys(keySegments: (string | null | undefined)[]) {
 
 /**
  * Resolves a localized string in a specific locale.
- * @param string The i18n key.
- * @param lang The locale to resolve from.
+ * @param i18nKey The i18n key.
+ * @param locale The locale to resolve from.
  * @param namespace The namespace to resolve from.
- * @param options Interpolation arguments.
+ * @param args Interpolation arguments.
  * @group i18n
  */
 export function resolveString(
-	string: string,
-	lang: string,
+	i18nKey: string,
+	locale: string,
 	namespace: Namespaces,
-	options: Record<string, unknown> = {}
+	args: Record<string, unknown> = {}
 ) {
 	const config = getConfig();
-	const val = config.getLocalizedString({
-		locale: lang,
+	const i18nString = config.getLocalizedString({
+		locale,
 		namespace: config.namespaces?.[namespace] ?? namespace,
-		i18nKey: string,
-		arguments: options
+		i18nKey,
+		arguments: args
 	});
 
-	if (config.validators && (!val || val.includes(string))) {
-		config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
+	const missingi18nString = !i18nString || i18nString === i18nKey;
+
+	if (config.validators && missingi18nString) {
+		config.onMissingKey(locale, config.namespaces?.[namespace] ?? namespace, i18nKey);
 	}
 
-	return val;
+	return i18nString;
 }
 
 /**
  * Resolves an i18n string in the `en-US` locale.
- * @param string The i18n key.
+ * @param i18nKey The i18n key.
  * @param namespace The namespace to resolve from.
- * @param options Interpolation arguments.
+ * @param args Interpolation arguments.
  * @group i18n
  */
-export function resolveDefaultString(string: string, namespace: Namespaces, options: Record<string, unknown> = {}) {
-	const config = getConfig();
-	const val = config.getLocalizedString({
-		locale: 'en-US',
-		namespace: config.namespaces?.[namespace] ?? namespace,
-		i18nKey: string,
-		arguments: options
-	});
-
-	if (config.validators && (!val || val.includes(string))) {
-		config.onMissingKey('en-US', config.namespaces?.[namespace] ?? namespace, string);
-	}
-
-	return val;
+export function resolveDefaultString(i18nKey: string, namespace: Namespaces, args: Record<string, unknown> = {}) {
+	return resolveString(i18nKey, 'en-US', namespace, args);
 }
 
 /**
  * Resolves an i18n string in all possible locales.
- * @param string The i18n key.
+ * @param i18nKey The i18n key.
  * @param namespace The namespace to resolve from.
- * @param options Interpolation arguments.
+ * @param args Interpolation arguments.
  * @group i18n
  */
-export function resolveAllStrings(string: string, namespace: Namespaces, options: Record<string, unknown> = {}) {
+export function resolveAllStrings(i18nKey: string, namespace: Namespaces, args: Record<string, unknown> = {}) {
 	const config = getConfig();
 	const ret: Record<string, string> = {};
 
-	for (const lang of config.locales) {
-		ret[lang] = config.getLocalizedString({
-			locale: lang,
-			namespace: config.namespaces?.[namespace] ?? namespace,
-			i18nKey: string,
-			arguments: options
-		});
-
-		if (config.validators && (!ret[lang] || ret[lang].includes(string))) {
-			config.onMissingKey(lang, config.namespaces?.[namespace] ?? namespace, string);
-		}
+	for (const locale of config.locales) {
+		ret[locale] = resolveString(i18nKey, locale, namespace, args);
 	}
 
 	return ret;
