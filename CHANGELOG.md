@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v0.5.0
+
+[compare changes](https://git.gay/nyamelia/djs-localized-builders/compare/v0.4.0...v0.5.0)
+
+### Features
+
+- Initial components impl ([f7a0952](https://git.gay/nyamelia/djs-localized-builders/commit/f7a0952))
+- `joinKeys` null/empty handling ([fe46d96](https://git.gay/nyamelia/djs-localized-builders/commit/fe46d96))
+- ⚠️  Rename get functions to resolve ([88fdbfc](https://git.gay/nyamelia/djs-localized-builders/commit/88fdbfc))
+- ⚠️  Rrename `baseKey` ([1c4c0b6](https://git.gay/nyamelia/djs-localized-builders/commit/1c4c0b6))
+- ⚠️  Rename `getLocalizedString` params ([5d66b90](https://git.gay/nyamelia/djs-localized-builders/commit/5d66b90))
+- ⚠️  Rename `langs` to `locales` ([66ceb26](https://git.gay/nyamelia/djs-localized-builders/commit/66ceb26))
+- **config:** ⚠️  Consistent api surface ([31d1a0d](https://git.gay/nyamelia/djs-localized-builders/commit/31d1a0d))
+- **embed:** ⚠️  Consistent `setTitle` and `setDescription` ([70c9e8d](https://git.gay/nyamelia/djs-localized-builders/commit/70c9e8d))
+
+### Performance
+
+- Only validate when validators enabled ([e05c932](https://git.gay/nyamelia/djs-localized-builders/commit/e05c932))
+- Prevent queue array adding when autohydrating ([030973a](https://git.gay/nyamelia/djs-localized-builders/commit/030973a))
+
+### Enhancements
+
+- ⚠️  Better obj keys ([#4](https://git.gay/nyamelia/djs-localized-builders/pull/4))
+- Pass `keySegment` to `onCreateEmbed` ([4e3a7a9](https://git.gay/nyamelia/djs-localized-builders/commit/4e3a7a9))
+- `resetConfig` ([fd050f7](https://git.gay/nyamelia/djs-localized-builders/commit/fd050f7))
+- Add support for passing `Interaction` as locale ([30de4cd](https://git.gay/nyamelia/djs-localized-builders/commit/30de4cd))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Rename get functions to resolve ([88fdbfc](https://git.gay/nyamelia/djs-localized-builders/commit/88fdbfc))
+- ⚠️  Rrename `baseKey` ([1c4c0b6](https://git.gay/nyamelia/djs-localized-builders/commit/1c4c0b6))
+- ⚠️  Rename `getLocalizedString` params ([5d66b90](https://git.gay/nyamelia/djs-localized-builders/commit/5d66b90))
+- ⚠️  Rename `langs` to `locales` ([66ceb26](https://git.gay/nyamelia/djs-localized-builders/commit/66ceb26))
+- **config:** ⚠️  Consistent api surface ([31d1a0d](https://git.gay/nyamelia/djs-localized-builders/commit/31d1a0d))
+- **embed:** ⚠️  Consistent `setTitle` and `setDescription` ([70c9e8d](https://git.gay/nyamelia/djs-localized-builders/commit/70c9e8d))
+- ⚠️  Better obj keys ([#4](https://git.gay/nyamelia/djs-localized-builders/pull/4))
+
 ## [0.4.0](https://git.gay/nyamelia/djs-localized-builders/compare/v0.3.0...v0.4.0) (2023-04-17)
 
 
