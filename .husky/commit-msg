@@ -1,1 +1,1 @@
-pnpm run lint:fix && git add -A && npx commitlint --edit
+npx commitlint --edit
