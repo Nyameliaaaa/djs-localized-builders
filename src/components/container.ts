@@ -2,13 +2,14 @@ import { ContainerBuilder as Builder } from '@discordjs/builders';
 import { mix } from 'ts-mixer';
 import { BuilderMixin, LocaleKeySegmentMixin } from '$mixins';
 import { LocaleParam } from '$types';
+import { IdMixin } from '../mixins/components';
 
-export interface ContainerBuilder extends BuilderMixin<Builder>, LocaleKeySegmentMixin {}
+export interface ContainerBuilder extends BuilderMixin<Builder>, IdMixin<Builder>, LocaleKeySegmentMixin {}
 
 /**
  * @group Embeds
  */
-@mix(LocaleKeySegmentMixin, BuilderMixin)
+@mix(LocaleKeySegmentMixin, IdMixin, BuilderMixin)
 export class ContainerBuilder {
 	constructor(locale: LocaleParam, keySegment?: string) {
 		this.builder = new Builder();
@@ -16,16 +17,6 @@ export class ContainerBuilder {
 
 	clearAccentColor() {
 		this.builder.clearAccentColor();
-		return this;
-	}
-
-	clearId() {
-		this.builder.clearId();
-		return this;
-	}
-
-	setId(id: number) {
-		this.builder.setId(id);
 		return this;
 	}
 
