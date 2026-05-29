@@ -22,7 +22,7 @@
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write .",
-		"release": "changelogen",
+		"release": "changelogen --release",
 		"prepare": "husky",
 		"docs:build:api": "typedoc",
 		"docs:dev": "pnpm docs:build:api && vitepress dev docs",
