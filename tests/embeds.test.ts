@@ -15,7 +15,7 @@ describe('EmbedBuilder', () => {
 	describe('Config#onLocaleEmbed', () => {
 		it('properly calls onLocaleEmbed', () => {
 			setConfig({
-				onCreateEmbed: ({ embed, locale, keySegment }) => {
+				onCreateEmbed: ({ embed }) => {
 					embed.setAuthor({ name: 'testing onCreateEmbed' });
 				}
 			});
@@ -80,14 +80,14 @@ describe('EmbedBuilder', () => {
 	describe('setTitle', () => {
 		it('should set a raw title', () => {
 			const embed = new EmbedBuilder(Locale.EnglishUS);
-			embed.setTitle('Hello', { raw: true });
+			embed.setTitle('Hello');
 
 			expect(embed.toJSON().title).toBe('Hello');
 		});
 
 		it('should set a ref title', () => {
 			const embed = new EmbedBuilder(Locale.EnglishUS);
-			embed.setTitle('titleRef');
+			embed.setTitle({ ref: 'titleRef' });
 
 			expect(embed.toJSON().title).toBe(`${Locale.EnglishUS}.titleRef`);
 		});
@@ -103,14 +103,14 @@ describe('EmbedBuilder', () => {
 	describe('setDescription', () => {
 		it('should set a raw description', () => {
 			const embed = new EmbedBuilder(Locale.EnglishUS);
-			embed.setDescription('Hello', { raw: true });
+			embed.setDescription('Hello');
 
 			expect(embed.toJSON().description).toBe('Hello');
 		});
 
 		it('should set a ref description', () => {
 			const embed = new EmbedBuilder(Locale.EnglishUS);
-			embed.setDescription('descRef');
+			embed.setDescription({ ref: 'descRef' });
 
 			expect(embed.toJSON().description).toBe(`${Locale.EnglishUS}.descRef`);
 		});

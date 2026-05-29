@@ -1,4 +1,4 @@
-export type ArgsWithRawParam = { raw?: boolean; [key: string]: unknown };
+export type RefWithArgs = { ref: string; arguments?: Record<string, unknown> };
 export type ArgsWithRawOrKeyedParam = { raw?: boolean; localized?: boolean; [key: string]: unknown };
 
 type FieldNameSource =

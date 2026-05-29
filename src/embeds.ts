@@ -9,15 +9,7 @@ import { APIEmbedField } from 'discord-api-types/v10';
 import { mix } from 'ts-mixer';
 import { getConfig, joinKeys, resolveString } from '$lib';
 import { BuilderMixin, LocaleKeySegmentMixin } from '$mixins';
-import {
-	ArgsWithRawParam,
-	LocaleAuthor,
-	LocaleFieldOptions,
-	LocaleFooter,
-	LocaleObject,
-	LocaleParam,
-	LocaleString
-} from '$types';
+import { LocaleAuthor, LocaleFieldOptions, LocaleFooter, LocaleParam, RefWithArgs } from '$types';
 
 export interface EmbedBuilder extends BuilderMixin<Builder>, LocaleKeySegmentMixin {}
 
@@ -30,12 +22,15 @@ export class EmbedBuilder {
 		this.builder = new Builder();
 	}
 
+	/**
+	 * @internal
+	 */
 	protected init(locale: LocaleParam, keySegment?: string) {
 		const localeValue = typeof locale === 'string' ? locale : locale.locale;
 		getConfig().onCreateEmbed({ embed: this, locale: localeValue, keySegment });
 	}
 
-	protected mapField(field: LocaleFieldOptions) {
+	private mapField(field: LocaleFieldOptions) {
 		const returnField: APIEmbedField = { inline: field.inline, name: '', value: '' };
 
 		if (isValidationEnabled()) {
@@ -108,54 +103,72 @@ export class EmbedBuilder {
 		return returnField;
 	}
 
-	setTitle(title: string, args?: ArgsWithRawParam): this;
+	private isRefObj(obj: unknown): obj is RefWithArgs {
+		return obj !== null && typeof obj === 'object' && 'ref' in obj && typeof obj.ref === 'string';
+	}
+
+	setTitle(args: RefWithArgs): this;
 	setTitle(args: Record<string, unknown>): this;
+	setTitle(title: string): this;
 	setTitle(): this;
-	setTitle(titleOrArgs?: string | Record<string, unknown>, args: ArgsWithRawParam = {}) {
-		let title = '';
-		if (this.keySegment && typeof titleOrArgs === 'object') {
-			title = resolveString(joinKeys([this.keySegment, 'title']), this.locale, 'embeds', titleOrArgs);
-		}
+	setTitle(titleOrArgs?: string | RefWithArgs | Record<string, unknown>, args: Record<string, unknown> = {}) {
+		let text = '';
+		const isRawString = typeof titleOrArgs === 'string';
 
-		if (this.keySegment && !titleOrArgs) {
-			title = resolveString(joinKeys([this.keySegment, 'title']), this.locale, 'embeds');
-		}
+		if (this.keySegment && !this.isRefObj(titleOrArgs)) {
+			const isArguments = typeof titleOrArgs === 'object';
+			const hasNoArguments = !titleOrArgs;
 
-		if (typeof titleOrArgs === 'string') {
-			if (args.raw) {
-				title = titleOrArgs;
-			} else {
-				title = resolveString(titleOrArgs, this.locale, 'embeds', args);
+			if (isArguments) {
+				text = resolveString(joinKeys([this.keySegment, 'title']), this.locale, 'embeds', titleOrArgs);
+			} else if (hasNoArguments) {
+				text = resolveString(joinKeys([this.keySegment, 'title']), this.locale, 'embeds');
 			}
 		}
 
-		this.builder.setTitle(title);
+		if (this.isRefObj(titleOrArgs)) {
+			text = resolveString(titleOrArgs.ref, this.locale, 'embeds', titleOrArgs.arguments ?? {});
+		}
+
+		if (isRawString) {
+			text = titleOrArgs;
+		}
+
+		this.builder.setTitle(text);
 		return this;
 	}
 
-	setDescription(description: string, args?: ArgsWithRawParam): this;
+	setDescription(args: RefWithArgs): this;
 	setDescription(args: Record<string, unknown>): this;
+	setDescription(description: string): this;
 	setDescription(): this;
-	setDescription(descriptionOrArgs?: string | Record<string, unknown>, args: ArgsWithRawParam = {}) {
-		let desc = '';
+	setDescription(
+		descriptionOrArgs?: string | RefWithArgs | Record<string, unknown>,
+		args: Record<string, unknown> = {}
+	) {
+		let text = '';
+		const isRawString = typeof descriptionOrArgs === 'string';
 
-		if (this.keySegment && typeof descriptionOrArgs === 'object') {
-			desc = resolveString(joinKeys([this.keySegment, 'description']), this.locale, 'embeds', descriptionOrArgs);
-		}
+		if (this.keySegment && !this.isRefObj(descriptionOrArgs)) {
+			const isArguments = typeof descriptionOrArgs === 'object';
+			const hasNoArguments = !descriptionOrArgs;
 
-		if (this.keySegment && !descriptionOrArgs) {
-			desc = resolveString(joinKeys([this.keySegment, 'description']), this.locale, 'embeds');
-		}
-
-		if (typeof descriptionOrArgs === 'string') {
-			if (args.raw) {
-				desc = descriptionOrArgs;
-			} else {
-				desc = resolveString(descriptionOrArgs, this.locale, 'embeds', args);
+			if (isArguments) {
+				text = resolveString(joinKeys([this.keySegment, 'description']), this.locale, 'embeds', descriptionOrArgs);
+			} else if (hasNoArguments) {
+				text = resolveString(joinKeys([this.keySegment, 'description']), this.locale, 'embeds');
 			}
 		}
 
-		this.builder.setDescription(desc);
+		if (this.isRefObj(descriptionOrArgs)) {
+			text = resolveString(descriptionOrArgs.ref, this.locale, 'embeds', descriptionOrArgs.arguments ?? {});
+		}
+
+		if (isRawString) {
+			text = descriptionOrArgs;
+		}
+
+		this.builder.setDescription(text);
 		return this;
 	}
 
