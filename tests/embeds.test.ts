@@ -1,11 +1,11 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: any is needed to silence typescript when testing invalid fields */
 import { Locale } from 'discord-api-types/v10';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { EmbedBuilder, type GetLocalizedStringOptions, resetConfig, setConfig } from '../dist';
+import { EmbedBuilder, resetConfig, setConfig } from '../dist';
 
 beforeEach(() => {
 	setConfig({
-		getLocalizedString: ({ i18nKey, locale }: GetLocalizedStringOptions) => `${locale}.${i18nKey}`,
+		resolveLocalizedString: ({ i18nKey, locale }) => `${locale}.${i18nKey}`,
 		validators: false,
 		locales: ['en-US', 'fr']
 	});
@@ -15,7 +15,7 @@ describe('EmbedBuilder', () => {
 	describe('Config#onLocaleEmbed', () => {
 		it('properly calls onLocaleEmbed', () => {
 			setConfig({
-				onCreateEmbed: (embed, locale, keySegment) => {
+				onCreateEmbed: ({ embed, locale, keySegment }) => {
 					embed.setAuthor({ name: 'testing onCreateEmbed' });
 				}
 			});
@@ -26,7 +26,7 @@ describe('EmbedBuilder', () => {
 
 		it('properly passes locale', () => {
 			setConfig({
-				onCreateEmbed: (embed, locale) => {
+				onCreateEmbed: ({ embed, locale }) => {
 					embed.setAuthor({ name: locale });
 				}
 			});
@@ -37,7 +37,7 @@ describe('EmbedBuilder', () => {
 
 		it('properly passes keySegment', () => {
 			setConfig({
-				onCreateEmbed: (embed, locale, keySegment) => {
+				onCreateEmbed: ({ embed, locale, keySegment }) => {
 					embed.setAuthor({ name: keySegment });
 				}
 			});
@@ -50,7 +50,7 @@ describe('EmbedBuilder', () => {
 	describe('locale', () => {
 		beforeEach(() => {
 			setConfig({
-				onCreateEmbed: (embed, locale) => {
+				onCreateEmbed: ({ embed, locale }) => {
 					embed.setAuthor({ name: locale });
 				}
 			});

@@ -5,18 +5,18 @@ import { getConfig, resetConfig, setConfig } from '../dist';
 describe('Config', () => {
 	it('sets configuration', () => {
 		setConfig({
-			langs: ['en-US', 'fr']
+			locales: ['en-US', 'fr']
 		});
 
-		expect(getConfig()).toMatchObject({ langs: ['en-US', 'fr'] });
+		expect(getConfig()).toMatchObject({ locales: ['en-US', 'fr'] });
 	});
 
 	it('preserves defaults', () => {
 		setConfig({
-			langs: ['en-US', 'fr']
+			locales: ['en-US', 'fr']
 		});
 
-		expect(getConfig()).toMatchObject({ langs: ['en-US', 'fr'], separatorChar: '.' });
+		expect(getConfig()).toMatchObject({ locales: ['en-US', 'fr'], separatorChar: '.' });
 	});
 
 	it('disables discord.js/builders validators', () => {

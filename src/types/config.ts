@@ -1,7 +1,7 @@
 import { EmbedBuilder } from '$embeds';
 
 /**
- * Maps the internal namespace names used by {@link resolveString}, {@link resolveDefaultString}, and {@link resolveAllStrings} to the namespace names in your i18n files.
+ * Maps the internal namespace names used by the library to the namespace names in your i18n files.
  * @group Configuration
  */
 export interface NamespaceMap {
@@ -25,12 +25,12 @@ export interface NamespaceMap {
 }
 
 /**
- * Options passed to {@link ConfigType.getLocalizedString}
+ * Parameters passed to {@link Config#resolveLocalizedString}.
  * @group Configuration
  */
-export interface GetLocalizedStringOptions {
+export interface ResolveLocalizedStringParams {
 	/**
-	 * The i18n namespace to resolve from, mapped to the values of {@link ConfigType.namespaces}
+	 * The i18n namespace to resolve from, mapped to the values of {@link Config#namespaces}.
 	 */
 	namespace: string;
 
@@ -47,38 +47,76 @@ export interface GetLocalizedStringOptions {
 	/**
 	 * Interpolation arguments passed to the localized string.
 	 */
-	arguments?: Record<string, unknown>;
+	args?: Record<string, unknown>;
+}
+
+/**
+ * Parameters passed to {@link Config#onMissingKey}.
+ * @group Configuration
+ */
+export interface OnMissingKeyParams {
+	/**
+	 * The namespace where this i18n key was not found, mapped to the values of {@link Config#namespaces}.
+	 */
+	namespace: string;
+
+	/**
+	 * The i18n key that was not found.
+	 */
+	i18nKey: string;
+
+	/**
+	 * The locale where this i18n key was not found.
+	 */
+	locale: string;
+}
+
+/**
+ * Parameters passed to {@link Config#onCreateEmbed}.
+ * @group Configuration
+ */
+export interface OnCreateEmbedParams {
+	/**
+	 * The EmbedBuilder instance.
+	 */
+	embed: EmbedBuilder;
+
+	/**
+	 * The embed's locale.
+	 */
+	locale: string;
+
+	/**
+	 * The embed's key segment, if any.
+	 */
+	keySegment?: string;
 }
 
 /**
  * Configuration object for `djs-localized-builders`, used by {@link setConfig}
  * @group Configuration
  */
-export interface ConfigType {
+export interface Config {
 	/**
 	 * Resolves a localized string.
 	 * @remarks The library will not function without this!
-	 * Returning {@link GetLocalizedStringOptions#i18nKey} will call {@link ConfigType.onMissingKey}
-	 * @param options - See {@link GetLocalizedStringOptions}.
+	 * Returning {@link ResolveLocalizedStringParams#i18nKey} will call {@link Config#onMissingKey}.
+	 * @param params See {@link ResolveLocalizedStringParams}.
 	 */
-	getLocalizedString: (options: GetLocalizedStringOptions) => string;
+	resolveLocalizedString: (params: ResolveLocalizedStringParams) => string;
 
 	/**
-	 * Called by {@link resolveString}, {@link resolveDefaultString}, and {@link resolveAllStrings} when an i18n key was not found.
-	 * @param lang The locale where this i18n key was not found.
-	 * @param namespace The namespace where this i18n key was not found.
-	 * @param key The i18n key that was not found.
+	 * Called by the library when an i18n key is not found.
+	 * @param params See {@link OnMissingKeyParams}.
 	 */
-	onMissingKey: (lang: string, namespace: string, key: string) => void;
+	onMissingKey: (params: OnMissingKeyParams) => void;
 
 	/**
 	 * Called when an {@link EmbedBuilder} is instantiated.
 	 * @remarks Use this to apply default properties to all embeds, such as a default color or footer.
-	 * @param embed The EmbedBuilder instance.
-	 * @param locale The embed's locale.
-	 * @param keySegment The embed's key segment, if any.
+	 * @param params See {@link OnCreateEmbedParams}
 	 */
-	onCreateEmbed: (embed: EmbedBuilder, locale: string, keySegment?: string) => Promise<void> | void;
+	onCreateEmbed: (params: OnCreateEmbedParams) => Promise<void> | void;
 
 	/**
 	 * Casing format of your i18n keys.
@@ -94,14 +132,14 @@ export interface ConfigType {
 	separatorChar: string;
 
 	/**
-	 * Maps the internal namespace names used by {@link resolveString}, {@link resolveDefaultString}, and {@link resolveAllStrings} to the namespace names in your i18n files.
+	 * Maps the internal namespace names used by the library to the namespace names in your i18n files.
 	 * @defaultValue `{ commands: 'commands', components: 'components', embeds: 'embeds' }`
 	 */
-	namespaces?: NamespaceMap;
+	namespaces: NamespaceMap;
 
 	/**
 	 * Locales to generate localizations for.
-	 * @remarks Must be a valid Discord locale, see {@link https://docs.discord.com/developers/reference#locales}
+	 * @remarks Must be valid Discord locales, see {@link https://docs.discord.com/developers/reference#locales}
 	 * @defaultValue `['en-US']`
 	 */
 	locales: string[];

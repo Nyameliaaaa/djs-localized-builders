@@ -1,19 +1,19 @@
 import { disableValidators, enableValidators } from '@discordjs/builders';
 import { settings } from 'ts-mixer';
-import { ConfigType } from '$types';
+import { Config } from '$types';
 
 settings.initFunction = 'init';
 settings.prototypeStrategy = 'proxy';
 
-const defaultConfig: ConfigType = {
-	getLocalizedString: ({ i18nKey }) => i18nKey,
-	onMissingKey: (lang, namespace, key) => {
-		throw new TypeError(`Key "${key}" was not found in the ${namespace} of ${lang}`, {
-			cause: { lang, namespace, key }
+const defaultConfig: Config = {
+	resolveLocalizedString: ({ i18nKey }) => i18nKey,
+	onMissingKey: ({ i18nKey, locale, namespace }) => {
+		throw new TypeError(`Key "${i18nKey}" was not found in the ${namespace} of ${locale}`, {
+			cause: { i18nKey, namespace, locale }
 		});
 	},
 	// biome-ignore lint/suspicious/noEmptyBlockStatements: intentional no-op default
-	onCreateEmbed: (embed, locale) => {},
+	onCreateEmbed: () => {},
 	caseFormat: 'lowercase',
 	separatorChar: '.',
 	validators: true,
@@ -25,7 +25,7 @@ const defaultConfig: ConfigType = {
 	}
 };
 
-let config: ConfigType = { ...defaultConfig };
+let config: Config = { ...defaultConfig };
 
 const setValidators = () => {
 	if (config.validators) {
@@ -40,27 +40,19 @@ const setValidators = () => {
  * @example Example #1
  *  ```ts
 	setConfig({
-		getLocalizedString: ({ namespace, i18nKey, locale, arguments }) => {
-			return client.i18n.getString({ namespace, i18nKey, locale, arguments }) ?? i18nKey
+		resolveLocalizedString: ({ namespace, i18nKey, locale, arguments }) => {
+			return i18n.getString({ namespace, i18nKey, locale, arguments }) ?? i18nKey
 		},
-		caseFormat: 'lowercase',
+		caseFormat: 'uppercase',
 		separatorChar: '_',
 		validators: process.ENV.NODE_ENV === 'development',
-        locales: client.i18n.locales,
-		namespaces: {
-			components: 'components',
-			commands: 'commands',
-			embeds: 'responses'
-		},
-		onMisingKey: (lang, namespace, key) => {
-			logger.error(lang, namespace, key);
-		}
+        locales: i18n.locales,
 	});
  * ```
  * @param newConfig The new configuration.
  * @group Configuration
  */
-export const setConfig = (newConfig: Partial<ConfigType>) => {
+export const setConfig = (newConfig: Partial<Config>) => {
 	config = { ...config, ...newConfig };
 	setValidators();
 };
@@ -78,4 +70,4 @@ export const resetConfig = () => {
  * Get the current configuration.
  * @group Configuration
  */
-export const getConfig = (): ConfigType => config;
+export const getConfig = (): Config => config;

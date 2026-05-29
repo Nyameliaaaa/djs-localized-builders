@@ -1,10 +1,10 @@
 import { Locale } from 'discord-api-types/v10';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { type GetLocalizedStringOptions, SlashCommandBuilder, setConfig } from '../dist';
+import { SlashCommandBuilder, setConfig } from '../dist';
 
 beforeEach(() => {
 	setConfig({
-		getLocalizedString: ({ i18nKey, locale }: GetLocalizedStringOptions) => `${locale}.${i18nKey}`,
+		resolveLocalizedString: ({ i18nKey, locale }) => `${locale}.${i18nKey}`,
 		validators: false,
 		locales: ['en-US', 'fr']
 	});

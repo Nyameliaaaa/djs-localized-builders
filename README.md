@@ -10,21 +10,13 @@ Install `djs-localized-builders` and `@discordjs/builders` (should be installed 
 // initalize i18n here
 
 setConfig({
-  getLocalizedString: ({ namespace, i18nKey, locale, arguments }) => {
-    return i18nLib.getString({ namespace, i18nKey, locale, arguments }) ?? i18nKey;
+  resolveLocalizedString: ({ namespace, i18nKey, locale, arguments }) => {
+    return i18n.getString({ namespace, i18nKey, locale, arguments }) ?? i18nKey
   },
-  onMissingKey: (lang, namespace, key) => {
-    logger.throw(lang, namespace, key);
-  },
-  caseFormat: "lowercase",
-  separatorChar: ".",
-  validators: process.ENV.NODE_ENV === "development",
-  locales: i18nLib.locales,
-  namespaces: {
-    components: "responses",
-    commands: "commands",
-    embeds: "responses",
-  },
+  caseFormat: 'uppercase',
+  separatorChar: '_',
+  validators: process.ENV.NODE_ENV === 'development',
+  locales: i18n.locales,
 });
 
 // load commands here

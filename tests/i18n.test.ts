@@ -1,13 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import {
-	GetLocalizedStringOptions,
-	joinKeys,
-	resetConfig,
-	resolveAllStrings,
-	resolveDefaultString,
-	resolveString,
-	setConfig
-} from '../dist';
+import { joinKeys, resetConfig, resolveAllStrings, resolveDefaultString, resolveString, setConfig } from '../dist';
 
 beforeEach(() => {
 	resetConfig();
@@ -17,8 +9,7 @@ describe('Helpers', () => {
 	describe('getting strings', () => {
 		beforeEach(() => {
 			setConfig({
-				getLocalizedString: ({ i18nKey, locale, namespace }: GetLocalizedStringOptions) =>
-					`${locale}:${namespace}:${i18nKey}`
+				resolveLocalizedString: ({ i18nKey, locale, namespace }) => `${locale}:${namespace}:${i18nKey}`
 			});
 		});
 
@@ -44,8 +35,7 @@ describe('Helpers', () => {
 
 	it('handles namespace mapping', () => {
 		setConfig({
-			getLocalizedString: ({ i18nKey, locale, namespace }: GetLocalizedStringOptions) =>
-				`${locale}:${namespace}:${i18nKey}`,
+			resolveLocalizedString: ({ i18nKey, locale, namespace }) => `${locale}:${namespace}:${i18nKey}`,
 			validators: false,
 			namespaces: { commands: 'namespace', components: 'namespace', embeds: 'namespace' }
 		});
@@ -56,7 +46,7 @@ describe('Helpers', () => {
 	describe('joinKeys', () => {
 		it('handles a custom separator char', () => {
 			setConfig({
-				getLocalizedString: ({ i18nKey }: GetLocalizedStringOptions) => `${i18nKey}`,
+				resolveLocalizedString: ({ i18nKey }) => `${i18nKey}`,
 				separatorChar: ':'
 			});
 
@@ -86,7 +76,7 @@ describe('Helpers', () => {
 		describe('handles separatorChar WITH caseFormat', () => {
 			it('handles uppercase', () => {
 				setConfig({
-					getLocalizedString: ({ i18nKey }: GetLocalizedStringOptions) => `${i18nKey}`,
+					resolveLocalizedString: ({ i18nKey }) => `${i18nKey}`,
 					caseFormat: 'uppercase',
 					separatorChar: ':'
 				});
@@ -96,7 +86,7 @@ describe('Helpers', () => {
 
 			it('handles lowercase', () => {
 				setConfig({
-					getLocalizedString: ({ i18nKey }: GetLocalizedStringOptions) => `${i18nKey}`,
+					resolveLocalizedString: ({ i18nKey }) => `${i18nKey}`,
 					caseFormat: 'lowercase',
 					separatorChar: ':'
 				});
@@ -106,7 +96,7 @@ describe('Helpers', () => {
 
 			it('handles keep', () => {
 				setConfig({
-					getLocalizedString: ({ i18nKey }: GetLocalizedStringOptions) => `${i18nKey}`,
+					resolveLocalizedString: ({ i18nKey }) => `${i18nKey}`,
 					caseFormat: 'keep',
 					separatorChar: ':'
 				});

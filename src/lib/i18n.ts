@@ -1,10 +1,10 @@
-import type { ConfigType, Namespaces } from '$types';
+import type { Config, Namespaces } from '$types';
 import { getConfig } from './config';
 
 /**
  * Joins multiple i18n key segments.
  * @param keySegments The i18n key segments.
- * @returns The joined i18n key segments, formatted according to {@link ConfigType.caseFormat} and {@link ConfigType.separatorChar}.
+ * @returns The joined i18n key segments, formatted according to {@link Config.caseFormat} and {@link Config.separatorChar}.
  * @group i18n
  */
 export function joinKeys(keySegments: (string | null | undefined)[]) {
@@ -43,17 +43,21 @@ export function resolveString(
 	args: Record<string, unknown> = {}
 ) {
 	const config = getConfig();
-	const i18nString = config.getLocalizedString({
+	const i18nString = config.resolveLocalizedString({
 		locale,
-		namespace: config.namespaces?.[namespace] ?? namespace,
+		namespace: config.namespaces[namespace],
 		i18nKey,
-		arguments: args
+		args
 	});
 
 	const missingi18nString = !i18nString || i18nString === i18nKey;
 
 	if (config.validators && missingi18nString) {
-		config.onMissingKey(locale, config.namespaces?.[namespace] ?? namespace, i18nKey);
+		config.onMissingKey({
+			locale,
+			namespace: config.namespaces[namespace],
+			i18nKey
+		});
 	}
 
 	return i18nString;

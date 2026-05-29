@@ -32,7 +32,7 @@ export class EmbedBuilder {
 
 	protected init(locale: LocaleParam, keySegment?: string) {
 		const localeValue = typeof locale === 'string' ? locale : locale.locale;
-		getConfig().onCreateEmbed(this, localeValue, keySegment);
+		getConfig().onCreateEmbed({ embed: this, locale: localeValue, keySegment });
 	}
 
 	protected mapField(field: LocaleFieldOptions) {
@@ -48,7 +48,7 @@ export class EmbedBuilder {
 			const hasRawValueAndArgs = field.value && field.valueArgs;
 
 			if (isEmpty) {
-				throw new TypeError('Embed field cannot be empty', { cause: this });
+				throw new TypeError('Embed field cannot be empty', { cause: field });
 			}
 
 			if (hasRawAndRefName || hasRawAndRefValue) {
