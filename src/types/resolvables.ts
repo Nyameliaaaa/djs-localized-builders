@@ -1,4 +1,7 @@
 import type {
+	ActionRowBuilder,
+	AnyComponentBuilder,
+	ContainerBuilder,
 	ContextMenuCommandBuilder,
 	EmbedBuilder,
 	SlashCommandAttachmentOption,
@@ -42,7 +45,17 @@ export type OptionResolvable =
  * @internal
  */
 export type ApplicationCommandBuilderResolvable = CommandResolvable | OptionResolvable;
+
 /**
  * @internal
  */
-export type BuilderResolvable = ApplicationCommandBuilderResolvable | EmbedBuilder;
+export type TopLevelBuilderResolvable = ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder;
+
+/**
+ * @internal
+ */
+export type ComponentBuilderResolvable = TopLevelBuilderResolvable;
+/**
+ * @internal
+ */
+export type BuilderResolvable = ApplicationCommandBuilderResolvable | ComponentBuilderResolvable | EmbedBuilder;
