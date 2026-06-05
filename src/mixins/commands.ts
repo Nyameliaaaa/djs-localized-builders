@@ -125,16 +125,11 @@ export class SharedOptionsMixin<_T extends SlashCommandBuilder | SlashCommandSub
 	}
 
 	private hydrateOption(option: OptionMixin<OptionResolvable>) {
-		if (option.keySegment) {
-			option.keySegment = joinKeys([this.keySegment, 'options', option.keySegment]).slice(0);
-
-			option.setName(resolveDefaultString(joinKeys([option.keySegment, 'name']), 'commands'));
-			option.setDescription(resolveDefaultString(joinKeys([option.keySegment, 'description']), 'commands'));
-			option.setNameLocalizations(resolveAllStrings(joinKeys([option.keySegment, 'name']), 'commands'));
-			option.setDescriptionLocalizations(resolveAllStrings(joinKeys([option.keySegment, 'description']), 'commands'));
+		if (this.keySegment) {
+			option.hydrateSelf(this.keySegment);
 
 			if (hasMixin(option, AutocompletableMixin)) {
-				option.hydrateChoices(option.keySegment);
+				option.hydrateChoices(this.keySegment);
 			}
 		}
 	}
