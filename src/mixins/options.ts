@@ -27,12 +27,12 @@ export class OptionMixin<_T extends OptionResolvable> {
 
 	hydrateSelf(parentKeySegment?: string) {
 		if (parentKeySegment && this.keySegment) {
-			const key = joinKeys([parentKeySegment, 'options', this.keySegment]).slice(0);
+			this.keySegment = joinKeys([parentKeySegment, 'options', this.keySegment]).slice(0);
 
-			this.setName(resolveDefaultString(joinKeys([key, 'name']), 'commands'));
-			this.setDescription(resolveDefaultString(joinKeys([key, 'description']), 'commands'));
-			this.setNameLocalizations(resolveAllStrings(joinKeys([key, 'name']), 'commands'));
-			this.setDescriptionLocalizations(resolveAllStrings(joinKeys([key, 'description']), 'commands'));
+			this.setName(resolveDefaultString(joinKeys([this.keySegment, 'name']), 'commands'));
+			this.setDescription(resolveDefaultString(joinKeys([this.keySegment, 'description']), 'commands'));
+			this.setNameLocalizations(resolveAllStrings(joinKeys([this.keySegment, 'name']), 'commands'));
+			this.setDescriptionLocalizations(resolveAllStrings(joinKeys([this.keySegment, 'description']), 'commands'));
 		}
 	}
 }
@@ -69,13 +69,7 @@ export class AutocompletableMixin<
 	 */
 	hydrateChoices(parentKeySegment: string) {
 		const preparedChoices = this.choiceQueue.map(val => {
-			const key = joinKeys([
-				parentKeySegment,
-				'options',
-				this.keySegment,
-				'choices',
-				val instanceof Object ? val.key.toString() : val.toString()
-			]);
+			const key = joinKeys([this.keySegment, 'choices', val instanceof Object ? val.key.toString() : val.toString()]);
 
 			const name = resolveDefaultString(key, 'commands');
 			const name_localizations = resolveAllStrings(key, 'commands');

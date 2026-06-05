@@ -18,13 +18,6 @@ export class KeySegmentMixin {
 	constructor(keySegment?: string) {
 		this.keySegment = keySegment;
 	}
-
-	/**
-	 * @internal
-	 */
-	protected init(keySegment?: string) {
-		this.keySegment = keySegment;
-	}
 }
 
 export class LocaleKeySegmentMixin {
@@ -32,11 +25,6 @@ export class LocaleKeySegmentMixin {
 	public locale: LocaleString;
 
 	constructor(locale: LocaleParam, keySegment?: string) {
-		this.locale = typeof locale === 'string' ? locale : locale.locale;
-		this.keySegment = keySegment;
-	}
-
-	protected init(locale: LocaleParam, keySegment?: string) {
 		this.locale = typeof locale === 'string' ? locale : locale.locale;
 		this.keySegment = keySegment;
 	}
